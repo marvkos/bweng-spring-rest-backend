@@ -1,7 +1,6 @@
 package at.fhtw.be_webeng_23ws.service;
 
 import at.fhtw.be_webeng_23ws.entity.Phone;
-import at.fhtw.be_webeng_23ws.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +8,10 @@ import java.util.UUID;
 
 @Service
 public class PhoneService {
+
+    /*
+
+    Need to rework
 
     private final BookRepository bookRepository;
 
@@ -39,5 +42,5 @@ public class PhoneService {
         } else {
             throw new IllegalArgumentException("Year must not be larger than or equal to 2100");
         }
-    }
+    }*/
 }

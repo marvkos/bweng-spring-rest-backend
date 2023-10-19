@@ -1,4 +1,4 @@
-package at.fhtw.be_webeng_23ws.entity;
+package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -12,11 +12,16 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Entity
+//@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Phone {
+
+    /*
+
+    Need to rework. Fields to do: id, name, description, display-size, memory, battery, price, brand
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -31,5 +36,5 @@ public class Phone {
         this.title = title;
         this.brand = brand;
         this.price = price;
-    }
+    }*/
 }

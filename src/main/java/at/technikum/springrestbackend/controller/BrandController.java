@@ -1,7 +1,5 @@
 package at.fhtw.be_webeng_23ws.controller;
 
-import at.fhtw.be_webeng_23ws.entity.Brand;
-import at.fhtw.be_webeng_23ws.service.BrandService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
