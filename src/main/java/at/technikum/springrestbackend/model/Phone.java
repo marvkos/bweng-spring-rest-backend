@@ -1,40 +1,49 @@
 package at.technikum.springrestbackend.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Phone {
-
-    /*
-
-    Need to rework. Fields to do: id, name, description, display-size, memory, battery, price, brand
-
     @Id
+    @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String title;
 
-    private int price;
+    private String name;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Brand brand;
+    private String description;
 
-    public Phone(String title, Brand brand, int price) {
-        this.title = title;
-        this.brand = brand;
+    private float displaySize;
+
+    private int memory;
+
+    private int battery;
+
+    private float price;
+
+    private String brand;
+
+    public Phone(String name, String description, float displaySize, int memory, int battery, float price, String brand){
+        this.name = name;
+        this.description = description;
+        this.displaySize = displaySize;
+        this.memory = memory;
+        this.battery = battery;
         this.price = price;
-    }*/
+        this.brand = brand;
+    }
 }

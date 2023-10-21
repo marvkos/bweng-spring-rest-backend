@@ -1,4 +1,4 @@
-package at.fhtw.be_webeng_23ws.controller;
+package at.technikum.springrestbackend.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

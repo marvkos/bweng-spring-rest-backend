@@ -1,6 +1,7 @@
-package at.fhtw.be_webeng_23ws.service;
+package at.technikum.springrestbackend.service;
 
-import at.fhtw.be_webeng_23ws.entity.Phone;
+import at.technikum.springrestbackend.model.Phone;
+import at.technikum.springrestbackend.repository.PhoneRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,38 +10,27 @@ import java.util.UUID;
 @Service
 public class PhoneService {
 
-    /*
+    private final PhoneRepository phoneRepository;
 
-    Need to rework
+    public PhoneService(PhoneRepository phoneRepository){this.phoneRepository = phoneRepository;}
 
-    private final BookRepository bookRepository;
+    public List<Phone> getPhones(){return phoneRepository.findAll();}
 
-    public PhoneService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    public Phone getPhone(UUID id){return phoneRepository.findById(id).orElseThrow();}
 
-    public List<Phone> getBooks() {
-        return bookRepository.findAll();
-    }
+    public List<Phone> getPhonesName(String name){return phoneRepository.findByName(name);}
 
-    public Phone getPhone(UUID id) {
-        return bookRepository.findById(id).orElseThrow();
-    }
+    public List<Phone> getPhonesDisplay(float displaySize){return phoneRepository.findByDisplaySize(displaySize);}
 
-    public Phone createBook(Phone phone) {
-        return bookRepository.save(phone);
-    }
+    public List<Phone> getPhonesMemory(int memory){return phoneRepository.findByMemory(memory);}
 
-    // visible for testing
-    String getEra(int year) {
-        if (year < 1900) {
-            return "19th century or before";
-        } else if (year < 2000) {
-            return "20th century";
-        } else if (year < 2100) {
-            return "21st century";
-        } else {
-            throw new IllegalArgumentException("Year must not be larger than or equal to 2100");
-        }
-    }*/
+    public List<Phone> getPhonesBattery(int battery){return phoneRepository.findByBattery(battery);}
+
+    public List<Phone> getPhonesPrice(float price){return phoneRepository.findByPrice(price);}
+
+    public List<Phone> getPhonesBrand(String brand){return phoneRepository.findByBrand(brand);}
+
+
+
 }
+

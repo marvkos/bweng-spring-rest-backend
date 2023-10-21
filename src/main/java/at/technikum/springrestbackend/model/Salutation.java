@@ -1,5 +1,5 @@
 package at.technikum.springrestbackend.model;
 
-public class Invoice {
-    //To do. id, order
+public enum Salutation {
+    Herr, Frau, Divers
 }
