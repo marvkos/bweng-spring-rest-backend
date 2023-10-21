@@ -1,7 +1,7 @@
-package at.fhtw.be_webeng_23ws.controller;
+package at.technikum.springrestbackend.controller;
 
-import at.fhtw.be_webeng_23ws.entity.Phone;
-import at.fhtw.be_webeng_23ws.service.PhoneService;
+import at.technikum.springrestbackend.model.Phone;
+import at.technikum.springrestbackend.service.PhoneService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
