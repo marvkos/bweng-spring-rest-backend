@@ -12,24 +12,47 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository){this.userRepository = userRepository;}
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    public List<User> getUsers(){return userRepository.findAll();}
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
 
-    public User getUser(UUID id){return userRepository.findById(id).orElseThrow();}
+    public User getUser(UUID id) {
+        return userRepository.findById(id).orElseThrow();
+    }
 
-    public List<User> getUsersUsername(String username){return userRepository.findByUsername(username);}
+    public User getUserUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 
-    public List<User> getUserRole(int role){return userRepository.findByRole(role);}
+    public List<User> getUsersRole(int role) {
+        return userRepository.findByRole(role);
+    }
 
-    public List<User> getUserFirstname(String firstname){return userRepository.findByFirstname(firstname);}
+    public List<User> getUsersFirstname(String firstname) {
+        return userRepository.findByFirstname(firstname);
+    }
 
-    public List<User> getUserLastname(String lastname){return userRepository.findByLastname(lastname);}
+    public List<User> getUsersLastname(String lastname) {
+        return userRepository.findByLastname(lastname);
+    }
 
-    public List<User> getUserEmail(String email){return userRepository.findByEmail(email);}
+    public User getUserEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
-    public List<User> getUserCountry(String country){return userRepository.findByCountry(country);}
+    public List<User> getUsersCountry(String country) {
+        return userRepository.findByCountry(country);
+    }
 
-    public List<User> findByStatus(boolean status){return userRepository.findByStatus(status);}
+    public List<User> getUsersStatus(boolean status) {
+        return userRepository.findByStatus(status);
+    }
 
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
 }

@@ -13,13 +13,23 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public OrderService(OrderRepository orderRepository){
+    public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getOrders(){return orderRepository.findAll();}
+    public List<Order> getOrders() {
+        return orderRepository.findAll();
+    }
 
-    public Order getOrder(UUID id){return orderRepository.findById(id).orElseThrow();}
+    public Order getOrder(UUID id) {
+        return orderRepository.findById(id).orElseThrow();
+    }
 
-    public List<Order> getOrdersUser(User user){return orderRepository.findByUser(user);}
+    public List<Order> getOrdersUser(User user) {
+        return orderRepository.findByUser(user);
+    }
+
+    public Order createOrder(Order order) {
+        return orderRepository.save(order);
+    }
 }
