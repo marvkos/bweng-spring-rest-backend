@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface UserRepository extends CrudRepository<User, UUID> {
 
-   List<User> findByUsername(String username);
+   User findByUsername(String username);
 
    List<User> findByRole(int role);
 
@@ -16,12 +16,11 @@ public interface UserRepository extends CrudRepository<User, UUID> {
 
    List<User> findByLastname(String lastname);
 
-   List<User> findByEmail(String mail);
+   User findByEmail(String mail);
 
    List<User> findByCountry(String country);
 
    List<User> findByStatus(boolean status);
-
     @Override
     List<User> findAll();
 }
