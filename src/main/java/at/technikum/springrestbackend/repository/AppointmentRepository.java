@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface AppointmentRepository extends CrudRepository<Appointment, UUID> {
 
-    List<Appointment> findAllForUser(User user);
+    List<Appointment> findByForUser(User user);
 }
