@@ -1,7 +1,7 @@
-package at.fhtw.be_webeng_23ws.controller;
+package at.technikum.springrestbackend.controller;
 
-import at.fhtw.be_webeng_23ws.entity.Phone;
-import at.fhtw.be_webeng_23ws.service.PhoneService;
+import at.technikum.springrestbackend.model.Phone;
+import at.technikum.springrestbackend.service.PhoneService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,18 +15,42 @@ public class PhoneController {
         this.phoneService = phoneService;
     }
 
-    @GetMapping("/books")
-    public List<Phone> getBooks() {
-        return phoneService.getBooks();
+    @GetMapping("/phones")
+    public List<Phone> getPhones() {
+        return phoneService.getPhones();
     }
 
-    @GetMapping("/books/{id}")
-    public Phone getBook(@PathVariable UUID id) {
+    @GetMapping("/phones/{id}")
+    public Phone getPhone(@PathVariable UUID id) {
         return phoneService.getPhone(id);
     }
 
-    @PostMapping("/books")
+    @GetMapping("/phones/{name}")
+    public List<Phone> getPhonesName(String name){
+        return phoneService.getPhonesName(name);
+    }
+    @GetMapping("/phones/{display}")
+    public List<Phone> getPhoneDisplay(float displaysize){
+        return phoneService.getPhonesDisplay(displaysize);
+    }
+    @GetMapping("/phones/{memory}")
+    public List<Phone> getPhonesMemory(int memory){
+        return phoneService.getPhonesMemory(memory);
+    }
+    @GetMapping("/phones/{battery}")
+    public List<Phone> getPhonesBattery(int battery){
+        return phoneService.getPhonesBattery(battery);
+    }
+    @GetMapping("/phones/price")
+    public List<Phone> getPhonePrice(float price){
+        return phoneService.getPhonesPrice(price);
+    }
+    @GetMapping("/phones/brand")
+    public List<Phone> getPhonesBrand(String brand){
+        return phoneService.getPhonesBrand(brand);
+    }
+    @PostMapping("/phones")
     public Phone createBook(@RequestBody Phone phone) {
-        return phoneService.createBook(phone);
+        return phoneService.createPhone(phone);
     }
 }
