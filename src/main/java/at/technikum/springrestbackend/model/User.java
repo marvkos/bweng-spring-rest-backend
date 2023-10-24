@@ -1,6 +1,9 @@
 package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,19 +27,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @NotBlank
     private String username;
-
+    @NotBlank
     private String password;
-
+    @Min(0)
     private int role;
-
+    @NotBlank
     private String firstname;
-
+    @NotBlank
     private String lastname;
 
     @Enumerated(EnumType.STRING) // Stellt sicher, dass die Datenbank den Enum-Wert als Zeichenkette speichert
     private Salutation salutation;
-
+    @Email
     private String email;
 
     private String country;
