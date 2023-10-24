@@ -1,6 +1,7 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.model.Lawyer;
+import at.technikum.springrestbackend.repository.LawyerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -20,7 +20,7 @@ public class SpecificAvailabilityController {
 
     @GetMapping
     public ResponseEntity<List<SpecificAvailability>> getAllAvailabilities() {
-        return ResponseEntity.ok(specificAvailabilityRepository.findAll());
+        return ResponseEntity.ok((List<SpecificAvailability>) specificAvailabilityRepository.findAll());
     }
 
     @GetMapping("/{id}")
