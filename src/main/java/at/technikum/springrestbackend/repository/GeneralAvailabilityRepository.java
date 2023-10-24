@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface GeneralAvailabilityRepository extends CrudRepository<GeneralAvailability, UUID> {
 
-    List<GeneralAvailability> findAllForLawyer(Lawyer lawyer);
+    List<GeneralAvailability> findByForLawyer(Lawyer lawyer);
 
     List<GeneralAvailability> findByDayAndForLawyer(DayOfWeek day, Lawyer lawyer);
 }
