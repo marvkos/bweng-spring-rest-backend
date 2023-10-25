@@ -20,9 +20,11 @@ public class SpecializationController {
 
     // Get all specializations
     @GetMapping
-    public List<Specialization> getAllSpecializations() {
-        return specializationRepository.findAll();
+    public ResponseEntity<List<Specialization>> getAllSpecializations() {
+        List<Specialization> specializations = specializationRepository.findAll();
+        return ResponseEntity.ok(specializations);
     }
+
 
     // Get a specific specialization by ID
     @GetMapping("/{id}")

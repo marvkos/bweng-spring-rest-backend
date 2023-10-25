@@ -28,9 +28,11 @@ public class LawyerController {
 
     // Retrieve all lawyers
     @GetMapping
-    public List<Lawyer> getAllLawyers() {
-        return lawyerRepository.findAll();
+    public ResponseEntity<List<Lawyer>> getAllLawyers() {
+        List<Lawyer> lawyers = lawyerRepository.findAll();
+        return ResponseEntity.ok(lawyers);
     }
+
 
     // Retrieve a single lawyer by ID
     @GetMapping("/{id}")

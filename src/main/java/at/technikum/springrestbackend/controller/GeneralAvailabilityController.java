@@ -1,12 +1,14 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.model.GeneralAvailability;
+import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.GeneralAvailabilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,9 +20,12 @@ public class GeneralAvailabilityController {
     private GeneralAvailabilityRepository repository;
 
     @GetMapping
-    public Iterable<GeneralAvailability> getAll() {
-        return repository.findAll();
+    public ResponseEntity<List<GeneralAvailability>> getAllAvailabilities() {
+        List<GeneralAvailability> availabilities =  repository.findAll();
+        return ResponseEntity.ok(availabilities);
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<GeneralAvailability> getById(@PathVariable UUID id) {

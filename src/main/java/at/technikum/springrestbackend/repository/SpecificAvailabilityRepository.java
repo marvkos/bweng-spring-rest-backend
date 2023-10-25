@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface SpecificAvailabilityRepository extends CrudRepository<SpecificAvailability, UUID> {
-
+    @Override
+    List<SpecificAvailability> findAll();
     List<SpecificAvailability> findByForLawyer(Lawyer lawyer);
 
     List<SpecificAvailability> findByStartDateTimeAndForLawyer(LocalDateTime startDateTime, Lawyer lawyer);
