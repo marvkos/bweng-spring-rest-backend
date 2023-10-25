@@ -3,6 +3,7 @@ package at.technikum.springrestbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +17,17 @@ import java.util.UUID;
 public class GeneralAvailability {
     @Id
     private UUID id;
+
+    @NotNull
     private DayOfWeek day;
+
+    @NotNull
     private LocalTime startTime;
+
+    @NotNull
     private LocalTime endTime;
+
+    @NotNull
     @ManyToOne
     private Lawyer forLawyer;
 }
