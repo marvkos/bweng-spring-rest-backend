@@ -20,8 +20,10 @@ public class SpecificAvailabilityController {
 
     @GetMapping
     public ResponseEntity<List<SpecificAvailability>> getAllAvailabilities() {
-        return ResponseEntity.ok((List<SpecificAvailability>) specificAvailabilityRepository.findAll());
+        List<SpecificAvailability> availabilities = specificAvailabilityRepository.findAll();
+        return ResponseEntity.ok(availabilities);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<SpecificAvailability> getAvailabilityById(@PathVariable UUID id) {

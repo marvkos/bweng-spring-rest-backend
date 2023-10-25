@@ -21,7 +21,8 @@ public class PaymentMethodController {
     // Get all payment methods
     @GetMapping
     public ResponseEntity<List<PaymentMethod>> getAllPaymentMethods() {
-        return new ResponseEntity<>(paymentMethodRepository.findAll(), HttpStatus.OK);
+        List<PaymentMethod> paymentMethods = paymentMethodRepository.findAll();
+        return ResponseEntity.ok(paymentMethods);
     }
 
     // Get a specific payment method by ID
