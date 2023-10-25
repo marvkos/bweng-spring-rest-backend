@@ -20,7 +20,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private  User user;
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)

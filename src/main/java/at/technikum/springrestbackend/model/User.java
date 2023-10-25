@@ -17,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "user", uniqueConstraints = {
+@Table(name = "User", uniqueConstraints = {
        @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
@@ -43,13 +43,16 @@ public class User {
     @Email
     private String email;
 
+    @NotBlank
     private String country;
 
     private String profilePicture;
 
     private boolean status;
 
-    public User (String username, String password, int role, String firstname, String lastname, Salutation salutation, String email, String country, String profilePicture, boolean status){
+    public User (String username, String password, int role, String firstname,
+                 String lastname, Salutation salutation, String email,
+                 String country, String profilePicture, boolean status){
         this.username = username;
         this.password = password;
         this.role = role;

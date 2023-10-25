@@ -13,8 +13,8 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    public OrderController(OrderService brandService) {
-        this.orderService = brandService;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @GetMapping("/orders")
