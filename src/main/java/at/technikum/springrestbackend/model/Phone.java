@@ -40,7 +40,8 @@ public class Phone {
     @NotBlank
     private String brand;
 
-    public Phone(String name, String description, float displaySize, int memory, int battery, float price, String brand){
+    public Phone(String name, String description, float displaySize,
+                 int memory, int battery, float price, String brand){
         this.name = name;
         this.description = description;
         this.displaySize = displaySize;
