@@ -1,6 +1,5 @@
 package at.technikum.springrestbackend.controller;
-
-import at.technikum.springrestbackend.model.Order;
+import at.technikum.springrestbackend.model.Orders;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.OrderService;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +17,20 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public List<Order> getOrders() {
+    public List<Orders> getOrders() {
         return orderService.getOrders();
     }
 
     @GetMapping("/orders/{id}")
-    public Order getOrder(@PathVariable UUID id) {
+    public Orders getOrder(@PathVariable UUID id) {
         return orderService.getOrder(id);
     }
     @GetMapping("/orders/{user}")
-    public List<Order> getOrdersUsers(User user){
+    public List<Orders> getOrdersUsers(User user){
         return orderService.getOrdersUser(user);
     }
     @PostMapping("/orders")
-    public Order createOrder(@RequestBody Order order){
+    public Orders createOrder(@RequestBody Orders order){
         return orderService.createOrder(order);
     }
 }
