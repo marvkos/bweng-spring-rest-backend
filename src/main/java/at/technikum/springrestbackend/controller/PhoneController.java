@@ -50,7 +50,7 @@ public class PhoneController {
         return phoneService.getPhonesBrand(brand);
     }
     @PostMapping("/phones")
-    public Phone createBook(@RequestBody Phone phone) {
+    public Phone createPhone(@RequestBody Phone phone) {
         return phoneService.createPhone(phone);
     }
 }

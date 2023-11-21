@@ -1,6 +1,6 @@
 package at.technikum.springrestbackend.service;
 
-import at.technikum.springrestbackend.model.Order;
+import at.technikum.springrestbackend.model.Orders;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -17,19 +17,19 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getOrders() {
+    public List<Orders> getOrders() {
         return orderRepository.findAll();
     }
 
-    public Order getOrder(UUID id) {
+    public Orders getOrder(UUID id) {
         return orderRepository.findById(id).orElseThrow();
     }
 
-    public List<Order> getOrdersUser(User user) {
+    public List<Orders> getOrdersUser(User user) {
         return orderRepository.findByUser(user);
     }
 
-    public Order createOrder(Order order) {
+    public Orders createOrder(Orders order) {
         return orderRepository.save(order);
     }
 }
