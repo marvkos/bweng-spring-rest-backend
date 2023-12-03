@@ -1,67 +1,49 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.model.Specialization;
-import at.technikum.springrestbackend.repository.SpecializationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import at.technikum.springrestbackend.service.SpecializationService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/specializations")
 public class SpecializationController {
 
-    @Autowired
-    private SpecializationRepository specializationRepository;
+    private final SpecializationService specializationService;
 
     // Get all specializations
     @GetMapping
     public ResponseEntity<List<Specialization>> getAllSpecializations() {
-        List<Specialization> specializations = specializationRepository.findAll();
-        return ResponseEntity.ok(specializations);
+        return specializationService.getAllSpecializations();
     }
-
 
     // Get a specific specialization by ID
     @GetMapping("/{id}")
     public ResponseEntity<Specialization> getSpecializationById(@PathVariable UUID id) {
-        Optional<Specialization> specialization = specializationRepository.findById(id);
-        if (specialization.isPresent()) {
-            return new ResponseEntity<>(specialization.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return specializationService.getSpecializationById(id);
     }
 
     // Create a new specialization
     @PostMapping
     public Specialization createSpecialization(@RequestBody Specialization specialization) {
-        specialization.setId(UUID.randomUUID());  // Set a new UUID for the entity
-        return specializationRepository.save(specialization);
+        return specializationService.createSpecialization(specialization);
     }
 
     // Update a specialization
     @PutMapping("/{id}")
     public ResponseEntity<Specialization> updateSpecialization(@PathVariable UUID id, @RequestBody Specialization specializationDetails) {
-        if (!specializationRepository.existsById(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        specializationDetails.setId(id);  // Ensure the ID remains the same
-        Specialization updatedSpecialization = specializationRepository.save(specializationDetails);
-        return new ResponseEntity<>(updatedSpecialization, HttpStatus.OK);
+        return specializationService.updateSpecialization(id, specializationDetails);
     }
 
     // Delete a specialization
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteSpecialization(@PathVariable UUID id) {
-        if (!specializationRepository.existsById(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        specializationRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return specializationService.deleteSpecialization(id);
     }
 }
