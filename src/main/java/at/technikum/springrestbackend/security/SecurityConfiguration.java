@@ -46,7 +46,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         registry -> registry
                                 .requestMatchers("/error").permitAll()
-                                .requestMatchers("/auth/token").permitAll()
+                                .requestMatchers("/auth/login").permitAll()
+                                .requestMatchers("/api/users").permitAll()
                                 .anyRequest().authenticated()
                 );
 
