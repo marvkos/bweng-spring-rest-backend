@@ -5,6 +5,8 @@ import at.technikum.springrestbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -13,4 +15,11 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public User updateUsername(UUID id, User user) {
+        User userToUpdate = userRepository.findById(id).orElseThrow();
+        userToUpdate.setUsername(user.getUsername());
+        return userRepository.save(userToUpdate);
+    }
+
 }
