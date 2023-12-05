@@ -21,6 +21,9 @@ User {
     private UUID id;
 
     @NotBlank
+    private String username;
+
+    @NotBlank
     @Size(min = 2, max = 50)
     private String firstName;
 
@@ -34,6 +37,9 @@ User {
 
     @NotBlank
     private String password;
+
+    @NotBlank
+    private String role;
 
     @OneToMany
     private List<Appointment> appointments;
