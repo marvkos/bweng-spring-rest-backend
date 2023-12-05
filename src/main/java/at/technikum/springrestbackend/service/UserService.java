@@ -55,4 +55,12 @@ public class UserService {
     public User createUser(User user) {
         return userRepository.save(user);
     }
+    public boolean isUsernameTaken(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean isEmailTaken(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }

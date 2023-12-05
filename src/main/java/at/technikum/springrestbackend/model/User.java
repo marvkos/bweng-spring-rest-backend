@@ -27,23 +27,28 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotBlank
+    @NotBlank(message = "Username is required")
     private String username;
-    @NotBlank
+
+    @NotBlank(message = "Password is required")
     private String password;
-    @Min(0)
+
+    @Min(value = 0, message = "Role should be a positive integer")
     private int role;
-    @NotBlank
+
+    @NotBlank(message = "First name is required")
     private String firstname;
-    @NotBlank
+
+    @NotBlank(message = "Last name is required")
     private String lastname;
 
-    @Enumerated(EnumType.STRING) // Stellt sicher, dass die Datenbank den Enum-Wert als Zeichenkette speichert
+    @Enumerated(EnumType.STRING)
     private Salutation salutation;
-    @Email
+
+    @Email(message = "Invalid email address")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Country is required")
     private String country;
 
     private String profilePicture;
