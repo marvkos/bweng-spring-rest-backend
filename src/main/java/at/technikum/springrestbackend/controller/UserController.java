@@ -32,42 +32,42 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/userid/{id}")
     public User getUser(UUID id) {
         return userService.getUser(id);
     }
 
-    @GetMapping("/users/{username}")
+    @GetMapping("/users/username/{username}")
     public User getUserUserName(String username) {
         return userService.getUserUsername(username);
     }
 
-    @GetMapping("/users/{role}")
+    @GetMapping("/users/role/{role}")
     public List<User> getUsersRole(int role) {
         return userService.getUsersRole(role);
     }
 
-    @GetMapping("/users/firstname")
+    @GetMapping("/users/firstname/{firstname}")
     public List<User> getUsersFirstname(String firstname) {
         return userService.getUsersFirstname(firstname);
     }
 
-    @GetMapping("/users/lastname")
+    @GetMapping("/users/lastname/{lastname}")
     public List<User> getUsersLastname(String lastname) {
         return userService.getUsersLastname(lastname);
     }
 
-    @GetMapping("/users/email")
+    @GetMapping("/users/email/{email}")
     public User getUserEmail(String email) {
         return userService.getUserEmail(email);
     }
 
-    @GetMapping("/users/country")
+    @GetMapping("/users/country/{country}")
     public List<User> getUsersCountry(String country) {
         return userService.getUsersCountry(country);
     }
 
-    @GetMapping("/users/status")
+    @GetMapping("/users/status/{status}")
     public List<User> getUsersStatus(boolean status) {
         return userService.getUsersStatus(status);
     }
