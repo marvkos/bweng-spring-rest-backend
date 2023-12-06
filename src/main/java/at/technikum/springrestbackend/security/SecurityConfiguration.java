@@ -47,7 +47,7 @@ public class SecurityConfiguration {
                         registry -> registry
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/auth/login").permitAll()
-                                .requestMatchers("/api/users").permitAll()
+                                .requestMatchers("/lawyers/**").hasAnyRole("LAWYER", "ADMIN")
                                 .anyRequest().authenticated()
                 );
 

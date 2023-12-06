@@ -1,14 +1,13 @@
 package at.technikum.springrestbackend.service;
 
 import at.technikum.springrestbackend.model.GeneralAvailability;
+import at.technikum.springrestbackend.model.Lawyer;
 import at.technikum.springrestbackend.repository.GeneralAvailabilityRepository;
+import at.technikum.springrestbackend.repository.LawyerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +17,8 @@ import java.util.UUID;
 public class GeneralAvailabilityService {
 
     private final GeneralAvailabilityRepository generalAvailabilityRepository;
+    private final LawyerRepository lawyerRepository;
+
 
     public ResponseEntity<List<GeneralAvailability>> getAllAvailabilities() {
         List<GeneralAvailability> availabilities =  generalAvailabilityRepository.findAll();
@@ -32,10 +33,15 @@ public class GeneralAvailabilityService {
         return ResponseEntity.notFound().build();
     }
 
-    public ResponseEntity<GeneralAvailability> create(GeneralAvailability availability) {
-        availability.setId(UUID.randomUUID());
-        GeneralAvailability savedAvailability = generalAvailabilityRepository.save(availability);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedAvailability);
+    public ResponseEntity<GeneralAvailability> create(GeneralAvailability availability, UUID lawyerId) {
+        Optional<Lawyer> lawyer = lawyerRepository.findById(lawyerId);
+        if (lawyer.isPresent()) {
+            availability.setId(UUID.randomUUID());
+            availability.setForLawyer(lawyer.get());
+            GeneralAvailability savedAvailability = generalAvailabilityRepository.save(availability);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedAvailability);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     public ResponseEntity<GeneralAvailability> update(UUID id, GeneralAvailability updatedAvailability) {

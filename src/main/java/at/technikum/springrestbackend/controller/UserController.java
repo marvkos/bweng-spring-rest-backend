@@ -19,25 +19,28 @@ public class UserController {
 
     // Create a new user
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
     // Get all users
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers() {
         return userService.getAllUsers();
     }
 
-
     // Get a specific user by ID
     @GetMapping("/{id}")
+    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update') OR hasRole('ROLE_ADMIN')")
     public ResponseEntity<User> getUserById(@PathVariable UUID id) {
         return userService.getUserById(id);
     }
 
     // Delete a user by ID
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update') OR hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         return userService.deleteUser(id);
     }

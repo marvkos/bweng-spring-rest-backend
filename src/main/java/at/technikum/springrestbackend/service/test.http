@@ -1,0 +1,5 @@
+### Create a new specialization
+GET http://localhost:8081//api/payment-methods
+Content-Type: application/json
+
+

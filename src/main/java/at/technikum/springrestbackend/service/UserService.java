@@ -50,6 +50,7 @@ public class UserService {
     public ResponseEntity<User> updateUser(UUID id, User updatedUser) {
         if (userRepository.existsById(id)) {
             updatedUser.setId(id);  // Ensure the ID is set to the one from the path
+            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             return ResponseEntity.ok(userRepository.save(updatedUser));
         } else {
             return ResponseEntity.notFound().build();
