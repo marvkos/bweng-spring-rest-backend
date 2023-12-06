@@ -18,8 +18,7 @@ public class UserController {
     private final UserService userService;
 
     // Create a new user
-    @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/new")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
