@@ -20,9 +20,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserService {
 
-    private final TokenIssuer tokenIssuer;
-
-    private final AuthenticationManager authenticationManager;
 
     private final UserRepository userRepository;
 
@@ -77,14 +74,5 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public TokenResponse authenticate(TokenRequest tokenRequest){
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(tokenRequest.getUsername(), tokenRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-
-        String token = tokenIssuer.issue(principal.getId(), principal.getUsername(), principal.getRole());
-        return new TokenResponse(token);
-    }
 
 }

@@ -81,11 +81,6 @@ public class UserController {
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 
-    @PostMapping("users/token")
-    public TokenResponse token(@RequestBody @Valid TokenRequest tokenRequest){
-        return userService.authenticate(tokenRequest);
-    }
-
     private boolean isValidRegistration(User user) {
 
         if (userService.isUsernameTaken(user.getUsername())) {
