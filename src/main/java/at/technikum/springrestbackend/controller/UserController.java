@@ -1,19 +1,24 @@
 package at.technikum.springrestbackend.controller;
 
+import at.technikum.springrestbackend.dto.TokenRequest;
+import at.technikum.springrestbackend.dto.TokenResponse;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
 import at.technikum.springrestbackend.util.PasswordValidator;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.List;
 import java.util.UUID;
 
+@RestController
 public class UserController {
     private final UserService userService;
 
@@ -75,6 +80,12 @@ public class UserController {
 
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
+
+    @PostMapping("users/token")
+    public TokenResponse token(@RequestBody @Valid TokenRequest tokenRequest){
+        return userService.authenticate(tokenRequest);
+    }
+
     private boolean isValidRegistration(User user) {
 
         if (userService.isUsernameTaken(user.getUsername())) {
