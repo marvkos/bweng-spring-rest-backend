@@ -7,8 +7,6 @@ import at.technikum.springrestbackend.repository.UserRepository;
 import at.technikum.springrestbackend.security.TokenIssuer;
 import at.technikum.springrestbackend.security.user.UserPrincipal;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
