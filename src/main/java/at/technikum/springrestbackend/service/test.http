@@ -2,4 +2,57 @@
 GET http://localhost:8081//api/payment-methods
 Content-Type: application/json
 
+###
+POST http://localhost:8081/api/users/new
+Content-Type: application/json
 
+{
+  "username": "nico",
+  "firstName": "Nico",
+  "lastName": "Jöch",
+  "email": "nico@nico.com",
+  "password": "nico",
+  "role": "ROLE_ADMIN"
+}
+
+###
+POST http://localhost:8081/auth/login
+Content-Type: application/json
+
+{
+  "username": "nico",
+  "password": "nico"
+}
+
+###
+GET http://localhost:8081/api/users
+Content-Type: application/json
+Authorization: Bearer <token>
+
+
+###
+POST http://localhost:8081/api/users/new
+Content-Type: application/json
+
+{
+  "username": "test",
+  "firstName": "Test",
+  "lastName": "Test",
+  "email": "test@test.com",
+  "password": "test",
+  "role": "ROLE_USER"
+}
+
+###
+POST http://localhost:8081/auth/login
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "test"
+}
+
+###
+GET http://localhost:8081/api/users
+Content-Type: application/json
+Authorization: Bearer <token>
