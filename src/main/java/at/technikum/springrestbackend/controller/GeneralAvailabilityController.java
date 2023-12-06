@@ -1,7 +1,6 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.model.GeneralAvailability;
-import at.technikum.springrestbackend.security.user.UserPrincipal;
 import at.technikum.springrestbackend.service.GeneralAvailabilityService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,11 +34,7 @@ public class GeneralAvailabilityController {
 
     @PostMapping
     public ResponseEntity<GeneralAvailability> create(@RequestBody GeneralAvailability availability) {
-        // Get the authenticated user (lawyer) from the security context
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UUID lawyerId = ((UserPrincipal) authentication.getPrincipal()).getId();
-
-        return generalAvailabilityService.create(availability, lawyerId);
+        return generalAvailabilityService.create(availability);
     }
 
     @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.GeneralAvailability', 'write') OR hasRole('ROLE_ADMIN')")

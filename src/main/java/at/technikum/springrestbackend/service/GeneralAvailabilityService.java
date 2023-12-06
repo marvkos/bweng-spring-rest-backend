@@ -33,15 +33,10 @@ public class GeneralAvailabilityService {
         return ResponseEntity.notFound().build();
     }
 
-    public ResponseEntity<GeneralAvailability> create(GeneralAvailability availability, UUID lawyerId) {
-        Optional<Lawyer> lawyer = lawyerRepository.findById(lawyerId);
-        if (lawyer.isPresent()) {
-            availability.setId(UUID.randomUUID());
-            availability.setForLawyer(lawyer.get());
-            GeneralAvailability savedAvailability = generalAvailabilityRepository.save(availability);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedAvailability);
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<GeneralAvailability> create(GeneralAvailability availability) {
+        availability.setId(UUID.randomUUID());
+        GeneralAvailability savedAvailability = generalAvailabilityRepository.save(availability);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAvailability);
     }
 
     public ResponseEntity<GeneralAvailability> update(UUID id, GeneralAvailability updatedAvailability) {
