@@ -1,7 +1,11 @@
 package at.technikum.springrestbackend.controller;
 
+import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.model.Phone;
+import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.PhoneService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,11 +50,24 @@ public class PhoneController {
         return phoneService.getPhonesPrice(price);
     }
     @GetMapping("/phones/brand")
-    public List<Phone> getPhonesBrand(String brand){
+    public List<Phone> getPhonesBrand(Brand brand){
         return phoneService.getPhonesBrand(brand);
     }
     @PostMapping("/phones")
     public Phone createPhone(@RequestBody Phone phone) {
         return phoneService.createPhone(phone);
     }
+    @DeleteMapping("/phones/{id}")
+    public ResponseEntity<String> deletePhone(@PathVariable UUID id) {
+        Phone phoneToDelete = phoneService.getPhone(id);
+
+        if (phoneToDelete == null) {
+            return new ResponseEntity<>("Phone not found", HttpStatus.NOT_FOUND);
+        }
+
+        phoneService.deletePhone(id);
+
+        return new ResponseEntity<>("Phone deleted successfully", HttpStatus.OK);
+    }
+
 }

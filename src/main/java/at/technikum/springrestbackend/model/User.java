@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -43,8 +44,10 @@ public class User {
     @NotBlank(message = "Last name is required")
     private String lastname;
 
+
     @Enumerated(EnumType.STRING)
     private Salutation salutation;
+
 
     @Email(message = "Invalid email address")
     private String email;

@@ -43,8 +43,11 @@ public class SecurityConfiguration {
         httpSecurity
                 .authorizeHttpRequests(
                         registry -> registry
+                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/users/token").permitAll()
+                                .requestMatchers("/register").permitAll()
+                                .requestMatchers("/users/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 

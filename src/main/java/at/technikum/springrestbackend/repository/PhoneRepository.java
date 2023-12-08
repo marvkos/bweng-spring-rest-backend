@@ -1,8 +1,8 @@
 package at.technikum.springrestbackend.repository;
 
+import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.model.Phone;
 import org.springframework.data.repository.CrudRepository;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -18,9 +18,11 @@ public interface PhoneRepository extends CrudRepository<Phone, UUID> {
 
     List<Phone> findByPrice(float price);
 
-    List<Phone> findByBrand(String brand);
+    List<Phone> findByBrand(Brand brand);
+    void deletePhoneById(UUID id);
 
     @Override
     List<Phone> findAll();
+
 
 }

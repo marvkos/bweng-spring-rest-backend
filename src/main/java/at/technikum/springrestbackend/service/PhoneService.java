@@ -1,20 +1,18 @@
 package at.technikum.springrestbackend.service;
 
+import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.model.Phone;
 import at.technikum.springrestbackend.repository.PhoneRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class PhoneService {
 
     private final PhoneRepository phoneRepository;
-
-    public PhoneService(PhoneRepository phoneRepository) {
-        this.phoneRepository = phoneRepository;
-    }
 
     public List<Phone> getPhones() {
         return phoneRepository.findAll();
@@ -44,12 +42,15 @@ public class PhoneService {
         return phoneRepository.findByPrice(price);
     }
 
-    public List<Phone> getPhonesBrand(String brand) {
+    public List<Phone> getPhonesBrand(Brand brand) {
         return phoneRepository.findByBrand(brand);
     }
 
     public Phone createPhone(Phone phone) {
         return phoneRepository.save(phone);
+    }
+    public void deletePhone(UUID id) {
+        phoneRepository.deletePhoneById(id);
     }
 
 }
