@@ -32,4 +32,7 @@ public class OrderService {
     public Orders createOrder(Orders order) {
         return orderRepository.save(order);
     }
+    public void deleteOrder(UUID id) {
+        orderRepository.deleteOrderById(id);
+    }
 }

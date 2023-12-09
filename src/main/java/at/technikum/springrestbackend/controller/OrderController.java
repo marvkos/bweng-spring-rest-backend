@@ -2,6 +2,8 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.model.Orders;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.OrderService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +31,16 @@ public class OrderController {
     public List<Orders> getOrdersUsers(User user){
         return orderService.getOrdersUser(user);
     }
-    @PostMapping("/orders")
-    public Orders createOrder(@RequestBody Orders order){
-        return orderService.createOrder(order);
+    @PostMapping("/create")
+    public ResponseEntity<Orders> createOrder(@RequestBody Orders order) {
+        Orders createdOrder = orderService.createOrder(order);
+        return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+    }
+
+    // Endpoint to delete an order by ID
+    @DeleteMapping("/delete/{orderId}")
+    public ResponseEntity<String> deleteOrder(@PathVariable UUID orderId) {
+        orderService.deleteOrder(orderId);
+        return new ResponseEntity<>("Order deleted successfully", HttpStatus.OK);
     }
 }

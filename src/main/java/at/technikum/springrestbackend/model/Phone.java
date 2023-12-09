@@ -1,10 +1,6 @@
 package at.technikum.springrestbackend.model;
 
-import jakarta.persistence.Entity;
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -27,7 +23,6 @@ public class Phone {
     private UUID id;
     @NotBlank
     private String name;
-
     private String description;
     @Positive
     private float displaySize;
@@ -37,11 +32,12 @@ public class Phone {
     private int battery;
     @Positive
     private float price;
-    @NotBlank
-    private String brand;
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 
     public Phone(String name, String description, float displaySize,
-                 int memory, int battery, float price, String brand){
+                 int memory, int battery, float price, Brand brand){
         this.name = name;
         this.description = description;
         this.displaySize = displaySize;

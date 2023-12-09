@@ -1,27 +1,20 @@
 package at.technikum.springrestbackend.controller;
 
-import at.technikum.springrestbackend.dto.TokenRequest;
-import at.technikum.springrestbackend.dto.TokenResponse;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.UserService;
 import at.technikum.springrestbackend.util.PasswordValidator;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-
+import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 public class UserController {
     private final UserService userService;
-
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -67,33 +60,45 @@ public class UserController {
         return userService.getUsersCountry(country);
     }
 
-    @GetMapping("/users/status/{status}")
-    public List<User> getUsersStatus(boolean status) {
-        return userService.getUsersStatus(status);
-    }
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
-        if (!isValidRegistration(user)) {
-            return new ResponseEntity<>("Invalid registration data", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Object> registerUser(@RequestBody @Valid User user) {
+        List<String> validationErrors = validateUserRegistration(user);
+        if (!validationErrors.isEmpty()) {
+            return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
         }
-        userService.createUser(user);
 
+        userService.createUser(user);
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
+    @DeleteMapping("/users/userid/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable UUID id) {
+        User userToDelete = userService.getUser(id);
 
-    private boolean isValidRegistration(User user) {
+        if (userToDelete == null) {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+
+        userService.deleteUser(id);
+
+        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+    }
+
+
+
+    private List<String> validateUserRegistration(User user) {
+        List<String> validationErrors = new ArrayList<>();
 
         if (userService.isUsernameTaken(user.getUsername())) {
-            return false;
+            validationErrors.add("Username is already taken");
         }
         if (userService.isEmailTaken(user.getEmail())) {
-            return false;
+            validationErrors.add("Email is already taken");
         }
         if (!PasswordValidator.isValidPassword(user.getPassword())) {
-            return false;
+            validationErrors.add("Invalid password");
         }
-        return true;
+
+        return validationErrors;
     }
 }
-
 

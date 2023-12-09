@@ -12,4 +12,6 @@ public interface OrderRepository extends CrudRepository<Orders, UUID> {
     List<Orders> findAll();
 
     List<Orders> findByUser(User user);
+
+    void deleteOrderById(UUID id);
 }
