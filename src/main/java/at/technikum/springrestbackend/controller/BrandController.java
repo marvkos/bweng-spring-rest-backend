@@ -40,17 +40,17 @@ public class BrandController {
         brandService.createBrand(brand);
         return new ResponseEntity<>("New brand is saved.", HttpStatus.CREATED);
     }
-    @DeleteMapping("/brands/brandid/{name}")
+    @DeleteMapping("/deletebrand/{name}")
     public ResponseEntity<Object> deleteBrand(@PathVariable String name) {
         Brand brandToDelete = brandService.getBrandByname(name);
 
         if (brandToDelete == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Brand not found", HttpStatus.NOT_FOUND);
         }
 
         brandService.deleteBrand(name);
 
-        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Brand deleted successfully", HttpStatus.OK);
     }
     private List<String> validateBrand(Brand brand) {
         List<String> validationErrors = new ArrayList<>();

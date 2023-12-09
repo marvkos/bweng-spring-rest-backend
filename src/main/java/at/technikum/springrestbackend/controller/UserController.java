@@ -84,6 +84,7 @@ public class UserController {
     }
 
 
+
     private List<String> validateUserRegistration(User user) {
         List<String> validationErrors = new ArrayList<>();
 

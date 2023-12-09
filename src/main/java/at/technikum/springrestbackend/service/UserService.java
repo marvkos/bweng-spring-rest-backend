@@ -3,8 +3,10 @@ package at.technikum.springrestbackend.service;
 
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -59,11 +61,17 @@ public class UserService {
     public boolean isUsernameTaken(String username) {
         return userRepository.existsByUsername(username);
     }
+
     public boolean isEmailTaken(String email) {
         return userRepository.existsByEmail(email);
     }
 
+    @Transactional
     public void deleteUser(UUID id) {
         userRepository.deleteUserById(id);
+    }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 }
