@@ -34,6 +34,8 @@ public class SecurityConfiguration {
         httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity
+                .cors()
+                .and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable);
 
