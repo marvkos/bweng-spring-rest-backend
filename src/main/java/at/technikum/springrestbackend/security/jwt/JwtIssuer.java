@@ -22,7 +22,7 @@ public class JwtIssuer implements TokenIssuer {
     public String issue(UUID userID, String username, String role){
         return JWT.create()
                 .withSubject(String.valueOf(userID))
-                .withExpiresAt(Instant.now().plus(Duration.of(4, ChronoUnit.HOURS)))
+                .withExpiresAt(Instant.now().plus(Duration.of(2, ChronoUnit.HOURS)))
                 .withClaim("username", username)
                 .withClaim("role", role)
                 .sign(Algorithm.HMAC256(jwtProperties.getSecret()));
