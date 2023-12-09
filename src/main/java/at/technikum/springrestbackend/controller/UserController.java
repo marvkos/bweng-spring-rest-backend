@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+
     }
 
     @GetMapping("/users")
@@ -60,6 +62,11 @@ public class UserController {
         return userService.getUsersCountry(country);
     }
 
+    @GetMapping("/user/helloWorld")
+    public String helloWorld(){
+        return "Hello World";
+    }
+
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@RequestBody @Valid User user) {
         List<String> validationErrors = validateUserRegistration(user);
@@ -67,6 +74,9 @@ public class UserController {
             return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
         }
 
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.createUser(user);
         return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
