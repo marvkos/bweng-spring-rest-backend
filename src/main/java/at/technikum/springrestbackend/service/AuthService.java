@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class AuthService {
@@ -26,6 +28,7 @@ public class AuthService {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
 
         String token = tokenIssuer.issue(principal.getId(), principal.getUsername(), principal.getRole());
-        return new TokenResponse(token);
+        UUID id = principal.getId();
+        return new TokenResponse(token, id);
     }
 }

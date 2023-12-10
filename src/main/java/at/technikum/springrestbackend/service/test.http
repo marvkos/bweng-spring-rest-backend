@@ -44,15 +44,17 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8081/auth/login
+POST http://localhost:8082/auth/login
 Content-Type: application/json
 
 {
-  "username": "test",
-  "password": "test"
+  "username": "nico",
+  "password": "nico"
 }
 
 ###
-GET http://localhost:8081/api/users
+OPTIONS http://localhost:8082/api/users
 Content-Type: application/json
-Authorization: Bearer <token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MjAwZjI0MC0xMzliLTQ3ODktYmMzNC0zY2ZjZjMxYmZkYWEiLCJleHAiOjE3MDIyMjg3NDIsInVzZXJuYW1lIjoibmljbyIsInJvbGUiOiJST0xFX0FETUlOIn0.Rq7HypLAAv1qXifAJrrF7yFY1LdHH3-c7uDM-XvTo8I
+
+
