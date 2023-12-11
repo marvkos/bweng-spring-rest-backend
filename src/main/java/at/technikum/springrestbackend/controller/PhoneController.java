@@ -4,6 +4,7 @@ import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.model.Phone;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.PhoneService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,16 +59,31 @@ public class PhoneController {
         return phoneService.createPhone(phone);
     }
     @DeleteMapping("/phones/{id}")
-    public ResponseEntity<String> deletePhone(@PathVariable UUID id) {
+    public ResponseEntity<Object> deletePhone(@PathVariable UUID id) {
         Phone phoneToDelete = phoneService.getPhone(id);
-
+        return handlePhoneDeletion(phoneToDelete);
+    }
+    @PutMapping("/updatePhone/{id}")
+    public ResponseEntity<Object> updatePhone(@PathVariable UUID id, @RequestBody @Valid Phone updatedPhone) {
+        return handlePhoneUpdate(id, updatedPhone);
+    }
+    private ResponseEntity<Object> handlePhoneDeletion(Phone phoneToDelete) {
         if (phoneToDelete == null) {
             return new ResponseEntity<>("Phone not found", HttpStatus.NOT_FOUND);
         }
 
-        phoneService.deletePhone(id);
-
+        phoneService.deletePhone(phoneToDelete.getId());
         return new ResponseEntity<>("Phone deleted successfully", HttpStatus.OK);
     }
 
+    private ResponseEntity<Object> handlePhoneUpdate(UUID id, Phone updatedPhone) {
+        int affectedRows = phoneService.updatePhoneInfo(id, updatedPhone.getName(), updatedPhone.getDescription(),updatedPhone.getDisplaySize(),updatedPhone.getMemory(),updatedPhone.getBattery(),updatedPhone.getPrice());
+
+        if (affectedRows > 0) {
+            return new ResponseEntity<>("Phone info has been updated successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Phone not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }
+

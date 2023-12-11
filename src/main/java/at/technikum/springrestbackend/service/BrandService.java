@@ -30,5 +30,10 @@ public class BrandService {
     public void deleteBrand(String name){
         brandRepository.deleteBrandByname(name);
     }
+    public Brand updateBrand(Brand brand){ return brandRepository.save(brand);}
+    @Transactional
+    public int updateBrandInfo(String oldName, String newName, String newDescription, String newPicturePath) {
+        return brandRepository.updateBrandInfo(oldName,newName,newDescription,newPicturePath);
+    }
 
 }

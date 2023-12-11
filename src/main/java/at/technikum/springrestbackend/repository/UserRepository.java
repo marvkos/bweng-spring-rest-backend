@@ -1,7 +1,11 @@
 package at.technikum.springrestbackend.repository;
 
 import at.technikum.springrestbackend.model.User;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -27,8 +31,10 @@ public interface UserRepository extends CrudRepository<User, UUID> {
 
     void deleteUserById(UUID id);
 
-    User save(User user);
-
     @Override
     List<User> findAll();
+    @Modifying
+    @Query("UPDATE User u SET u.username = :newUsername,u.password = :newPassword, u.role = :newRole, u.firstname = :newFirstname, u.lastname = :newLastname, u.salutation = :newSalutation, u.email = :newEmail, u.street = :newStreet, u.hauseNumber = :newHausNumber, u.flatNumber = :newFlatNumber, u.city = :newCity, u.postalcode = :newPostalcode, u.country = :newCountry, u.profilePicture = :newProfilePicture WHERE u.username = :oldUsername")
+    int updateUserInfo(@Param("oldUsername") String oldUsername, @Param("newUsername") String newUsername,@Param("newPassword") String newPassword,@Param("newRole") String newRole,@Param("newFirstname") String newFirstname, @Param("newLastname") String newLastname, @Param("newSalutation") Enum newSalutation,
+    @Param("newEmail") String newEmail, @Param("newStreet") String newStreet, @Param("newHausNumber") int newHauseNumber, @Param("newFlatNumber") int newFlatNumber, @Param("newCity") String newCity, @Param("newPostalcode") int newPostalcode, @Param("newCountry") String newCountry, @Param("newProfilePicture") String newProfilePicture);
 }
