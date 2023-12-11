@@ -1,7 +1,11 @@
 package at.technikum.springrestbackend.repository;
 
 import at.technikum.springrestbackend.model.Brand;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
 import java.util.UUID;
 import java.util.List;
 
@@ -12,4 +16,9 @@ public interface BrandRepository extends CrudRepository<Brand, UUID> {
      boolean existsByname(String name);
 
      void deleteBrandByname(String name);
+     Brand save(Brand brand);
+     @Modifying
+     @Query("UPDATE Brand b SET b.name = :newName, b.description = :newDescription , b.picturePath = :newPicturePath WHERE b.name = :oldName")
+      int updateBrandInfo(@Param("oldName") String oldname, @Param("newName") String newUsername, @Param("newDescription") String newDescription, @Param("newPicturePath") String newPicturePath);
+
 }

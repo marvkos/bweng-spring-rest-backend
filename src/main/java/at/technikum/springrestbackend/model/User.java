@@ -52,6 +52,21 @@ public class User {
     @Email(message = "Invalid email address")
     private String email;
 
+    @NotBlank(message = "Street is required")
+    private String street;
+
+    @NotBlank(message = "Hausenumber is required")
+    private int hauseNumber;
+
+    @NotBlank(message = "Flatnumber is required")
+    private int flatNumber;
+
+    @NotBlank(message = "City is required")
+    private String city;
+
+    @NotBlank(message = "Postalcode is required")
+    private int postalcode;
+
     @NotBlank(message = "Country is required")
     private String country;
 

@@ -3,61 +3,80 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.BrandService;
-import at.technikum.springrestbackend.util.PasswordValidator;
+import at.technikum.springrestbackend.util.BrandValidator;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 
 @RestController
 public class BrandController {
 
     private final BrandService brandService;
+    private final BrandValidator brandValidator;
 
-    public BrandController(BrandService brandService){
+    @Autowired
+    public BrandController(BrandService brandService, BrandValidator brandValidator) {
         this.brandService = brandService;
+        this.brandValidator = brandValidator;
+
     }
+
     @GetMapping("/brands")
-    public List<Brand> getBrands(){
+    public List<Brand> getBrands() {
         return brandService.getBrands();
     }
+
     @GetMapping("/brands/name")
-    public Brand getBrand(String name){
+    public Brand getBrand(String name) {
         return brandService.getBrandByname(name);
     }
+
     @PostMapping("/addbrand")
     public ResponseEntity<Object> addBrand(@RequestBody @Valid Brand brand) {
-        List<String> validationErrors = validateBrand(brand);
+        return handleBrandCreation(brand);
+    }
+
+    @DeleteMapping("/deletebrand/{name}")
+    public ResponseEntity<Object> deleteUser(@PathVariable String name) {
+       Brand brandToDelete = brandService.getBrandByname(name);
+        return handleBrandDeletion(brandToDelete);
+    }
+
+    @PutMapping("/updatebrand/{name}")
+    public ResponseEntity<Object> updateBrand(@PathVariable String name, @RequestBody @Valid Brand updatedBrand) {
+        return handleBrandUpdate(name, updatedBrand);
+    }
+
+    private ResponseEntity<Object> handleBrandCreation(Brand brand) {
+        List<String> validationErrors = brandValidator.validateBrand(brand);
         if (!validationErrors.isEmpty()) {
             return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
         }
-
         brandService.createBrand(brand);
         return new ResponseEntity<>("New brand is saved.", HttpStatus.CREATED);
     }
-    @DeleteMapping("/deletebrand/{name}")
-    public ResponseEntity<Object> deleteBrand(@PathVariable String name) {
-        Brand brandToDelete = brandService.getBrandByname(name);
-
+    private ResponseEntity<Object> handleBrandDeletion(Brand brandToDelete) {
         if (brandToDelete == null) {
             return new ResponseEntity<>("Brand not found", HttpStatus.NOT_FOUND);
         }
-
-        brandService.deleteBrand(name);
-
+        brandService.deleteBrand(brandToDelete.getName());
         return new ResponseEntity<>("Brand deleted successfully", HttpStatus.OK);
     }
-    private List<String> validateBrand(Brand brand) {
-        List<String> validationErrors = new ArrayList<>();
+    private ResponseEntity<Object> handleBrandUpdate(String name, Brand updatedBrand) {
+        int affectedRows = brandService.updateBrandInfo(name, updatedBrand.getName(), updatedBrand.getDescription(),updatedBrand.getPicturePath());
 
-        if (brandService.isBrandTaken(brand.getName())) {
-            validationErrors.add("Brand is already exists");
+        if (affectedRows > 0) {
+            return new ResponseEntity<>("Brand info has been updated successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Brand not found", HttpStatus.NOT_FOUND);
         }
-        return validationErrors;
     }
 }

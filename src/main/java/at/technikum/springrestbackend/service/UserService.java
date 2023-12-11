@@ -26,7 +26,7 @@ public class UserService {
         return userRepository.findById(id).orElseThrow();
     }
 
-    public User getUserUsername(String username) {
+    public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -70,8 +70,8 @@ public class UserService {
     public void deleteUser(UUID id) {
         userRepository.deleteUserById(id);
     }
-
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    @Transactional
+    public int updateUserInfo(String oldUsername, String newUsername,String newPassword, String newRole,String newFirstname, String newLastname, Enum newSalutation, String newEmail, String newStreet, int newHauseNumber, int newFlatNumber, String newCity, int newPostalcode, String newCountry, String newProfilePicture) {
+        return userRepository.updateUserInfo(oldUsername, newUsername,newPassword,newRole,newFirstname,newLastname,newSalutation, newEmail,newStreet,newHauseNumber,newFlatNumber,newCity,newPostalcode,newCountry,newProfilePicture);
     }
 }

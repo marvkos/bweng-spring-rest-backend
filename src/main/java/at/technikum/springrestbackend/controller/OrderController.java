@@ -1,4 +1,5 @@
 package at.technikum.springrestbackend.controller;
+import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.model.Orders;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.OrderService;
@@ -36,8 +37,6 @@ public class OrderController {
         Orders createdOrder = orderService.createOrder(order);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
-
-    // Endpoint to delete an order by ID
     @DeleteMapping("/delete/{orderId}")
     public ResponseEntity<String> deleteOrder(@PathVariable UUID orderId) {
         orderService.deleteOrder(orderId);
