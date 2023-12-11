@@ -9,10 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
     private final UserValidator userValidator;
@@ -30,6 +32,19 @@ public class UserController {
     @GetMapping("/users/userid/{id}")
     public User getUser(UUID id) {
         return userService.getUser(id);
+    }
+
+    @GetMapping("user/role/{username}")
+    public String getUserRole(@PathVariable String username){
+        User user = userService.getUserByUsername(username);
+
+        if(user != null){
+            return user.getRole();
+        }else{
+            return "No user with this name found";
+        }
+
+
     }
 
     @GetMapping("/users/username/{username}")
