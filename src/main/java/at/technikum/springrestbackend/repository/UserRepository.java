@@ -13,7 +13,7 @@ public interface UserRepository extends CrudRepository<User, UUID> {
 
     User findByUsername(String username);
 
-    List<User> findByRole(int role);
+    List<User> findByRole(String role);
 
     List<User> findByFirstname(String firstname);
 

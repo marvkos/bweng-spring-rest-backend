@@ -31,7 +31,7 @@ public class OrderController {
         return orderService.getOrder(id);
     }
     @GetMapping("/orders/{user}")
-    public List<Orders> getOrdersUsers(User user){
+    public List<Orders> getOrdersUsers(@PathVariable User user){
         return orderService.getOrdersUser(user);
     }
     @PostMapping("/create")

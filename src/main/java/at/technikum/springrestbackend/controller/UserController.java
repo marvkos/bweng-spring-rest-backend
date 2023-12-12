@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/users/userid/{id}")
-    public User getUser(UUID id) {
+    public User getUser(@PathVariable UUID id) {
         return userService.getUser(id);
     }
 
@@ -48,32 +48,32 @@ public class UserController {
     }
 
     @GetMapping("/users/username/{username}")
-    public User getUserUserName(String username) {
+    public User getUserUserName(@PathVariable String username) {
         return userService.getUserByUsername(username);
     }
 
     @GetMapping("/users/role/{role}")
-    public List<User> getUsersRole(int role) {
+    public List<User> getUsersRole(@PathVariable String role) {
         return userService.getUsersRole(role);
     }
 
     @GetMapping("/users/firstname/{firstname}")
-    public List<User> getUsersFirstname(String firstname) {
+    public List<User> getUsersFirstname(@PathVariable String firstname) {
         return userService.getUsersFirstname(firstname);
     }
 
     @GetMapping("/users/lastname/{lastname}")
-    public List<User> getUsersLastname(String lastname) {
+    public List<User> getUsersLastname(@PathVariable String lastname) {
         return userService.getUsersLastname(lastname);
     }
 
     @GetMapping("/users/email/{email}")
-    public User getUserEmail(String email) {
+    public User getUserEmail(@PathVariable String email) {
         return userService.getUserEmail(email);
     }
 
     @GetMapping("/users/country/{country}")
-    public List<User> getUsersCountry(String country) {
+    public List<User> getUsersCountry(@PathVariable String country) {
         return userService.getUsersCountry(country);
     }
 

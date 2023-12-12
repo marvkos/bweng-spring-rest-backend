@@ -33,27 +33,27 @@ public class PhoneController {
     }
 
     @GetMapping("/phones/{name}")
-    public List<Phone> getPhonesName(String name){
+    public List<Phone> getPhonesName(@PathVariable String name){
         return phoneService.getPhonesName(name);
     }
     @GetMapping("/phones/{display}")
-    public List<Phone> getPhoneDisplay(float displaysize){
+    public List<Phone> getPhoneDisplay(@PathVariable float displaysize){
         return phoneService.getPhonesDisplay(displaysize);
     }
     @GetMapping("/phones/{memory}")
-    public List<Phone> getPhonesMemory(int memory){
+    public List<Phone> getPhonesMemory(@PathVariable int memory){
         return phoneService.getPhonesMemory(memory);
     }
     @GetMapping("/phones/{battery}")
-    public List<Phone> getPhonesBattery(int battery){
+    public List<Phone> getPhonesBattery(@PathVariable int battery){
         return phoneService.getPhonesBattery(battery);
     }
     @GetMapping("/phones/price")
-    public List<Phone> getPhonePrice(float price){
+    public List<Phone> getPhonePrice(@PathVariable float price){
         return phoneService.getPhonesPrice(price);
     }
     @GetMapping("/phones/brand")
-    public List<Phone> getPhonesBrand(Brand brand){
+    public List<Phone> getPhonesBrand(@PathVariable Brand brand){
         return phoneService.getPhonesBrand(brand);
     }
     @PostMapping("/phones")

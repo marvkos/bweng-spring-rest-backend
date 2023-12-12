@@ -30,7 +30,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public List<User> getUsersRole(int role) {
+    public List<User> getUsersRole(String role) {
         return userRepository.findByRole(role);
     }
 

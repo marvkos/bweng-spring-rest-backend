@@ -45,11 +45,12 @@ public class SecurityConfiguration {
         httpSecurity
                 .authorizeHttpRequests(
                         registry -> registry
-                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/auth/token").permitAll()
                                 .requestMatchers("/register").permitAll()
+                                .requestMatchers("/users/userid").permitAll()
                                 .requestMatchers("/user/helloWorld").hasRole("user")
+                                .requestMatchers("/users/username/{username}").hasAnyRole("user", "admin")
                                 .anyRequest().authenticated()
                 );
 

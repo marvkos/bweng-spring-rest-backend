@@ -76,7 +76,7 @@ public class User {
 
     public User (String username, String password, String role, String firstname,
                  String lastname, Salutation salutation, String email,
-                 String country, String profilePicture, boolean status){
+                 String country, String profilePicture, boolean status, String street, int hauseNumber, int flatNumber, String city, int postalcode){
         this.username = username;
         this.password = password;
         this.role = role;
@@ -87,6 +87,11 @@ public class User {
         this.country = country;
         this.profilePicture = profilePicture;
         this.status = status;
+        this.street = street;
+        this.hauseNumber = hauseNumber;
+        this.flatNumber = flatNumber;
+        this.city = city;
+        this.postalcode = postalcode;
     }
 
 

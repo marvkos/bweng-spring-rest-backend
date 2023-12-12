@@ -37,7 +37,7 @@ public class BrandController {
     }
 
     @GetMapping("/brands/name")
-    public Brand getBrand(String name) {
+    public Brand getBrand(@PathVariable String name) {
         return brandService.getBrandByname(name);
     }
 
