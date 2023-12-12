@@ -1,8 +1,8 @@
 package at.technikum.springrestbackend.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -55,16 +55,16 @@ public class User {
     @NotBlank(message = "Street is required")
     private String street;
 
-    @NotBlank(message = "Hausenumber is required")
+    @Min(value = 1,message = "Hausenumber is required")
     private int hauseNumber;
 
-    @NotBlank(message = "Flatnumber is required")
+    @Min(value = 1,message = "Flatnumber is required")
     private int flatNumber;
 
     @NotBlank(message = "City is required")
     private String city;
 
-    @NotBlank(message = "Postalcode is required")
+    @Min(value = 1,message = "Postalcode is required")
     private int postalcode;
 
     @NotBlank(message = "Country is required")
