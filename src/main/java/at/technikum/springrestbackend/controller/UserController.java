@@ -108,7 +108,7 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.createUser(user);
 
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 
     private ResponseEntity<Object> handleUserDeletion(User userToDelete) {
