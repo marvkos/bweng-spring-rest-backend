@@ -52,7 +52,6 @@ public class SecurityConfiguration {
         httpSecurity
                 .authorizeHttpRequests(
                         registry -> registry
-                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/auth/token").permitAll()
                                 .requestMatchers("/register").permitAll()
