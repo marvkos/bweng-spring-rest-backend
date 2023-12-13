@@ -122,12 +122,8 @@ public class UserController {
 
     private ResponseEntity<Object> handleUserUpdate(String name, User updatedUser) {
 
-        // Check if the provided password is already hashed
-        if (!updatedUser.getPassword().startsWith("$2a$10$")) {
-            // If not hashed, encode the password using BCryptPasswordEncoder
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
 
         int affectedRows = userService.updateUserInfo(
                 name,
