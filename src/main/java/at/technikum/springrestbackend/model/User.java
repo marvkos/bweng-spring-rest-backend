@@ -53,13 +53,8 @@ public class User {
     private String email;
 
     @NotBlank(message = "Street is required")
-    private String street;
+    private String address;
 
-    @Min(value = 1,message = "Hausenumber is required")
-    private int hauseNumber;
-
-    @Min(value = 1,message = "Flatnumber is required")
-    private int flatNumber;
 
     @NotBlank(message = "City is required")
     private String city;

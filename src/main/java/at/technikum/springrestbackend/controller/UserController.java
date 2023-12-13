@@ -121,7 +121,7 @@ public class UserController {
     }
 
     private ResponseEntity<Object> handleUserUpdate(String name, User updatedUser) {
-        int affectedRows = userService.updateUserInfo(name, updatedUser.getUsername(), updatedUser.getPassword(),updatedUser.getRole(),updatedUser.getFirstname(),updatedUser.getLastname(),updatedUser.getSalutation(),updatedUser.getEmail(),updatedUser.getStreet(),updatedUser.getHauseNumber(),updatedUser.getFlatNumber(),updatedUser.getCity(),updatedUser.getPostalcode(),updatedUser.getCountry(),updatedUser.getProfilePicture());
+        int affectedRows = userService.updateUserInfo(name, updatedUser.getUsername(), updatedUser.getPassword(),updatedUser.getRole(),updatedUser.getFirstname(),updatedUser.getLastname(),updatedUser.getSalutation(),updatedUser.getEmail(),updatedUser.getAddress(),updatedUser.getCity(),updatedUser.getPostalcode(),updatedUser.getCountry(),updatedUser.getProfilePicture());
 
         if (affectedRows > 0) {
             return new ResponseEntity<>("User info has been updated successfully", HttpStatus.OK);
