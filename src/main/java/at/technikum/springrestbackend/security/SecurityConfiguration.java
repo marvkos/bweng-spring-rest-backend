@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -34,7 +35,13 @@ public class SecurityConfiguration {
         httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity
-                .cors()
+                .cors().configurationSource(request -> {
+                    CorsConfiguration corsConfiguration = new CorsConfiguration();
+                    corsConfiguration.addAllowedOrigin("*");
+                    corsConfiguration.addAllowedHeader("*");
+                    corsConfiguration.addAllowedMethod("*");
+                    return corsConfiguration;
+                })
                 .and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable);
@@ -50,6 +57,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/register").permitAll()
                                 .requestMatchers("/users/userid").permitAll()
                                 .requestMatchers("/user/helloWorld").hasRole("user")
+                                .requestMatchers("/updateUser/{name}").permitAll()
                                 .requestMatchers("/users/username/{username}").hasAnyRole("user", "admin")
                                 .anyRequest().authenticated()
                 );
