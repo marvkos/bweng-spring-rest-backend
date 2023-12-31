@@ -19,6 +19,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public ResponseEntity<User> createUser(User user) {
+        if(!isValidPassword(user.getPassword())){
+            return ResponseEntity.badRequest().build();
+        }
+
         user.setId(UUID.randomUUID());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return ResponseEntity.ok(userRepository.save(user));
@@ -65,6 +69,15 @@ public class UserService {
         User userToUpdate = userRepository.findById(id).orElseThrow();
         userToUpdate.setUsername(user.getUsername());
         return userRepository.save(userToUpdate);
+    }
+
+    private boolean isValidPassword(String password){
+        return password != null &&
+                password.length() >= 12 &&
+                password.matches(".*[a-z].*") &&
+                password.matches(".*[A-Z].*") &&
+                password.matches(".*\\d.*") &&
+                password.matches(".*[!@#$%^&*()].*");
     }
 
 }
