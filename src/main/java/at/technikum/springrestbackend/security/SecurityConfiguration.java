@@ -50,6 +50,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers("/api/users/new").permitAll()
+                                .requestMatchers("/api/blog/**").permitAll()
                                 .requestMatchers("/lawyers/**").hasAnyRole("LAWYER", "ADMIN")
                                 .anyRequest().authenticated()
                 );
