@@ -8,10 +8,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
-
-
+import java.time.Instant;
 import java.util.UUID;
 
 
@@ -44,39 +45,37 @@ public class User {
     @NotBlank(message = "Last name is required")
     private String lastname;
 
+    @NotBlank(message = "Salutation is required")
+    private String salutation;
 
-    @Enumerated(EnumType.STRING)
-    private Salutation salutation;
-
-
+    @NotBlank(message = "E-mail is required")
     @Email(message = "Invalid email address")
     private String email;
 
-    @NotBlank(message = "Street is required")
-    private String street;
+    @NotBlank(message = "CountryCode is required")
+    private String countryCode;
 
-    @Min(value = 1,message = "Hausenumber is required")
-    private int hauseNumber;
+    private int postalCode;
 
-    @Min(value = 1,message = "Flatnumber is required")
-    private int flatNumber;
-
-    @NotBlank(message = "City is required")
     private String city;
 
-    @Min(value = 1,message = "Postalcode is required")
-    private int postalcode;
+    private String street;
 
-    @NotBlank(message = "Country is required")
-    private String country;
+    private String houseNumber;
 
     private String profilePicture;
 
     private boolean status;
 
+    @CreationTimestamp
+    private Instant createdOn;
+
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
+
     public User (String username, String password, String role, String firstname,
-                 String lastname, Salutation salutation, String email,
-                 String country, String profilePicture, boolean status, String street, int hauseNumber, int flatNumber, String city, int postalcode){
+                 String lastname, String salutation, String email,
+                 String profilePicture, boolean status, String street,  String city, int postalCode, String houseNumber, String countryCode){
         this.username = username;
         this.password = password;
         this.role = role;
@@ -84,16 +83,18 @@ public class User {
         this.lastname = lastname;
         this.salutation = salutation;
         this.email = email;
-        this.country = country;
         this.profilePicture = profilePicture;
         this.status = status;
         this.street = street;
-        this.hauseNumber = hauseNumber;
-        this.flatNumber = flatNumber;
         this.city = city;
-        this.postalcode = postalcode;
+        this.postalCode = postalCode;
+        this.houseNumber = houseNumber;
+        this.countryCode = countryCode;
+
     }
 
 
-
+    public boolean getStatus() {
+        return this.status;
+    }
 }

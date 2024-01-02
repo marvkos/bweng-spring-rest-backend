@@ -18,7 +18,7 @@ public interface BrandRepository extends CrudRepository<Brand, UUID> {
      void deleteBrandByname(String name);
      Brand save(Brand brand);
      @Modifying
-     @Query("UPDATE Brand b SET b.name = :newName, b.description = :newDescription , b.picturePath = :newPicturePath WHERE b.name = :oldName")
-      int updateBrandInfo(@Param("oldName") String oldname, @Param("newName") String newUsername, @Param("newDescription") String newDescription, @Param("newPicturePath") String newPicturePath);
+     @Query("UPDATE Brand b SET b.name = :newName,  , b.picturePath = :newPicturePath WHERE b.name = :oldName")
+      int updateBrandInfo(@Param("oldName") String oldname, @Param("newName") String newUsername, @Param("newPicturePath") String newPicturePath);
 
 }

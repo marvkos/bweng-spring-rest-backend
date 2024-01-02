@@ -36,7 +36,7 @@ public class BrandController {
         return brandService.getBrands();
     }
 
-    @GetMapping("/brands/name")
+    @GetMapping("/brand/{name}")
     public Brand getBrand(@PathVariable String name) {
         return brandService.getBrandByname(name);
     }
@@ -73,7 +73,7 @@ public class BrandController {
         return new ResponseEntity<>("Brand deleted successfully", HttpStatus.OK);
     }
     private ResponseEntity<Object> handleBrandUpdate(String name, Brand updatedBrand) {
-        int affectedRows = brandService.updateBrandInfo(name, updatedBrand.getName(), updatedBrand.getDescription(),updatedBrand.getPicturePath());
+        int affectedRows = brandService.updateBrandInfo(name, updatedBrand.getName(), updatedBrand.getPicturePath());
 
         if (affectedRows > 0) {
             return new ResponseEntity<>("Brand info has been updated successfully", HttpStatus.OK);

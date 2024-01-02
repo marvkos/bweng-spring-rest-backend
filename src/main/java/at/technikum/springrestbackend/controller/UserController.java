@@ -77,10 +77,7 @@ public class UserController {
         return userService.getUsersCountry(country);
     }
 
-    @GetMapping("/user/helloWorld")
-    public String helloWorld(){
-        return "Hello World";
-    }
+
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@RequestBody @Valid User user) {
@@ -134,13 +131,13 @@ public class UserController {
                 updatedUser.getLastname(),
                 updatedUser.getSalutation(),
                 updatedUser.getEmail(),
+                updatedUser.getCountryCode(),
+                updatedUser.getPostalCode(),
                 updatedUser.getStreet(),
-                updatedUser.getHauseNumber(),
-                updatedUser.getFlatNumber(),
                 updatedUser.getCity(),
-                updatedUser.getPostalcode(),
-                updatedUser.getCountry(),
-                updatedUser.getProfilePicture()
+                updatedUser.getHouseNumber(),
+                updatedUser.getProfilePicture(),
+                updatedUser.getStatus()
         );
 
         if (affectedRows > 0) {

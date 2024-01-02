@@ -1,15 +1,16 @@
 package at.technikum.springrestbackend.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.Instant;
 import java.util.UUID;
 
 
@@ -17,23 +18,36 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "Brand", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name"})
+})
 public class Brand {
 
     @Id
     @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
     @NotBlank(message = "Name of the brand is required")
     private String name;
-    @NotBlank(message = "Description of the brand is required")
-    private String description;
+
 
     private String picturePath;
 
-    public Brand(String name, String description, String picturePath) {
+    @CreationTimestamp
+    private Instant createdOn;
+
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
+
+    @NotBlank(message = "User required")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private User createdBy;
+
+    public Brand(String name, String picturePath, User user) {
         this.name = name;
-        this.description = description;
         this.picturePath = picturePath;
+        this.createdBy = user;
     }
 
 }

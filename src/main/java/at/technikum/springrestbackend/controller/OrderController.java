@@ -26,7 +26,7 @@ public class OrderController {
         return orderService.getOrders();
     }
 
-    @GetMapping("/orders/{id}")
+    @GetMapping("/order/{id}")
     public Orders getOrder(@PathVariable UUID id) {
         return orderService.getOrder(id);
     }
@@ -34,12 +34,12 @@ public class OrderController {
     public List<Orders> getOrdersUsers(@PathVariable User user){
         return orderService.getOrdersUser(user);
     }
-    @PostMapping("/create")
+    @PostMapping("/createOrder")
     public ResponseEntity<Orders> createOrder(@RequestBody Orders order) {
         Orders createdOrder = orderService.createOrder(order);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
-    @DeleteMapping("/delete/{orderId}")
+    @DeleteMapping("/deleteOrder/{orderId}")
     public ResponseEntity<String> deleteOrder(@PathVariable UUID orderId) {
         orderService.deleteOrder(orderId);
         return new ResponseEntity<>("Order deleted successfully", HttpStatus.OK);

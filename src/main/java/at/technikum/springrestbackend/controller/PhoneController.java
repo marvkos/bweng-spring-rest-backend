@@ -27,7 +27,7 @@ public class PhoneController {
         return phoneService.getPhones();
     }
 
-    @GetMapping("/phones/{id}")
+    @GetMapping("/phone/{id}")
     public Phone getPhone(@PathVariable UUID id) {
         return phoneService.getPhone(id);
     }
@@ -48,19 +48,19 @@ public class PhoneController {
     public List<Phone> getPhonesBattery(@PathVariable int battery){
         return phoneService.getPhonesBattery(battery);
     }
-    @GetMapping("/phones/price")
+    @GetMapping("/phones/{price}")
     public List<Phone> getPhonePrice(@PathVariable float price){
         return phoneService.getPhonesPrice(price);
     }
-    @GetMapping("/phones/brand")
+    @GetMapping("/phones/{brand}")
     public List<Phone> getPhonesBrand(@PathVariable Brand brand){
         return phoneService.getPhonesBrand(brand);
     }
-    @PostMapping("/phones")
+    @PostMapping("/addPhone")
     public Phone createPhone(@RequestBody Phone phone) {
         return phoneService.createPhone(phone);
     }
-    @DeleteMapping("/phones/{id}")
+    @DeleteMapping("/deletePhone/{id}")
     public ResponseEntity<Object> deletePhone(@PathVariable UUID id) {
         Phone phoneToDelete = phoneService.getPhone(id);
         return handlePhoneDeletion(phoneToDelete);

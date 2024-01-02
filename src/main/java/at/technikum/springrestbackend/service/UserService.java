@@ -71,7 +71,7 @@ public class UserService {
         userRepository.deleteUserById(id);
     }
     @Transactional
-    public int updateUserInfo(String oldUsername, String newUsername,String newPassword, String newRole,String newFirstname, String newLastname, Enum newSalutation, String newEmail, String newStreet, int newHauseNumber, int newFlatNumber, String newCity, int newPostalcode, String newCountry, String newProfilePicture) {
-        return userRepository.updateUserInfo(oldUsername, newUsername,newPassword,newRole,newFirstname,newLastname,newSalutation, newEmail,newStreet,newHauseNumber,newFlatNumber,newCity,newPostalcode,newCountry,newProfilePicture);
+    public int updateUserInfo(String oldUsername, String newUsername,String newPassword, String newRole,String newFirstname, String newLastname, String newSalutation, String newEmail, String newCountryCode, int newPostalCode, String newStreet, String newCity, String newHouseNumber,  String newProfilePicture, boolean newStatus) {
+        return userRepository.updateUserInfo(oldUsername, newUsername,newPassword,newRole,newFirstname,newLastname,newSalutation, newEmail,newCountryCode, newPostalCode, newStreet, newCity, newHouseNumber, newProfilePicture, newStatus);
     }
 }

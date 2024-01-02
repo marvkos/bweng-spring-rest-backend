@@ -32,8 +32,8 @@ public class BrandService {
     }
     public Brand updateBrand(Brand brand){ return brandRepository.save(brand);}
     @Transactional
-    public int updateBrandInfo(String oldName, String newName, String newDescription, String newPicturePath) {
-        return brandRepository.updateBrandInfo(oldName,newName,newDescription,newPicturePath);
+    public int updateBrandInfo(String oldName, String newName, String newPicturePath) {
+        return brandRepository.updateBrandInfo(oldName,newName, newPicturePath);
     }
 
 }
