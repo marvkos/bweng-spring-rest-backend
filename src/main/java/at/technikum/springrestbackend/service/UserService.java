@@ -47,7 +47,7 @@ public class UserService {
     }
 
     public List<User> getUsersCountry(String country) {
-        return userRepository.findByCountry(country);
+        return userRepository.findByCountryCode(country);
     }
 
     public List<User> getUsersStatus(boolean status) {
