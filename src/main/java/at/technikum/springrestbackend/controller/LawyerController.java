@@ -19,7 +19,6 @@ public class LawyerController {
 
     // Create a new lawyer
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Lawyer> createLawyer(@RequestBody Lawyer lawyer) {
         return lawyerService.createLawyer(lawyer);
     }

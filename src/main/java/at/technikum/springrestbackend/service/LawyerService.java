@@ -18,7 +18,6 @@ public class LawyerService {
     private final LawyerRepository lawyerRepository;
 
     public ResponseEntity<Lawyer> createLawyer(Lawyer lawyer) {
-        lawyer.setId(UUID.randomUUID());
         Lawyer savedLawyer = lawyerRepository.save(lawyer);
         return new ResponseEntity<>(savedLawyer, HttpStatus.CREATED);
     }

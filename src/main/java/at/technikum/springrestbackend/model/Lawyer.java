@@ -29,16 +29,11 @@ public class Lawyer {
     @Size(min = 2, max = 50)
     private String lastName;
 
-    @NotBlank
-    @Email
-    private String email;
-
-    @NotBlank
-    private String password;
+    @NotNull
+    private String specialization;
 
     @NotNull
-    @ManyToOne
-    private Specialization specialization;
+    private Number hourlyRate;
 
     @NotBlank
     private String address;
@@ -49,25 +44,7 @@ public class Lawyer {
     @NotBlank
     private String city;
 
-    @NotBlank
-    private String country;
-
-    @NotNull
-    private String appointmentDuration;
-
-    @NotNull
-    private Currency feePerHour;
-
-    @Size(min = 1, message = "At least one payment method must be specified")
     @OneToMany
-    private List<PaymentMethod> paymentMethods;
+    private List<GeneralAvailability> availabilities;
 
-    @OneToMany
-    private List<GeneralAvailability> weekAvailabilities;
-
-    @OneToMany
-    private List<SpecificAvailability> unavailabilities;
-
-    @OneToMany
-    private List<Appointment> appointments;
 }
