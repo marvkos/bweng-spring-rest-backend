@@ -3,7 +3,9 @@ package at.technikum.springrestbackend.controller;
 import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.model.Phone;
 import at.technikum.springrestbackend.model.User;
+import at.technikum.springrestbackend.service.BrandService;
 import at.technikum.springrestbackend.service.PhoneService;
+import at.technikum.springrestbackend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +20,14 @@ import java.util.UUID;
 public class PhoneController {
     private final PhoneService phoneService;
 
-    public PhoneController(PhoneService phoneService) {
+    private final UserService userService;
+
+    private final BrandService brandService;
+
+    public PhoneController(PhoneService phoneService, UserService userService, BrandService brandService) {
         this.phoneService = phoneService;
+        this.userService = userService;
+        this.brandService = brandService;
     }
 
     @GetMapping("/phones")
@@ -56,10 +64,34 @@ public class PhoneController {
     public List<Phone> getPhonesBrand(@PathVariable Brand brand){
         return phoneService.getPhonesBrand(brand);
     }
-    @PostMapping("/addPhone")
-    public Phone createPhone(@RequestBody Phone phone) {
-        return phoneService.createPhone(phone);
+    @PostMapping("/addPhone/{username}/{brand}")
+    public ResponseEntity<Object> createPhone(@PathVariable @Valid String username,
+                                              @PathVariable @Valid String brand,
+                                              @RequestBody @Valid Phone phone) {
+        return handlePhoneCreation(username, brand, phone);
     }
+
+    private ResponseEntity<Object> handlePhoneCreation(String username, String brand, Phone phone) {
+    User user = userService.getUserByUsername(username);
+    Brand newBrand = brandService.getBrandByname(brand);
+
+    if(user == null){
+        return new ResponseEntity<>("No User with that username", HttpStatus.BAD_REQUEST);
+    }else if(newBrand == null){
+        return new ResponseEntity<>("No Brand with that name", HttpStatus.BAD_REQUEST);
+    }else {
+        User mangedUser = userService.getUser(user.getId());
+        Brand mangedBrand = brandService.getBrand(newBrand.getId());
+
+        phone.setCreatedBy(mangedUser);
+        phone.setBrand(mangedBrand);
+    }
+
+    phoneService.createPhone(phone);
+    return new ResponseEntity<>("New phone is saved.", HttpStatus.CREATED);
+
+    }
+
     @DeleteMapping("/deletePhone/{id}")
     public ResponseEntity<Object> deletePhone(@PathVariable UUID id) {
         Phone phoneToDelete = phoneService.getPhone(id);

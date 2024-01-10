@@ -21,7 +21,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Table(name = "User", uniqueConstraints = {
-       @UniqueConstraint(columnNames = {"username"}),
+        @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
 public class User {

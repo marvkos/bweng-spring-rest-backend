@@ -38,13 +38,13 @@ public class Phone {
     @Min(0)
     private int battery;
 
-    @NotBlank(message = "price required")
+
     @Positive
     private float price;
 
     private String picture;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
@@ -54,8 +54,9 @@ public class Phone {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    @NotBlank(message = "User required")
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    //Does not need NOT Blank because will be set manually
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User createdBy;
 
     public Phone(String name, String description, float displaySize,

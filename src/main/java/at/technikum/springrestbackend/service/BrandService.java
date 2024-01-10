@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -14,12 +15,14 @@ public class BrandService {
 
     private final BrandRepository brandRepository;
 
+    public Brand getBrand(UUID id){ return brandRepository.findById(id).orElseThrow();}
     public List<Brand> getBrands(){
         return brandRepository.findAll();
     }
     public Brand getBrandByname(String name){
         return brandRepository.findByname(name);
     }
+    @Transactional
     public Brand createBrand(Brand brand){
         return brandRepository.save(brand);
     }
