@@ -125,6 +125,14 @@
             <version>1.19.3</version>
         </dependency>
 
+        <!-- MiniIO -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.7</version>
+        </dependency>
+
+
 
 
 
