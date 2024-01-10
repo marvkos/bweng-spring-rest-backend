@@ -32,21 +32,21 @@ public class LawyerController {
 
     // Retrieve a single lawyer by ID
     @GetMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.Lawyer', 'read') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.Lawyer', 'read')")
     public ResponseEntity<Lawyer> getLawyerById(@PathVariable UUID id) {
         return lawyerService.getLawyerById(id);
     }
 
     // Update a lawyer by ID
     @PutMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.Lawyer', 'write') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.Lawyer', 'write')")
     public ResponseEntity<Lawyer> updateLawyer(@PathVariable UUID id, @RequestBody Lawyer updatedLawyer) {
         return lawyerService.updateLawyer(id, updatedLawyer);
     }
 
     // Delete a lawyer by ID
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.Lawyer', 'delete') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.Lawyer', 'delete')")
     public ResponseEntity<Void> deleteLawyer(@PathVariable UUID id) {
         return lawyerService.deleteLawyer(id);
     }
