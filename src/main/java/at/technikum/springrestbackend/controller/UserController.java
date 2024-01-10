@@ -32,14 +32,14 @@ public class UserController {
 
     // Get a specific user by ID
     @GetMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update')")
     public ResponseEntity<User> getUserById(@PathVariable UUID id) {
         return userService.getUserById(id);
     }
 
     // Delete a user by ID
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update')")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         return userService.deleteUser(id);
     }
@@ -53,7 +53,7 @@ public class UserController {
 
     // Update only the username
     @PatchMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update')")
     public User updateUsername(@PathVariable UUID id, @RequestBody User user) {
         return userService.updateUsername(id, user);
     }

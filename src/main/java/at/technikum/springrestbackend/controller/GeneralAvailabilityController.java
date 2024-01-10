@@ -5,8 +5,6 @@ import at.technikum.springrestbackend.service.GeneralAvailabilityService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +23,7 @@ public class GeneralAvailabilityController {
         return generalAvailabilityService.getAllAvailabilities();
     }
 
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.GeneralAvailability', 'read') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.GeneralAvailability', 'read') ")
     @GetMapping("/{id}")
     public ResponseEntity<GeneralAvailability> getById(@PathVariable UUID id) {
         return generalAvailabilityService.getById(id);
@@ -37,13 +35,13 @@ public class GeneralAvailabilityController {
         return generalAvailabilityService.create(availability);
     }
 
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.GeneralAvailability', 'write') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.GeneralAvailability', 'write') ")
     @PutMapping("/{id}")
     public ResponseEntity<GeneralAvailability> update(@PathVariable UUID id, @RequestBody GeneralAvailability updatedAvailability) {
         return generalAvailabilityService.update(id, updatedAvailability);
     }
 
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.GeneralAvailability', 'delete') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.GeneralAvailability', 'delete') ")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         return generalAvailabilityService.delete(id);
