@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.controller;
 
+import at.technikum.springrestbackend.dto.CreateLawyerRequest;
 import at.technikum.springrestbackend.model.Lawyer;
 import at.technikum.springrestbackend.service.LawyerService;
 import lombok.AllArgsConstructor;
@@ -18,8 +19,8 @@ public class LawyerController {
     private final LawyerService lawyerService;
 
     @PostMapping
-    public ResponseEntity<Lawyer> createLawyer(@RequestBody Lawyer lawyer) {
-        return lawyerService.createLawyer(lawyer);
+    public ResponseEntity<Lawyer> createLawyer(@RequestBody CreateLawyerRequest lawyerRequest) {
+        return lawyerService.createLawyer(lawyerRequest.toLawyer());
     }
 
     @GetMapping
