@@ -5,13 +5,16 @@ import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.BrandService;
 import at.technikum.springrestbackend.service.UserService;
 import at.technikum.springrestbackend.util.BrandValidator;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class BrandController {
 
     @GetMapping("/brands")
     public List<Brand> getBrands() {
+
         return brandService.getBrands();
     }
 
@@ -77,19 +81,48 @@ public class BrandController {
             brand.setCreatedBy(managedUser);
         }
 
-        brandService.createBrand(brand);
-        return new ResponseEntity<>("New brand is saved.", HttpStatus.CREATED);
+        try {
+            brandService.createBrand(brand);
+            return new ResponseEntity<>("New brand is saved.", HttpStatus.CREATED);
+        }catch (TokenExpiredException e){
+            return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+        }catch (Exception e) {
+            // Handle other exceptions
+            return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     private ResponseEntity<Object> handleBrandDeletion(Brand brandToDelete) {
         if (brandToDelete == null) {
             return new ResponseEntity<>("Brand not found", HttpStatus.NOT_FOUND);
         }
-        brandService.deleteBrand(brandToDelete.getName());
-        return new ResponseEntity<>("Brand deleted successfully", HttpStatus.OK);
+        try{
+            brandService.deleteBrand(brandToDelete.getName());
+            return new ResponseEntity<>("Brand deleted successfully", HttpStatus.OK);
+
+        }catch (DataIntegrityViolationException e) {
+            // Handle foreign key constraint violation (associated phones present)
+            return new ResponseEntity<>("Cannot delete the brand. It has associated phones.", HttpStatus.CONFLICT);
+        } catch (TokenExpiredException e){
+            return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+        }catch (Exception e) {
+            // Handle other exceptions
+            return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     private ResponseEntity<Object> handleBrandUpdate(String name, Brand updatedBrand) {
-        int affectedRows = brandService.updateBrandInfo(name, updatedBrand.getName(), updatedBrand.getPicturePath());
+        int affectedRows = 0;
+
+        try {
+            affectedRows = brandService.updateBrandInfo(name, updatedBrand.getName(), updatedBrand.getPicturePath());
+        }catch (TokenExpiredException e){
+            return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+        }catch (Exception e) {
+            // Handle other exceptions
+            return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
 
         if (affectedRows > 0) {

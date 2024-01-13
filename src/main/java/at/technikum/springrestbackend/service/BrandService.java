@@ -4,7 +4,10 @@ import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.repository.BrandRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -30,10 +33,7 @@ public class BrandService {
         return brandRepository.existsByname(name);
     }
     @Transactional
-    public void deleteBrand(String name){
-        brandRepository.deleteBrandByname(name);
-    }
-    public Brand updateBrand(Brand brand){ return brandRepository.save(brand);}
+    public void deleteBrand(String name) { brandRepository.deleteBrandByname(name);}
     @Transactional
     public int updateBrandInfo(String oldName, String newName, String newPicturePath) {
         return brandRepository.updateBrandInfo(oldName,newName, newPicturePath);

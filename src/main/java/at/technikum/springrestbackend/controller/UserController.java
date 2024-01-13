@@ -1,16 +1,20 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.model.User;
+import at.technikum.springrestbackend.security.jwt.JwtToPrincipalConverter;
 import at.technikum.springrestbackend.service.UserService;
 import at.technikum.springrestbackend.util.UserValidator;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -86,8 +90,19 @@ public class UserController {
 
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable UUID id) {
-        User userToDelete = userService.getUser(id);
-        return handleUserDeletion(userToDelete);
+        try{
+            User userToDelete = userService.getUser(id);
+            return handleUserDeletion(userToDelete);
+        }catch (DataIntegrityViolationException e) {
+            // Handle foreign key constraint violation
+            return new ResponseEntity<>("Cannot delete User. It has associated orders or items.",HttpStatus.CONFLICT);
+        }catch (TokenExpiredException e){
+            return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+        }catch (Exception e) {
+            // Handle other exceptions
+            return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PutMapping("/updateUser/{name}")
@@ -103,9 +118,16 @@ public class UserController {
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.createUser(user);
 
-        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+        try {
+            userService.createUser(user);
+            return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+        }catch (TokenExpiredException e){
+            return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+        }catch (Exception e) {
+            // Handle other exceptions
+            return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     private ResponseEntity<Object> handleUserDeletion(User userToDelete) {
@@ -118,27 +140,45 @@ public class UserController {
     }
 
     private ResponseEntity<Object> handleUserUpdate(String name, User updatedUser) {
+        String username = JwtToPrincipalConverter.getCurrentUsername();
+        String userRole = JwtToPrincipalConverter.getCurrentUserRole();
+
+
+        if(!Objects.equals(username, name) && !userRole.equals("ROLE_admin")){
+            return new ResponseEntity<>("Users can only edit there own Profile (except admins)", HttpStatus.UNAUTHORIZED);
+        }
+
+
+            int affectedRows = 0;
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
 
-        int affectedRows = userService.updateUserInfo(
-                name,
-                updatedUser.getUsername(),
-                updatedUser.getPassword(),
-                updatedUser.getRole(),
-                updatedUser.getFirstname(),
-                updatedUser.getLastname(),
-                updatedUser.getSalutation(),
-                updatedUser.getEmail(),
-                updatedUser.getCountryCode(),
-                updatedUser.getPostalCode(),
-                updatedUser.getStreet(),
-                updatedUser.getCity(),
-                updatedUser.getHouseNumber(),
-                updatedUser.getProfilePicture(),
-                updatedUser.getStatus()
-        );
+        try{
+            affectedRows = userService.updateUserInfo(
+                    name,
+                    updatedUser.getUsername(),
+                    updatedUser.getPassword(),
+                    updatedUser.getRole(),
+                    updatedUser.getFirstname(),
+                    updatedUser.getLastname(),
+                    updatedUser.getSalutation(),
+                    updatedUser.getEmail(),
+                    updatedUser.getCountryCode(),
+                    updatedUser.getPostalCode(),
+                    updatedUser.getStreet(),
+                    updatedUser.getCity(),
+                    updatedUser.getHouseNumber(),
+                    updatedUser.getProfilePicture(),
+                    updatedUser.getStatus()
+            );
+        }catch (TokenExpiredException e){
+            return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+        }catch (Exception e) {
+            // Handle other exceptions
+            return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
 
         if (affectedRows > 0) {
             return new ResponseEntity<>("User info has been updated successfully", HttpStatus.OK);

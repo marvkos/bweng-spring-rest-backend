@@ -6,7 +6,9 @@ import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.service.BrandService;
 import at.technikum.springrestbackend.service.PhoneService;
 import at.technikum.springrestbackend.service.UserService;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.validation.Valid;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -87,15 +89,34 @@ public class PhoneController {
         phone.setBrand(mangedBrand);
     }
 
-    phoneService.createPhone(phone);
-    return new ResponseEntity<>("New phone is saved.", HttpStatus.CREATED);
+    try{
+        phoneService.createPhone(phone);
+        return new ResponseEntity<>("New phone is saved.", HttpStatus.CREATED);
+    }catch (TokenExpiredException e){
+        return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+    }catch (Exception e) {
+        // Handle other exceptions
+        return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
     }
 
     @DeleteMapping("/deletePhone/{id}")
     public ResponseEntity<Object> deletePhone(@PathVariable UUID id) {
-        Phone phoneToDelete = phoneService.getPhone(id);
+
+        try{
+            Phone phoneToDelete = phoneService.getPhone(id);
         return handlePhoneDeletion(phoneToDelete);
+        }catch (DataIntegrityViolationException e) {
+            // Handle foreign key constraint violation
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Cannot delete the phone. It has associated orders.");
+        } catch (Exception e) {
+            // Handle other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while processing your request.");
+        }
     }
     @PutMapping("/updatePhone/{id}")
     public ResponseEntity<Object> updatePhone(@PathVariable UUID id, @RequestBody @Valid Phone updatedPhone) {
@@ -106,12 +127,33 @@ public class PhoneController {
             return new ResponseEntity<>("Phone not found", HttpStatus.NOT_FOUND);
         }
 
-        phoneService.deletePhone(phoneToDelete.getId());
-        return new ResponseEntity<>("Phone deleted successfully", HttpStatus.OK);
+        try{
+            phoneService.deletePhone(phoneToDelete.getId());
+            return new ResponseEntity<>("Phone deleted successfully", HttpStatus.OK);
+        }catch (DataIntegrityViolationException e) {
+            // Handle foreign key constraint violation
+            return new ResponseEntity<>("Cannot delete the phone. It has associated orders.", HttpStatus.CONFLICT);
+        } catch (TokenExpiredException e){
+            return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+        }catch (Exception e) {
+            // Handle other exceptions
+            return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     private ResponseEntity<Object> handlePhoneUpdate(UUID id, Phone updatedPhone) {
-        int affectedRows = phoneService.updatePhoneInfo(id, updatedPhone.getName(), updatedPhone.getDescription(),updatedPhone.getDisplaySize(),updatedPhone.getMemory(),updatedPhone.getBattery(),updatedPhone.getPrice());
+       int affectedRows = 0;
+
+       try {
+           affectedRows = phoneService.updatePhoneInfo(id, updatedPhone.getName(), updatedPhone.getDescription(),updatedPhone.getDisplaySize(),updatedPhone.getMemory(),updatedPhone.getBattery(),updatedPhone.getPrice());
+
+       }catch (TokenExpiredException e){
+           return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
+       }catch (Exception e) {
+           // Handle other exceptions
+           return new ResponseEntity<>("An error occurred while processing your request.", HttpStatus.INTERNAL_SERVER_ERROR);
+       }
 
         if (affectedRows > 0) {
             return new ResponseEntity<>("Phone info has been updated successfully", HttpStatus.OK);
