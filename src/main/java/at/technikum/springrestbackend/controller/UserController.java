@@ -93,10 +93,7 @@ public class UserController {
         try{
             User userToDelete = userService.getUser(id);
             return handleUserDeletion(userToDelete);
-        }catch (DataIntegrityViolationException e) {
-            // Handle foreign key constraint violation
-            return new ResponseEntity<>("Cannot delete User. It has associated orders or items.",HttpStatus.CONFLICT);
-        }catch (TokenExpiredException e){
+        } catch (TokenExpiredException e){
             return new ResponseEntity<>("The JWT Token is expired, pleas login in again", HttpStatus.UNAUTHORIZED);
         }catch (Exception e) {
             // Handle other exceptions
