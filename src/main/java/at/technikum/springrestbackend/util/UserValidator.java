@@ -26,6 +26,10 @@ public class UserValidator {
         if (!PasswordValidator.isValidPassword(user.getPassword())) {
             validationErrors.add("Invalid password");
         }
+        if(!CountryCodeValidator.isValidCountryCode((user.getCountryCode()))){
+            validationErrors.add("Invalid CountryCode");
+        }
+
 
         return validationErrors;
     }
