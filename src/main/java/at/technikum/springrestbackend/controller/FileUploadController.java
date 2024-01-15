@@ -1,24 +1,15 @@
-
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.service.FileUploaderService;
 import io.minio.errors.MinioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
-import java.io.ByteArrayInputStream;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -35,29 +26,51 @@ public class FileUploadController {
     @PostMapping("/api/files/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
                                              @RequestParam("bucketName") String bucketName,
-                                             @RequestParam("objectName") String objectName) {
+                                             @RequestParam("objectName") String objectName,
+                                             @RequestParam("id") String id) {
         try {
+            // Check if the file is an image (JPEG or PNG)
+            String contentType = file.getContentType();
+            if (contentType == null ||
+                    (!contentType.equals("image/jpeg") &&
+                            !contentType.equals("image/jpg") &&
+                            !contentType.equals("image/png"))) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File type not supported. Please upload a JPEG or PNG image.");
+            }
+
+            // Proceed with file upload
             String tempFileName = System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename();
             file.transferTo(new java.io.File(tempFileName));
+            objectName = id + "_" + objectName;
             fileUploaderService.uploadFile(bucketName, objectName, tempFileName);
-            return ResponseEntity.ok("File uploaded successfully as " + objectName);
+            return ResponseEntity.ok("Image uploaded successfully as " + objectName);
         } catch (IOException | MinioException e) {
-            return ResponseEntity.status(500).body("Error uploading file: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading file: " + e.getMessage());
         }
     }
 
 
-    @GetMapping("/api/files/download/image/{bucketName}/{fileName}")
-    public ResponseEntity<Resource> downloadImage(@PathVariable String bucketName, @PathVariable String fileName) {
+    @GetMapping("/api/files/download/image/{bucketName}/{fileName}/{id}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable String bucketName, @PathVariable String fileName, @PathVariable String id) {
         try {
             byte[] data = fileUploaderService.downloadImage(bucketName, fileName);
             InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(data));
 
             return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG) // or determine the content type dynamically
+                    .contentType(MediaType.IMAGE_JPEG)
                     .body(resource);
         } catch (IOException | MinioException e) {
             return ResponseEntity.status(500).body(new InputStreamResource(new ByteArrayInputStream(("Error downloading image: " + e.getMessage()).getBytes())));
+        }
+    }
+
+    @DeleteMapping("/api/files/delete/{bucketName}/{objectName}")
+    public ResponseEntity<String> deleteFile(@PathVariable String bucketName, @PathVariable String objectName) {
+        try {
+            fileUploaderService.deleteFile(bucketName, objectName);
+            return ResponseEntity.ok("File deleted successfully: " + objectName);
+        } catch (IOException | MinioException e) {
+            return ResponseEntity.status(500).body("Error deleting file: " + e.getMessage());
         }
     }
 

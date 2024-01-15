@@ -1,22 +1,15 @@
 package at.technikum.springrestbackend.service;
 
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.MinioClient;
-import io.minio.GetObjectArgs;
-import io.minio.UploadObjectArgs;
+import io.minio.*;
 import io.minio.errors.MinioException;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-
 
 @Service
 public class FileUploaderService {
@@ -61,5 +54,16 @@ public class FileUploaderService {
         }
     }
 
+    public void deleteFile(String bucketName, String objectName) throws IOException, MinioException {
+        try {
+            minioClient.removeObject(
+                    RemoveObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(objectName)
+                            .build());
+        } catch (InvalidKeyException | NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error in file deletion: Security error", e);
+        }
+    }
 
 }
