@@ -4,14 +4,16 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
-
-
+import java.time.Instant;
 import java.util.UUID;
 
 
@@ -20,7 +22,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @Table(name = "User", uniqueConstraints = {
-       @UniqueConstraint(columnNames = {"username"}),
+        @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
 })
 public class User {
@@ -29,6 +31,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Pattern(regexp = "^.{5,}$", message = "Username must have at least 5 characters")
     @NotBlank(message = "Username is required")
     private String username;
 
@@ -44,34 +47,37 @@ public class User {
     @NotBlank(message = "Last name is required")
     private String lastname;
 
+    @NotBlank(message = "Salutation is required")
+    private String salutation;
 
-    @Enumerated(EnumType.STRING)
-    private Salutation salutation;
-
-
+    @NotBlank(message = "E-mail is required")
     @Email(message = "Invalid email address")
     private String email;
 
-    @NotBlank(message = "Street is required")
-    private String address;
+    @NotBlank(message = "CountryCode is required")
+    private String countryCode;
 
+    private int postalCode;
 
-    @NotBlank(message = "City is required")
     private String city;
 
-    @Min(value = 1,message = "Postalcode is required")
-    private int postalcode;
+    private String street;
 
-    @NotBlank(message = "Country is required")
-    private String country;
+    private String houseNumber;
 
     private String profilePicture;
 
     private boolean status;
 
+    @CreationTimestamp
+    private Instant createdOn;
+
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
+
     public User (String username, String password, String role, String firstname,
-                 String lastname, Salutation salutation, String email,
-                 String country, String profilePicture, boolean status){
+                 String lastname, String salutation, String email,
+                 String profilePicture, boolean status, String street,  String city, int postalCode, String houseNumber, String countryCode){
         this.username = username;
         this.password = password;
         this.role = role;
@@ -79,11 +85,18 @@ public class User {
         this.lastname = lastname;
         this.salutation = salutation;
         this.email = email;
-        this.country = country;
         this.profilePicture = profilePicture;
         this.status = status;
+        this.street = street;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.houseNumber = houseNumber;
+        this.countryCode = countryCode;
+
     }
 
 
-
+    public boolean getStatus() {
+        return this.status;
+    }
 }

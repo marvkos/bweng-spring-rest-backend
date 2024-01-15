@@ -20,7 +20,7 @@ public class BrandValidator {
         List<String> validationErrors = new ArrayList<>();
 
         if (brandService.isBrandTaken(brand.getName())) {
-            validationErrors.add("Brand is already exists");
+            validationErrors.add("Brand already exists");
         }
         return validationErrors;
     }
