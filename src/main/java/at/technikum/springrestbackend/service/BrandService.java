@@ -4,10 +4,8 @@ import at.technikum.springrestbackend.model.Brand;
 import at.technikum.springrestbackend.repository.BrandRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +15,8 @@ import java.util.UUID;
 public class BrandService {
 
     private final BrandRepository brandRepository;
+
+
 
     public Brand getBrand(UUID id){ return brandRepository.findById(id).orElseThrow();}
     public List<Brand> getBrands(){

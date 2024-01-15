@@ -31,7 +31,6 @@ public class PhoneController {
         this.userService = userService;
         this.brandService = brandService;
     }
-
     @GetMapping("/phones")
     public List<Phone> getPhones() {
         return phoneService.getPhones();
