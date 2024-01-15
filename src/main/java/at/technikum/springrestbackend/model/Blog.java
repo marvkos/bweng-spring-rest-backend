@@ -33,4 +33,8 @@ public class Blog {
 
     @UpdateTimestamp
     private Instant lastUpdatedOn;
+
+    private String photoBucket;
+
+    private String photoName;
 }

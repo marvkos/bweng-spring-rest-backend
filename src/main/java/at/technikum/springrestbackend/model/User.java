@@ -55,4 +55,8 @@ User {
 
     @OneToMany
     private List<Appointment> appointments;
+
+    private String photoBucket;
+
+    private String photoName;
 }
