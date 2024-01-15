@@ -2,6 +2,7 @@ package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.model.Blog;
 import at.technikum.springrestbackend.service.BlogService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class BlogController {
     // Create a new user
     @PostMapping("/")
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Blog> createBlog(@RequestBody Blog blog) {
+    public ResponseEntity<Blog> createBlog(@Valid @RequestBody Blog blog) {
         return blogService.createBlog(blog);
     }
 

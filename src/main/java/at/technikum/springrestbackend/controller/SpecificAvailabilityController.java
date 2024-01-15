@@ -24,7 +24,7 @@ public class SpecificAvailabilityController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.SpecificAvailability', 'read') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.SpecificAvailability', 'read')")
     public ResponseEntity<SpecificAvailability> getAvailabilityById(@PathVariable UUID id) {
         return specificAvailabilityService.getAvailabilityById(id);
     }
@@ -35,13 +35,13 @@ public class SpecificAvailabilityController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.SpecificAvailability', 'write') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.SpecificAvailability', 'write')")
     public ResponseEntity<SpecificAvailability> updateAvailability(@PathVariable UUID id, @RequestBody SpecificAvailability updatedAvailability) {
         return specificAvailabilityService.updateAvailability(id, updatedAvailability);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.SpecificAvailability', 'delete') OR hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.SpecificAvailability', 'delete')")
     public ResponseEntity<Void> deleteAvailability(@PathVariable UUID id) {
         return specificAvailabilityService.deleteAvailability(id);
     }
