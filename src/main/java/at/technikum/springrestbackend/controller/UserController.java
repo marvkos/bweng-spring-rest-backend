@@ -46,7 +46,7 @@ public class UserController {
 
     // Update a user by ID
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'update') OR hasRole('ROLE_ADMIN')")
     public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User updatedUser) {
         return userService.updateUser(id, updatedUser);
     }

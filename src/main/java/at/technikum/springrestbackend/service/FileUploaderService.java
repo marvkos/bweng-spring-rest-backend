@@ -6,6 +6,7 @@ import io.minio.MinioClient;
 import io.minio.GetObjectArgs;
 import io.minio.UploadObjectArgs;
 import io.minio.errors.MinioException;
+import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
 
 @Service
 public class FileUploaderService {
@@ -45,17 +47,19 @@ public class FileUploaderService {
         }
     }
 
-    public Resource downloadFile(String bucketName, String objectName)
-            throws IOException, MinioException {
+    public byte[] downloadImage(String bucketName, String fileName) throws IOException, MinioException {
         try {
             InputStream fileStream = minioClient.getObject(
                     GetObjectArgs.builder()
                             .bucket(bucketName)
-                            .object(objectName)
+                            .object(fileName)
                             .build());
-            return new InputStreamResource(fileStream);
+
+            return IOUtils.toByteArray(fileStream);
         } catch (InvalidKeyException | NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error in file download: Security error", e);
+            throw new RuntimeException("Error in image download: Security error", e);
         }
     }
+
+
 }

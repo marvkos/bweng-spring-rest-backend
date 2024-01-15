@@ -47,4 +47,8 @@ public class Lawyer {
     @OneToMany
     private List<GeneralAvailability> availabilities;
 
+    private String photoBucket;
+
+    private String photoName;
+
 }

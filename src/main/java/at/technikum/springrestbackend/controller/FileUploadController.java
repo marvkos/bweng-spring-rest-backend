@@ -11,7 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import java.io.ByteArrayInputStream;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 @RestController
@@ -38,20 +46,19 @@ public class FileUploadController {
         }
     }
 
-    @GetMapping("/api/files/download")
-    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam String bucketName, @RequestParam String objectName) {
+
+    @GetMapping("/api/files/download/image/{bucketName}/{fileName}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable String bucketName, @PathVariable String fileName) {
         try {
-            System.out.println("Downloading file from bucket: " + bucketName + " with name: " + objectName);
-            InputStreamResource fileResource = (InputStreamResource) fileUploaderService.downloadFile(bucketName, objectName);
+            byte[] data = fileUploaderService.downloadImage(bucketName, fileName);
+            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(data));
+
             return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename=\"" + objectName + "\"")
-                    .body(fileResource);
-        } catch (Exception e) {
-            e.printStackTrace(); // Log the stack trace
-            return ResponseEntity.internalServerError().body(null);
+                    .contentType(MediaType.IMAGE_JPEG) // or determine the content type dynamically
+                    .body(resource);
+        } catch (IOException | MinioException e) {
+            return ResponseEntity.status(500).body(new InputStreamResource(new ByteArrayInputStream(("Error downloading image: " + e.getMessage()).getBytes())));
         }
     }
 
 }
-
-

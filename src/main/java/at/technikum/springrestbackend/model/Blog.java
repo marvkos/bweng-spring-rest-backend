@@ -38,6 +38,10 @@ public class Blog {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
+    private String photoBucket;
+
+    private String photoName;
+
     public Blog(String title, String content, String author){
         this.title = title;
         this.author = author;
