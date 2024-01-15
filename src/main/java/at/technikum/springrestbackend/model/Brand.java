@@ -2,6 +2,7 @@ package at.technikum.springrestbackend.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -46,10 +48,7 @@ public class Brand {
    // @ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "user_id")
     //private User user;
-   public Brand(String name, String picturePath) {
-       this.name = name;
-       this.picturePath = picturePath;
-   }
+
     public Brand(String name, String picturePath, User user) {
         this.name = name;
         this.picturePath = picturePath;

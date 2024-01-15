@@ -1,11 +1,14 @@
 package at.technikum.springrestbackend.repository;
+
 import at.technikum.springrestbackend.model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 import java.util.UUID;
+
 public interface UserRepository extends CrudRepository<User, UUID> {
 
     User findByUsername(String username);
