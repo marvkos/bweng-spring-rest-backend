@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.security.jwt;
+package at.technikum.springrestbackend.security;
 
 import at.technikum.springrestbackend.property.JwtProperties;
 import com.auth0.jwt.JWT;
@@ -15,10 +15,8 @@ public class JwtDecoder {
 
     public DecodedJWT decode(String token) throws TokenExpiredException {
         try {
-            // Attempt to decode and verify the token
             return JWT.require(Algorithm.HMAC256(jwtProperties.getSecret())).build().verify(token);
         } catch (TokenExpiredException e) {
-            // Token has expired, rethrow the exception or handle it as needed
             throw e;
         }
     }

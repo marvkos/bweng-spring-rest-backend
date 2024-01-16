@@ -71,4 +71,13 @@ public class Phone {
         this.createdBy = user;
         this.picture = picture;
     }
+
+    public Phone(String name, String desc, float displaySize, int memory, int battery, float price) {
+        this.name = name;
+        this.description = desc;
+        this.displaySize = displaySize;
+        this.memory = memory;
+        this.battery = battery;
+        this.price = price;
+    }
 }

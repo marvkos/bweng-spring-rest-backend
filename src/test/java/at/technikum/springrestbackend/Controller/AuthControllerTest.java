@@ -1,11 +1,12 @@
 package at.technikum.springrestbackend.Controller;
+
+
 import at.technikum.springrestbackend.controller.AuthController;
 import at.technikum.springrestbackend.dto.TokenRequest;
 import at.technikum.springrestbackend.dto.TokenResponse;
 import at.technikum.springrestbackend.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,30 +20,20 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerTest {
+
+    private MockMvc mockMvc;
 
     @Mock
     private AuthService authService;
 
     @InjectMocks
     private AuthController authController;
-  
-    private MockMvc mockMvc;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
     }
 
@@ -58,21 +49,4 @@ public class AuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"token\":\"token\"}"));
     }
-
-
-    @Test
-    void testToken_ValidRequest() {
-        // Mock the behavior of the AuthService to return a valid TokenResponse
-        TokenRequest mockTokenRequest = new TokenRequest("john_doe", "P@ssw0rd");
-        TokenResponse mockTokenResponse = new TokenResponse("validToken");
-        when(authService.authenticate(mockTokenRequest)).thenReturn(mockTokenResponse);
-
-        // Call the token method on the AuthController with a valid TokenRequest
-        TokenResponse result = authController.token(mockTokenRequest);
-
-        // Verify that the result is an OK response with the expected TokenResponse
-        assertEquals(mockTokenResponse, result);
-    }
-
-   
 }
