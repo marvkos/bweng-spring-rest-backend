@@ -16,7 +16,7 @@ import java.util.UUID;
 public class LawyerController {
 
     private final LawyerService lawyerService;
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Lawyer> createLawyer(@RequestBody Lawyer lawyer) {
         return lawyerService.createLawyer(lawyer);
