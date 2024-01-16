@@ -1,13 +1,12 @@
 package at.technikum.springrestbackend.service;
 
 import at.technikum.springrestbackend.model.GeneralAvailability;
-import at.technikum.springrestbackend.model.Lawyer;
 import at.technikum.springrestbackend.repository.GeneralAvailabilityRepository;
-import at.technikum.springrestbackend.repository.LawyerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +16,6 @@ import java.util.UUID;
 public class GeneralAvailabilityService {
 
     private final GeneralAvailabilityRepository generalAvailabilityRepository;
-    private final LawyerRepository lawyerRepository;
 
 
     public ResponseEntity<List<GeneralAvailability>> getAllAvailabilities() {

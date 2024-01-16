@@ -6,7 +6,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.List;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

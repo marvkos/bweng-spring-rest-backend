@@ -3,6 +3,7 @@ package at.technikum.springrestbackend.service;
 import at.technikum.springrestbackend.model.Blog;
 import at.technikum.springrestbackend.repository.BlogRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class BlogService {
 
     public ResponseEntity<Blog> createBlog(Blog blog){
         blog.setId(UUID.randomUUID());
-        return ResponseEntity.ok(blogRepository.save(blog));
+        return new ResponseEntity<>(blogRepository.save(blog), HttpStatus.CREATED);
     }
 
     public ResponseEntity<List<Blog>> getLatestBlogs() {
