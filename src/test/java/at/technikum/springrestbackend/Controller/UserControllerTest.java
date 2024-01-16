@@ -10,6 +10,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.time.Instant;
+import org.mockito.*;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +31,8 @@ public class UserControllerTest {
 
     @InjectMocks
     private UserController userController;
+    private User testUser;
+    private UUID testUserId;
 
     @BeforeEach
     void setUp() {
@@ -113,6 +118,45 @@ public class UserControllerTest {
 
         // Verify that the result is a NOT_FOUND response
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+    }
+
+    @Test
+    void testHandleUserDeletion_ValidUser() {
+
+        UUID mockUserId = UUID.randomUUID();
+        User mockUser = new User("valid_user", "P@ssw0rd", "ROLE_user", "Jane", "Doe", "Ms", "jane@example.com", null, true, "Some Address", "City", 1000, "1/2/3", "AT");
+        when(userService.getUser(mockUserId)).thenReturn(mockUser);
+
+        doNothing().when(userService).deleteUser(mockUserId);
+
+        ResponseEntity<Object> result = userController.deleteUser(mockUserId);
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+    }
+    @Test
+    void testGetUserById() {
+        when(userService.getUser(testUserId)).thenReturn(testUser);
+        assertEquals(testUser, userController.getUser(testUserId));
+    }
+
+    @Test
+    void testRegisterUser_Invalid() {
+        when(userValidator.validateUserRegistration(testUser)).thenReturn(List.of("Invalid Data"));
+        ResponseEntity<Object> response = userController.registerUser(testUser);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    void testDeleteUser_NotFound() {
+        when(userService.getUser(testUserId)).thenReturn(null);
+        ResponseEntity<Object> response = userController.deleteUser(testUserId);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+    @Test
+    void testDeleteUser_Exception() {
+        when(userService.getUser(testUserId)).thenThrow(new TokenExpiredException("Expired", Instant.now()));
+        ResponseEntity<Object> response = userController.deleteUser(testUserId);
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
     }
 
 }

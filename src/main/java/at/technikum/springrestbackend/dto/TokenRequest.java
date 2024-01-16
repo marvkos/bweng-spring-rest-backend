@@ -12,4 +12,9 @@ public class TokenRequest {
 
     @NotBlank
     private String password;
+
+    public TokenRequest(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }

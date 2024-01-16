@@ -14,14 +14,5 @@ public class PasswordValidator {
         return matcher.matches();
     }
 
-    public static void main(String[] args) {
-        String password = "StrongP@ss1";
-
-        if (isValidPassword(password)) {
-            System.out.println("Password is valid");
-        } else {
-            System.out.println("Password is not valid");
-        }
-    }
 }
 
