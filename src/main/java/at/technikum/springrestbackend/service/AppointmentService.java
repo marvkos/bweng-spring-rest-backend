@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.service;
 
+import at.technikum.springrestbackend.dto.appointment.AvailabilityTimetable;
 import at.technikum.springrestbackend.model.*;
 import at.technikum.springrestbackend.repository.*;
 import lombok.AllArgsConstructor;
@@ -114,7 +115,9 @@ public class AppointmentService {
                         appointment -> timeIsBetween(finalCurrentTime, appointment.getStartTime(), appointment.getEndTime().minusSeconds(1))
                 );
 
-                if (lawyerIsAvailable && lawyerHasNoAppointment)
+                if (lawyerIsAvailable &&
+                        lawyerHasNoAppointment &&
+                        !currentTime.plusMinutes(availability.getDuration()).isAfter(endTime))
                     timeslots.add(currentTime.toString());
 
                 currentTime = currentTime.plusMinutes(availability.getDuration());
@@ -123,7 +126,7 @@ public class AppointmentService {
         return timeslots;
     }
 
-    public ResponseEntity<Hashtable<String, List<String>>> getAvailabilityTimeslotsForDates(
+    public ResponseEntity<AvailabilityTimetable> getAvailabilityTimeslotsForDates(
             UUID lawyerId,
             LocalDate from,
             int amountOfDays
@@ -140,7 +143,7 @@ public class AppointmentService {
             List<String> availableTimeslots = getTimeslotsByDate(lawyer, currentDate);
             availabilityTimeslots.put(currentDate.toString(), availableTimeslots);
         }
-        return ResponseEntity.ok(availabilityTimeslots);
+        return ResponseEntity.ok(new AvailabilityTimetable(availabilityTimeslots));
     }
 
     public ResponseEntity<Appointment> createAppointment(UUID lawyerId, UUID userId, String date, String time) {
@@ -156,43 +159,23 @@ public class AppointmentService {
             return ResponseEntity.badRequest().build();
         }
 
-        // We verify that the lawyer has a general availability at the given time
+        List<String> availableTimeslots = getTimeslotsByDate(lawyer.get(), LocalDate.parse(date));
+        if (availableTimeslots.stream().noneMatch(timeslot -> LocalTime.parse(time).equals(LocalTime.parse(timeslot)))) {
+            return ResponseEntity.badRequest().build();
+        }
+
         List<GeneralAvailability> generalAvailabilities = generalAvailabilityRepository.findAllByDayAndLawyer(
                 LocalDate.parse(date).getDayOfWeek(),
                 lawyer.get()
         );
-        LocalTime timeOfAppointment = LocalTime.parse(time);
         GeneralAvailability generalAvailability = generalAvailabilities.stream().filter(
                 availability ->
-                        timeIsBetween(timeOfAppointment, availability.getStartTime(), availability.getEndTime())
+                        timeIsBetween(LocalTime.parse(time), availability.getStartTime(), availability.getEndTime())
         ).findFirst().orElse(null);
         if (generalAvailability == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        // We verify that the appointment is not already taken
-        Optional<Appointment> appointment = appointmentRepository.findByLawyerAndDateAndStartTime(
-                lawyer.get(),
-                LocalDate.parse(date),
-                LocalTime.parse(time)
-        );
-        if (appointment.isPresent()) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        // We verify that the lawyer is not unavailable at the given time
-        List<SpecificAvailability> unavailabilities = specificAvailabilityRepository.findAllByDateAndLawyer(
-                LocalDate.parse(date),
-                lawyer.get()
-        );
-        if (unavailabilities.stream().anyMatch(
-                unavailability ->
-                        timeIsBetween(timeOfAppointment, unavailability.getStartTime(), unavailability.getEndTime())
-        )) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        // We create the appointment;
         Appointment newAppointment = new Appointment();
         newAppointment.setId(UUID.randomUUID());
         newAppointment.setLawyer(lawyer.get());

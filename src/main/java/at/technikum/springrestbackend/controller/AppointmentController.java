@@ -2,14 +2,13 @@ package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.dto.appointment.CreateAppointmentRequest;
 import at.technikum.springrestbackend.dto.appointment.GetAvailableTimeslotsForPeriodRequest;
+import at.technikum.springrestbackend.dto.appointment.AvailabilityTimetable;
 import at.technikum.springrestbackend.model.Appointment;
 import at.technikum.springrestbackend.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Hashtable;
-import java.util.List;
 
 @RestController
 @RequestMapping("/appointments")
@@ -31,7 +30,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/available-timeslots")
-    public ResponseEntity<Hashtable<String, List<String>>> getAvailableTimeslotsForPeriod(
+    public ResponseEntity<AvailabilityTimetable> getAvailableTimeslotsForPeriod(
             GetAvailableTimeslotsForPeriodRequest request
     ) {
             return appointmentService.getAvailabilityTimeslotsForDates(
