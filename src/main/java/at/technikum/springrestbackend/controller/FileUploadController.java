@@ -7,11 +7,13 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 public class FileUploadController {
@@ -22,12 +24,12 @@ public class FileUploadController {
     public FileUploadController(FileUploaderService fileUploaderService) {
         this.fileUploaderService = fileUploaderService;
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'post')")
     @PostMapping("/api/files/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
                                              @RequestParam("bucketName") String bucketName,
                                              @RequestParam("objectName") String objectName,
-                                             @RequestParam("id") String id) {
+                                             @RequestParam("id") UUID id) {
         try {
             // Check if the file is an image (JPEG or PNG)
             String contentType = file.getContentType();
@@ -49,9 +51,9 @@ public class FileUploadController {
         }
     }
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'get')")
     @GetMapping("/api/files/download/image/{bucketName}/{fileName}/{id}")
-    public ResponseEntity<Resource> downloadImage(@PathVariable String bucketName, @PathVariable String fileName, @PathVariable String id) {
+    public ResponseEntity<Resource> downloadImage(@PathVariable String bucketName, @PathVariable String fileName, @PathVariable UUID id) {
         try {
             byte[] data = fileUploaderService.downloadImage(bucketName, fileName);
             InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(data));
@@ -63,7 +65,7 @@ public class FileUploadController {
             return ResponseEntity.status(500).body(new InputStreamResource(new ByteArrayInputStream(("Error downloading image: " + e.getMessage()).getBytes())));
         }
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasPermission(#id, 'at.technikum.springrestbackend.model.User', 'delete')")
     @DeleteMapping("/api/files/delete/{bucketName}/{objectName}")
     public ResponseEntity<String> deleteFile(@PathVariable String bucketName, @PathVariable String objectName) {
         try {
