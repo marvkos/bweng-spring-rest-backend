@@ -14,12 +14,13 @@ public interface LawyerRepository extends CrudRepository<Lawyer, UUID>, PagingAn
     @Override
     List<Lawyer> findAll();
 
-    Page<Lawyer> findAllByFirstNameContainingOrLastNameContainingOrAddressContainingOrCityContainingOrPostalCodeContaining(
+    Page<Lawyer> findAllByFirstNameContainingOrLastNameContainingOrAddressContainingOrCityContainingOrPostalCodeContainingOrSpecializationContaining(
             String firstName,
             String lastName,
             String address,
             String city,
             String postalCode,
+            String specialization,
             Pageable paging
     );
 }

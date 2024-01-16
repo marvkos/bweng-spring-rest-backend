@@ -96,7 +96,8 @@ public class LawyerService {
             int page,
             int size
     ) {
-        Page<Lawyer> lawyers = lawyerRepository.findAllByFirstNameContainingOrLastNameContainingOrAddressContainingOrCityContainingOrPostalCodeContaining(
+        Page<Lawyer> lawyers = lawyerRepository.findAllByFirstNameContainingOrLastNameContainingOrAddressContainingOrCityContainingOrPostalCodeContainingOrSpecializationContaining(
+                searchTerm,
                 searchTerm,
                 searchTerm,
                 searchTerm,
