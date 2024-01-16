@@ -1,12 +1,7 @@
 package at.technikum.springrestbackend.service;
 
-import at.technikum.springrestbackend.model.Appointment;
-import at.technikum.springrestbackend.model.GeneralAvailability;
-import at.technikum.springrestbackend.model.Lawyer;
-import at.technikum.springrestbackend.model.SpecificAvailability;
-import at.technikum.springrestbackend.repository.AppointmentRepository;
-import at.technikum.springrestbackend.repository.GeneralAvailabilityRepository;
-import at.technikum.springrestbackend.repository.SpecificAvailabilityRepository;
+import at.technikum.springrestbackend.model.*;
+import at.technikum.springrestbackend.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +16,9 @@ import java.util.*;
 public class AppointmentService {
     private final GeneralAvailabilityRepository generalAvailabilityRepository;
     private final SpecificAvailabilityRepository specificAvailabilityRepository;
+    private final LawyerRepository lawyerRepository;
     private final AppointmentRepository appointmentRepository;
+    private final UserRepository userRepository;
 
     public ResponseEntity<List<GeneralAvailability>> getAllGeneralAvailabilities() {
         List<GeneralAvailability> availabilities =  generalAvailabilityRepository.findAll();
@@ -137,5 +134,66 @@ public class AppointmentService {
             availabilityTimeslots.put(currentDate.toString(), availableTimeslots);
         }
         return availabilityTimeslots;
+    }
+
+    public ResponseEntity<Appointment> createAppointment(UUID lawyerId, UUID userId, String date, String time) {
+        // We verify that the lawyer exists
+        Optional<Lawyer> lawyer = lawyerRepository.findById(lawyerId);
+        if (lawyer.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // We verify that the user exists
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // We verify that the lawyer has a general availability at the given time
+        List<GeneralAvailability> generalAvailabilities = generalAvailabilityRepository.findAllByDayAndLawyer(
+                LocalDate.parse(date).getDayOfWeek(),
+                lawyer.get()
+        );
+        GeneralAvailability generalAvailability = generalAvailabilities.stream().filter(
+                availability -> LocalTime.parse(time).isAfter(availability.getStartTime())
+                        && LocalTime.parse(time).isBefore(availability.getEndTime())
+        ).findFirst().orElse(null);
+        if (generalAvailability == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // We verify that the appointment is not already taken
+        Optional<Appointment> appointment = appointmentRepository.findByLawyerAndDateAndStartTime(
+                lawyer.get(),
+                LocalDate.parse(date),
+                LocalTime.parse(time)
+        );
+        if (appointment.isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // We verify that the lawyer is not unavailable at the given time
+        List<SpecificAvailability> unavailabilities = specificAvailabilityRepository.findAllByDateAndLawyer(
+                LocalDate.parse(date),
+                lawyer.get()
+        );
+        if (unavailabilities.stream().anyMatch(
+                unavailability -> LocalTime.parse(time).isAfter(unavailability.getStartTime())
+                        && LocalTime.parse(time).isBefore(unavailability.getEndTime())
+        )) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // We create the appointment;
+        Appointment savedAppointment = appointmentRepository.save(new Appointment() {{
+            setId(UUID.randomUUID());
+            setLawyer(lawyer.get());
+            setUser(user.get());
+            setDate(LocalDate.parse(date));
+            setStartTime(LocalTime.parse(time));
+            setEndTime(LocalTime.parse(time).plusMinutes(generalAvailability.getDuration()));
+        }});
+
+        return ResponseEntity.ok(savedAppointment);
     }
 }
