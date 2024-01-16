@@ -13,23 +13,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
 import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class OrderController {
+
     private final UserService userService;
+
     private final PhoneService phoneService;
     private final OrderService orderService;
+
     public OrderController(UserService userService, PhoneService phoneService, OrderService orderService) {
         this.userService = userService;
         this.phoneService = phoneService;
         this.orderService = orderService;
     }
+
     @GetMapping("/orders")
     public List<Orders> getOrders() {
         return orderService.getOrders();
     }
+
     @GetMapping("/order/{id}")
     public Orders getOrder(@PathVariable UUID id) {
         return orderService.getOrder(id);
@@ -38,25 +44,34 @@ public class OrderController {
     public List<Orders> getOrdersUsers(@PathVariable User user){
         return orderService.getOrdersUser(user);
     }
+
+
     @PostMapping("/createOrder/{username}")
     public ResponseEntity<Object> createOrder(@PathVariable @Valid String username,
             @RequestBody List<UUID> phones) {
         return handelOrderCreation(username, phones);
     }
+
     @DeleteMapping("/deleteOrder/{orderId}")
     public ResponseEntity<String> deleteOrder(@PathVariable UUID orderId) {
+
         return handelOrderDeletion(orderId);
+
     }
+
     private ResponseEntity<String> handelOrderDeletion(UUID orderId) {
         String username = JwtToPrincipalConverter.getCurrentUsername();
         String userRole = JwtToPrincipalConverter.getCurrentUserRole();
+
         try{
             Orders order = orderService.getOrder(orderId);
             if(order == null){
                 return new ResponseEntity<>("There is no Order with this ID", HttpStatus.NOT_FOUND);
             }
+
             User user = order.getUser();
             String orderUserName = user.getUsername();
+
             if(!Objects.equals(username, orderUserName) && !userRole.equals("ROLE_admin")){
                 return new ResponseEntity<>("Only Admins or the creator of the order can delete it.", HttpStatus.UNAUTHORIZED);
             }

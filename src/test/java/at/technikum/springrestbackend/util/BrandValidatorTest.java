@@ -53,4 +53,3 @@ public class BrandValidatorTest {
         verify(brandService, times(1)).isBrandTaken("ExistingBrand");
     }
 }
-
