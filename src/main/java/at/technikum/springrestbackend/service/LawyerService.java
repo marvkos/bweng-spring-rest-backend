@@ -116,6 +116,7 @@ public class LawyerService {
         ));
         PagedResults<LawyerSearchResult> lawyerSearchResults = new PagedResults<>(
                 lawyers.stream().map(lawyer -> new LawyerSearchResult(
+                        lawyer.getId(),
                         lawyer.getFirstName(),
                         lawyer.getLastName(),
                         lawyer.getSpecialization(),
