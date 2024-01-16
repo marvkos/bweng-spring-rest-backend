@@ -21,6 +21,7 @@ import java.util.*;
 public class LawyerService {
 
     private final LawyerRepository lawyerRepository;
+    private final AppointmentService appointmentService;
 
     public ResponseEntity<Lawyer> createLawyer(Lawyer lawyer) {
         Lawyer savedLawyer = lawyerRepository.save(lawyer);
@@ -59,31 +60,6 @@ public class LawyerService {
         }
     }
 
-    private Hashtable<String, List<String>> getAvailabilityTimeslotsForDates(UUID lawyerId, LocalDate from, int amountOfDays) {
-        Hashtable<String, List<String>> availabilityTimeslots = new Hashtable<>();
-        for (int i = 0; i < amountOfDays; i++) {
-            LocalDate currentDate = from.plusDays(i);
-
-
-
-            List<String> availableTimeslots = new ArrayList<>()
-            {
-                {
-                    add("10:00");
-                    add("11:00");
-                    add("12:00");
-                }
-            };
-            //for (LocalDate specificAvailabilityDate : lawyerRepository.getSpecificAvailabilityDates(lawyerId)) {
-            //    if (specificAvailabilityDate.equals(currentDate)) {
-            //        availableTimeslots.addAll(lawyerRepository.getSpecificAvailabilityTimeslots(lawyerId, specificAvailabilityDate));
-            //    }
-            //}
-            availabilityTimeslots.put(currentDate.toString(), availableTimeslots);
-        }
-        return availabilityTimeslots;
-    }
-
     public ResponseEntity<PagedResults<LawyerSearchResult>> getLawyersProfilesBySearchTerm(
             String searchTerm,
             int page,
@@ -111,7 +87,7 @@ public class LawyerService {
                         new LawyerAvailability(
                                 LocalDate.now().toString(),
                                 LocalDate.now().plusDays(6).toString(),
-                                getAvailabilityTimeslotsForDates(lawyer.getId(), LocalDate.now(), 7)
+                                appointmentService.getAvailabilityTimeslotsForDates(lawyer, LocalDate.now(), 7)
                         )
                 )).toList(),
                 page,
