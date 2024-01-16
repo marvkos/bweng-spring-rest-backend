@@ -1,11 +1,24 @@
 package at.technikum.springrestbackend.Controller;
-
 import at.technikum.springrestbackend.controller.AuthController;
 import at.technikum.springrestbackend.dto.TokenRequest;
 import at.technikum.springrestbackend.dto.TokenResponse;
 import at.technikum.springrestbackend.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -15,6 +28,8 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+
+@ExtendWith(MockitoExtension.class)
 public class AuthControllerTest {
 
     @Mock
@@ -22,11 +37,28 @@ public class AuthControllerTest {
 
     @InjectMocks
     private AuthController authController;
+  
+    private MockMvc mockMvc;
 
     @BeforeEach
-    void setUp() {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
     }
+
+    @Test
+    public void shouldReturnTokenWhenValidRequest() throws Exception {
+        TokenRequest tokenRequest = new TokenRequest();
+        TokenResponse tokenResponse = new TokenResponse("token");
+        given(authService.authenticate(any(TokenRequest.class))).willReturn(tokenResponse);
+
+        mockMvc.perform(post("/auth/token")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{ \"username\": \"user\", \"password\": \"pass\" }"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"token\":\"token\"}"));
+    }
+
 
     @Test
     void testToken_ValidRequest() {
@@ -42,16 +74,5 @@ public class AuthControllerTest {
         assertEquals(mockTokenResponse, result);
     }
 
-    /*@Test
-    void testToken_InvalidRequest() {
-        // Mock the behavior of the AuthService to throw an exception for an invalid request
-        TokenRequest invalidTokenRequest = new TokenRequest("", ""); // Invalid request
-        when(authService.authenticate(invalidTokenRequest)).thenThrow(new IllegalArgumentException("Invalid request"));
-
-        // Call the token method on the AuthController with an invalid TokenRequest
-     result = authController.token(invalidTokenRequest);
-
-        // Verify that the result is a BAD_REQUEST response
-        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-    }*/
+   
 }
