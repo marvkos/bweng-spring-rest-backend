@@ -1,6 +1,5 @@
 package at.technikum.springrestbackend.service;
 
-import at.technikum.springrestbackend.dto.AvailabilityTimeslots;
 import at.technikum.springrestbackend.dto.LawyerAvailability;
 import at.technikum.springrestbackend.dto.LawyerSearchResult;
 import at.technikum.springrestbackend.dto.PagedResults;
@@ -60,35 +59,29 @@ public class LawyerService {
         }
     }
 
-    /*public ResponseEntity<LawyerAvailability> getLawyerAvailability(
-            UUID id,
-            LocalDate date,
-            int amountOfDays
-    ) {
-        Optional<Lawyer> lawyerOptional = lawyerRepository.findById(id);
-        if (lawyerOptional.isPresent()) {
-            Lawyer lawyer = lawyerOptional.get();
-            Dictionary<LocalDate, List<LocalDate>> lawyerAvailability = new Hashtable<>();
-            for (int i = 0; i < amountOfDays; i++) {
-                LocalDate currentDate = date.plusDays(i);
-                List<LocalDate> availableTimeslots = new ArrayList<>();
-                for (LocalDate specificAvailabilityDate : lawyer.getSpecificAvailabilities().keySet()) {
-                    if (specificAvailabilityDate.equals(currentDate)) {
-                        availableTimeslots.add(specificAvailabilityDate);
-                    }
+    private Hashtable<String, List<String>> getAvailabilityTimeslotsForDates(UUID lawyerId, LocalDate from, int amountOfDays) {
+        Hashtable<String, List<String>> availabilityTimeslots = new Hashtable<>();
+        for (int i = 0; i < amountOfDays; i++) {
+            LocalDate currentDate = from.plusDays(i);
+
+
+
+            List<String> availableTimeslots = new ArrayList<>()
+            {
+                {
+                    add("10:00");
+                    add("11:00");
+                    add("12:00");
                 }
-                lawyerAvailability.put(currentDate, availableTimeslots);
-            }
-            return new ResponseEntity<>(lawyerAvailability, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            };
+            //for (LocalDate specificAvailabilityDate : lawyerRepository.getSpecificAvailabilityDates(lawyerId)) {
+            //    if (specificAvailabilityDate.equals(currentDate)) {
+            //        availableTimeslots.addAll(lawyerRepository.getSpecificAvailabilityTimeslots(lawyerId, specificAvailabilityDate));
+            //    }
+            //}
+            availabilityTimeslots.put(currentDate.toString(), availableTimeslots);
         }
-    }*/
-
-    private List<LocalTime> getAvailableTimeslotsForDate(UUID id, LocalDate date) {
-        List<LocalTime> availableTimeslots = new ArrayList<>();
-
-        return availableTimeslots;
+        return availabilityTimeslots;
     }
 
     public ResponseEntity<PagedResults<LawyerSearchResult>> getLawyersProfilesBySearchTerm(
@@ -105,15 +98,6 @@ public class LawyerService {
                 searchTerm,
                 PageRequest.of(page, size)
         );
-        ArrayList<AvailabilityTimeslots> availabilityTimeslots = new ArrayList<>();
-        availabilityTimeslots.add(new AvailabilityTimeslots(
-                LocalDate.now().toString(),
-                new ArrayList<String>() {{
-                    add(LocalTime.now().toString());
-                    add(LocalTime.now().plusHours(1).toString());
-                    add(LocalTime.now().plusHours(2).toString());
-                }}
-        ));
         PagedResults<LawyerSearchResult> lawyerSearchResults = new PagedResults<>(
                 lawyers.stream().map(lawyer -> new LawyerSearchResult(
                         lawyer.getId(),
@@ -126,8 +110,8 @@ public class LawyerService {
                         lawyer.getCity(),
                         new LawyerAvailability(
                                 LocalDate.now().toString(),
-                                LocalDate.now().plusDays(7).toString(),
-                                availabilityTimeslots
+                                LocalDate.now().plusDays(6).toString(),
+                                getAvailabilityTimeslotsForDates(lawyer.getId(), LocalDate.now(), 7)
                         )
                 )).toList(),
                 page,

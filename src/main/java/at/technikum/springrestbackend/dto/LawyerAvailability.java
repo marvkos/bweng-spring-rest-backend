@@ -14,5 +14,5 @@ import java.util.UUID;
 public class LawyerAvailability {
     private String from;
     private String to;
-    private List<AvailabilityTimeslots> timeslotsByDate;
+    private Dictionary<String, List<String>> timeslotsByDate;
 }
