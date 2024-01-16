@@ -38,9 +38,9 @@ public class LawyerController {
         return lawyerService.getLawyerById(id);
     }
 
-    @GetMapping("/search/{searchTerm}")
+    @GetMapping("/search")
     public ResponseEntity<PagedResults<LawyerSearchResult>> getLawyersProfilesBySearchTerm(
-            @RequestBody GetLawyerProfilesRequest request)
+            GetLawyerProfilesRequest request)
     {
         return lawyerService.getLawyersProfilesBySearchTerm(request.getSearchTerm(), request.getPage(), request.getSize());
     }

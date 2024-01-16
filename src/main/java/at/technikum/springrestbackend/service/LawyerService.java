@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.service;
 
+import at.technikum.springrestbackend.dto.AvailabilityTimeslots;
 import at.technikum.springrestbackend.dto.LawyerAvailability;
 import at.technikum.springrestbackend.dto.LawyerSearchResult;
 import at.technikum.springrestbackend.dto.PagedResults;
@@ -103,6 +104,15 @@ public class LawyerService {
                 searchTerm,
                 PageRequest.of(page, size)
         );
+        ArrayList<AvailabilityTimeslots> availabilityTimeslots = new ArrayList<>();
+        availabilityTimeslots.add(new AvailabilityTimeslots(
+                LocalDate.now().toString(),
+                new ArrayList<String>() {{
+                    add(LocalTime.now().toString());
+                    add(LocalTime.now().plusHours(1).toString());
+                    add(LocalTime.now().plusHours(2).toString());
+                }}
+        ));
         PagedResults<LawyerSearchResult> lawyerSearchResults = new PagedResults<>(
                 lawyers.stream().map(lawyer -> new LawyerSearchResult(
                         lawyer.getFirstName(),
@@ -113,14 +123,13 @@ public class LawyerService {
                         lawyer.getPostalCode(),
                         lawyer.getCity(),
                         new LawyerAvailability(
-                                lawyer.getId(),
-                                "LocalDate.now()",
-                                "LocalDate.now().plusDays(7)",
-                                new Hashtable<>()
+                                LocalDate.now().toString(),
+                                LocalDate.now().plusDays(7).toString(),
+                                availabilityTimeslots
                         )
                 )).toList(),
                 page,
-                lawyers.getSize(),
+                (int)lawyers.getTotalElements(),
                 lawyers.getTotalPages()
         );
         return ResponseEntity.ok(lawyerSearchResults);

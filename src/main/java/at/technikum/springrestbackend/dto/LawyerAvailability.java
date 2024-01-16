@@ -12,8 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 public class LawyerAvailability {
-    private UUID lawyerId;
     private String from;
     private String to;
-    private Dictionary<LocalDate, List<LocalTime>> timeslotsByDate;
+    private List<AvailabilityTimeslots> timeslotsByDate;
 }
