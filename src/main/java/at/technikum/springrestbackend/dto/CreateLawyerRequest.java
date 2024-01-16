@@ -5,6 +5,9 @@ import at.technikum.springrestbackend.model.Lawyer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 @AllArgsConstructor
 @Getter
 public class CreateLawyerRequest {
@@ -18,6 +21,7 @@ public class CreateLawyerRequest {
 
     public Lawyer toLawyer() {
         Lawyer lawyer = new Lawyer();
+        lawyer.setId(UUID.randomUUID());
         lawyer.setFirstName(firstName);
         lawyer.setLastName(lastName);
         lawyer.setSpecialization(specialization.toString());
@@ -25,6 +29,7 @@ public class CreateLawyerRequest {
         lawyer.setAddress(address);
         lawyer.setPostalCode(postalCode);
         lawyer.setCity(city);
+        lawyer.setAvailabilities(new ArrayList<>());
         return lawyer;
     }
 }
