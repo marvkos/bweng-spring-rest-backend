@@ -10,6 +10,7 @@ import at.technikum.springrestbackend.service.OrderService;
 import at.technikum.springrestbackend.service.PhoneService;
 import at.technikum.springrestbackend.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,6 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+
+@ExtendWith(MockitoExtension.class)
 public class OrderControllerTest {
 
     @Mock
@@ -154,6 +157,7 @@ public class OrderControllerTest {
         String username = "john_doe";
         List<UUID> phoneIds = Arrays.asList(UUID.randomUUID(), UUID.randomUUID());
 
+
         ResponseEntity<Object> expectedResponse = new ResponseEntity<>("New Order is created.", HttpStatus.CREATED);
 
         when(userService.getUserByUsername(username)).thenReturn(new User());
@@ -163,4 +167,5 @@ public class OrderControllerTest {
 
         assertEquals(expectedResponse, result);
     }
+
 }

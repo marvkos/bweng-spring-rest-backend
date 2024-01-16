@@ -161,6 +161,7 @@ public class BrandControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
         assertEquals("Brand not found", result.getBody());
     }
+
     @Test
     void testAddBrand_ExceptionHandling() {
         when(brandValidator.validateBrand(any(Brand.class))).thenReturn(Collections.emptyList());
@@ -183,5 +184,6 @@ public class BrandControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
         assertEquals("An error occurred while processing your request.", result.getBody());
     }
+
 
 }
