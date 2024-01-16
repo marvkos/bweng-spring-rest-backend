@@ -154,9 +154,10 @@ public class AppointmentService {
                 LocalDate.parse(date).getDayOfWeek(),
                 lawyer.get()
         );
+        LocalTime timeOfAppointment = LocalTime.parse(time);
         GeneralAvailability generalAvailability = generalAvailabilities.stream().filter(
-                availability -> LocalTime.parse(time).isAfter(availability.getStartTime())
-                        && LocalTime.parse(time).isBefore(availability.getEndTime())
+                availability ->
+                        timeIsBetween(timeOfAppointment, availability.getStartTime(), availability.getEndTime())
         ).findFirst().orElse(null);
         if (generalAvailability == null) {
             return ResponseEntity.badRequest().build();
@@ -178,22 +179,24 @@ public class AppointmentService {
                 lawyer.get()
         );
         if (unavailabilities.stream().anyMatch(
-                unavailability -> LocalTime.parse(time).isAfter(unavailability.getStartTime())
-                        && LocalTime.parse(time).isBefore(unavailability.getEndTime())
+                unavailability ->
+                        timeIsBetween(timeOfAppointment, unavailability.getStartTime(), unavailability.getEndTime())
         )) {
             return ResponseEntity.badRequest().build();
         }
 
         // We create the appointment;
-        Appointment savedAppointment = appointmentRepository.save(new Appointment() {{
-            setId(UUID.randomUUID());
-            setLawyer(lawyer.get());
-            setUser(user.get());
-            setDate(LocalDate.parse(date));
-            setStartTime(LocalTime.parse(time));
-            setEndTime(LocalTime.parse(time).plusMinutes(generalAvailability.getDuration()));
-        }});
+        Appointment newAppointment = new Appointment();
+        newAppointment.setId(UUID.randomUUID());
+        newAppointment.setLawyer(lawyer.get());
+        newAppointment.setUser(user.get());
+        newAppointment.setDate(LocalDate.parse(date));
+        newAppointment.setStartTime(LocalTime.parse(time));
+        newAppointment.setEndTime(LocalTime.parse(time).plusMinutes(generalAvailability.getDuration()));
+        return ResponseEntity.ok(appointmentRepository.save(newAppointment));
+    }
 
-        return ResponseEntity.ok(savedAppointment);
+    private boolean timeIsBetween(LocalTime time, LocalTime startTime, LocalTime endTime) {
+        return (time.isAfter(startTime) || time.equals(startTime)) && (time.isBefore(endTime) || time.equals(endTime));
     }
 }
