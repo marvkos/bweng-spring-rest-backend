@@ -2,10 +2,10 @@ package at.technikum.springrestbackend.repository;
 
 import at.technikum.springrestbackend.model.Orders;
 import at.technikum.springrestbackend.model.User;
-import at.technikum.springrestbackend.repository.OrderRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;

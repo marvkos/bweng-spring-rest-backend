@@ -17,4 +17,8 @@ public class TokenRequest {
         this.username = username;
         this.password = password;
     }
+
+    public TokenRequest() {
+
+    }
 }

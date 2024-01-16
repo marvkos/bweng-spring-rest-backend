@@ -1,4 +1,6 @@
 package at.technikum.springrestbackend.Controller;
+
+
 import at.technikum.springrestbackend.controller.OrderController;
 import at.technikum.springrestbackend.model.Orders;
 import at.technikum.springrestbackend.model.Phone;
@@ -7,11 +9,6 @@ import at.technikum.springrestbackend.security.jwt.JwtToPrincipalConverter;
 import at.technikum.springrestbackend.service.OrderService;
 import at.technikum.springrestbackend.service.PhoneService;
 import at.technikum.springrestbackend.service.UserService;
-import at.technikum.springrestbackend.service.OrderService;
-import at.technikum.springrestbackend.service.PhoneService;
-import at.technikum.springrestbackend.service.UserService;
-import com.auth0.jwt.exceptions.TokenExpiredException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,19 +26,16 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
 @ExtendWith(MockitoExtension.class)
 public class OrderControllerTest {
 
     @Mock
-
     private UserService userService;
 
     @Mock
     private PhoneService phoneService;
 
     @Mock
-
     private OrderService orderService;
 
     @InjectMocks
@@ -148,5 +142,3 @@ public class OrderControllerTest {
     }
 
 }
-
-
