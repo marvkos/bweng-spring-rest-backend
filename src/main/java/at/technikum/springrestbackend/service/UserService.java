@@ -3,6 +3,7 @@ package at.technikum.springrestbackend.service;
 import at.technikum.springrestbackend.model.User;
 import at.technikum.springrestbackend.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class UserService {
 
         user.setId(UUID.randomUUID());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.ok(userRepository.save(user));
+        return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
     }
 
     public ResponseEntity<List<User>> getAllUsers() {
@@ -53,7 +54,7 @@ public class UserService {
 
     public ResponseEntity<User> updateUser(UUID id, User updatedUser) {
         if (userRepository.existsById(id)) {
-            updatedUser.setId(id);  // Ensure the ID is set to the one from the path
+            updatedUser.setId(id);
             updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             return ResponseEntity.ok(userRepository.save(updatedUser));
         } else {

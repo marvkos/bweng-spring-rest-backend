@@ -30,6 +30,7 @@ public class Blog {
     @Size(min = 3, max = 1000)
     private String content;
 
+    @NotBlank
     private String author;
 
     @CreationTimestamp
