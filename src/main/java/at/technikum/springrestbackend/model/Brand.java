@@ -54,4 +54,9 @@ public class Brand {
         this.picturePath = picturePath;
         this.createdBy = user;
     }
+
+    public Brand(String name, String picturePath) {
+        this.name = name;
+        this.picturePath = picturePath;
+    }
 }

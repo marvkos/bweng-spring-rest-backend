@@ -11,7 +11,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import java.time.Instant;
-import org.mockito.*;
+
 import com.auth0.jwt.exceptions.TokenExpiredException;
 
 import java.util.Arrays;
