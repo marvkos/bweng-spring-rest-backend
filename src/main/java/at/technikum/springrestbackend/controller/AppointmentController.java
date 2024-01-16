@@ -1,13 +1,15 @@
 package at.technikum.springrestbackend.controller;
 
 import at.technikum.springrestbackend.dto.appointment.CreateAppointmentRequest;
+import at.technikum.springrestbackend.dto.appointment.GetAvailableTimeslotsForPeriodRequest;
 import at.technikum.springrestbackend.model.Appointment;
 import at.technikum.springrestbackend.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.Hashtable;
+import java.util.List;
 
 @RestController
 @RequestMapping("/appointments")
@@ -18,13 +20,24 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Appointment> createAppointment(@RequestBody CreateAppointmentRequest request) {
         return appointmentService.createAppointment(
                 request.getLawyerId(),
                 request.getUserId(),
                 request.getDate(),
                 request.getTime()
+        );
+    }
+
+    @GetMapping("/available-timeslots")
+    public ResponseEntity<Hashtable<String, List<String>>> getAvailableTimeslotsForPeriod(
+            GetAvailableTimeslotsForPeriodRequest request
+    ) {
+            return appointmentService.getAvailabilityTimeslotsForDates(
+                request.getLawyerId(),
+                LocalDate.parse(request.getStartDate()),
+                request.getNumberOfDays()
         );
     }
 }

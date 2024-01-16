@@ -87,7 +87,10 @@ public class LawyerService {
                         new LawyerAvailability(
                                 LocalDate.now().toString(),
                                 LocalDate.now().plusDays(6).toString(),
-                                appointmentService.getAvailabilityTimeslotsForDates(lawyer, LocalDate.now(), 7)
+                                appointmentService.getAvailabilityTimeslotsForDates(
+                                        lawyer.getId(),
+                                        LocalDate.now(),
+                                        7).getBody()
                         )
                 )).toList(),
                 page,

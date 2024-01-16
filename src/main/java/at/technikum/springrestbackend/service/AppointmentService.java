@@ -103,17 +103,15 @@ public class AppointmentService {
             LocalTime endTime = availability.getEndTime();
             LocalTime currentTime = startTime;
 
-            while (currentTime.isBefore(endTime)) {
+            while (currentTime.isBefore(endTime) || currentTime.equals(endTime)) {
                 LocalTime finalCurrentTime = currentTime;
 
                 boolean lawyerIsAvailable = unavailabilities.stream().noneMatch(
-                        unavailability -> finalCurrentTime.isAfter(unavailability.getStartTime())
-                                && finalCurrentTime.isBefore(unavailability.getEndTime())
+                        unavailability -> timeIsBetween(finalCurrentTime, unavailability.getStartTime(), unavailability.getEndTime().minusSeconds(1))
                 );
 
                 boolean lawyerHasNoAppointment = appointments.stream().noneMatch(
-                        appointment -> finalCurrentTime.isAfter(appointment.getStartTime())
-                                && finalCurrentTime.isBefore(appointment.getEndTime())
+                        appointment -> timeIsBetween(finalCurrentTime, appointment.getStartTime(), appointment.getEndTime().minusSeconds(1))
                 );
 
                 if (lawyerIsAvailable && lawyerHasNoAppointment)
@@ -122,18 +120,27 @@ public class AppointmentService {
                 currentTime = currentTime.plusMinutes(availability.getDuration());
             }
         }
-
         return timeslots;
     }
 
-    public Hashtable<String, List<String>> getAvailabilityTimeslotsForDates(Lawyer lawyer, LocalDate from, int amountOfDays) {
+    public ResponseEntity<Hashtable<String, List<String>>> getAvailabilityTimeslotsForDates(
+            UUID lawyerId,
+            LocalDate from,
+            int amountOfDays
+    ) {
+        Optional<Lawyer> optionalLawyer = lawyerRepository.findById(lawyerId);
+        if (optionalLawyer.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        Lawyer lawyer = optionalLawyer.get();
+
         Hashtable<String, List<String>> availabilityTimeslots = new Hashtable<>();
         for (int i = 0; i < amountOfDays; i++) {
             LocalDate currentDate = from.plusDays(i);
             List<String> availableTimeslots = getTimeslotsByDate(lawyer, currentDate);
             availabilityTimeslots.put(currentDate.toString(), availableTimeslots);
         }
-        return availabilityTimeslots;
+        return ResponseEntity.ok(availabilityTimeslots);
     }
 
     public ResponseEntity<Appointment> createAppointment(UUID lawyerId, UUID userId, String date, String time) {
