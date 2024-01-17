@@ -137,7 +137,7 @@ public class AppointmentService {
         }
         Lawyer lawyer = optionalLawyer.get();
 
-        Hashtable<String, List<String>> availabilityTimeslots = new Hashtable<>();
+        TreeMap<String, List<String>> availabilityTimeslots = new TreeMap<>();
         for (int i = 0; i < amountOfDays; i++) {
             LocalDate currentDate = from.plusDays(i);
             List<String> availableTimeslots = getTimeslotsByDate(lawyer, currentDate);
@@ -147,20 +147,18 @@ public class AppointmentService {
     }
 
     public ResponseEntity<Appointment> createAppointment(UUID lawyerId, UUID userId, String date, String time) {
-        // We verify that the lawyer exists
         Optional<Lawyer> lawyer = lawyerRepository.findById(lawyerId);
         if (lawyer.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
-        // We verify that the user exists
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
+        List<String> availableTimeslots = getTimeslotsByDate(lawyer.get(), LocalDate.parse(date));
+        if (availableTimeslots.stream().noneMatch(timeslot -> LocalTime.parse(time).equals(LocalTime.parse(timeslot)))) {
             return ResponseEntity.badRequest().build();
         }
 
-        List<String> availableTimeslots = getTimeslotsByDate(lawyer.get(), LocalDate.parse(date));
-        if (availableTimeslots.stream().noneMatch(timeslot -> LocalTime.parse(time).equals(LocalTime.parse(timeslot)))) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
