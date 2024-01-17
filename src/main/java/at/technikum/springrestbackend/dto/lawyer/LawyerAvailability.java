@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.dto;
+package at.technikum.springrestbackend.dto.lawyer;
 
 import at.technikum.springrestbackend.dto.appointment.AvailabilityTimetable;
 import lombok.AllArgsConstructor;

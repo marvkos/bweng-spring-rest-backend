@@ -1,8 +1,8 @@
 package at.technikum.springrestbackend.controller;
 
-import at.technikum.springrestbackend.dto.CreateLawyerRequest;
-import at.technikum.springrestbackend.dto.GetLawyerProfilesRequest;
-import at.technikum.springrestbackend.dto.LawyerSearchResult;
+import at.technikum.springrestbackend.dto.lawyer.CreateLawyerRequest;
+import at.technikum.springrestbackend.dto.lawyer.GetLawyerProfilesRequest;
+import at.technikum.springrestbackend.dto.lawyer.LawyerSearchResult;
 import at.technikum.springrestbackend.dto.PagedResults;
 import at.technikum.springrestbackend.model.Lawyer;
 import at.technikum.springrestbackend.service.LawyerService;

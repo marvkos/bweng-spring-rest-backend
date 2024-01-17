@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.dto;
+package at.technikum.springrestbackend.dto.lawyer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

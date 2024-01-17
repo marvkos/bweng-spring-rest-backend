@@ -1,7 +1,7 @@
 package at.technikum.springrestbackend.service;
 
-import at.technikum.springrestbackend.dto.LawyerAvailability;
-import at.technikum.springrestbackend.dto.LawyerSearchResult;
+import at.technikum.springrestbackend.dto.lawyer.LawyerAvailability;
+import at.technikum.springrestbackend.dto.lawyer.LawyerSearchResult;
 import at.technikum.springrestbackend.dto.PagedResults;
 import at.technikum.springrestbackend.model.Lawyer;
 import at.technikum.springrestbackend.repository.LawyerRepository;
@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 @Service
