@@ -4,7 +4,6 @@ import at.technikum.springrestbackend.dto.appointment.AvailabilityTimetable;
 import at.technikum.springrestbackend.model.*;
 import at.technikum.springrestbackend.repository.*;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,75 +19,6 @@ public class AppointmentService {
     private final LawyerRepository lawyerRepository;
     private final AppointmentRepository appointmentRepository;
     private final UserRepository userRepository;
-
-    public ResponseEntity<List<GeneralAvailability>> getAllGeneralAvailabilities() {
-        List<GeneralAvailability> availabilities =  generalAvailabilityRepository.findAll();
-        return ResponseEntity.ok(availabilities);
-    }
-
-    public ResponseEntity<GeneralAvailability> getGeneralAvailabilityById(UUID id) {
-        Optional<GeneralAvailability> availability = generalAvailabilityRepository.findById(id);
-        if (availability.isPresent()) {
-            return ResponseEntity.ok(availability.get());
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    public ResponseEntity<GeneralAvailability> createGeneralAvailability(GeneralAvailability availability) {
-        availability.setId(UUID.randomUUID());
-        GeneralAvailability savedAvailability = generalAvailabilityRepository.save(availability);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedAvailability);
-    }
-
-    public ResponseEntity<GeneralAvailability> updateGeneralAvailability(UUID id, GeneralAvailability updatedAvailability) {
-        if (!generalAvailabilityRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        updatedAvailability.setId(id);
-        generalAvailabilityRepository.save(updatedAvailability);
-        return ResponseEntity.ok(updatedAvailability);
-    }
-
-    public ResponseEntity<Void> deleteGeneralAvailability(UUID id) {
-        if (!generalAvailabilityRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        generalAvailabilityRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    public ResponseEntity<List<SpecificAvailability>> getAllSpecificAvailabilities() {
-        List<SpecificAvailability> availabilities = specificAvailabilityRepository.findAll();
-        return ResponseEntity.ok(availabilities);
-    }
-
-    public ResponseEntity<SpecificAvailability> getSpecificAvailabilityById(UUID id) {
-        Optional<SpecificAvailability> availability = specificAvailabilityRepository.findById(id);
-        return availability.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    public ResponseEntity<SpecificAvailability> createSpecificAvailability(SpecificAvailability specificAvailability) {
-        specificAvailability.setId(UUID.randomUUID());
-        SpecificAvailability savedAvailability = specificAvailabilityRepository.save(specificAvailability);
-        return new ResponseEntity<>(savedAvailability, HttpStatus.CREATED);
-    }
-
-    public ResponseEntity<SpecificAvailability> updateSpecificAvailability(UUID id, SpecificAvailability updatedAvailability) {
-        if (!specificAvailabilityRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        updatedAvailability.setId(id);
-        SpecificAvailability savedAvailability = specificAvailabilityRepository.save(updatedAvailability);
-        return ResponseEntity.ok(savedAvailability);
-    }
-
-    public ResponseEntity<Void> deleteSpecificAvailability(UUID id) {
-        if (!specificAvailabilityRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        specificAvailabilityRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
 
     private List<String> getTimeslotsByDate(Lawyer lawyer, LocalDate date) {
         List<Appointment> appointments = appointmentRepository.findAllByLawyerAndDate(lawyer, date);
