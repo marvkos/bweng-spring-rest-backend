@@ -6,7 +6,7 @@ This is the template project for the BWENG course.
     * [Get Docker](https://docs.docker.com/get-docker/)
 
 ## Container
-* Spring Boot basic setup container
+* Spring Boot basic setup container 
   * Port 8080
 * MariaDB container
   * Port 3306
@@ -37,6 +37,7 @@ Stop Docker container
 docker compose stop
 ```
 Remove Docker container
+
 ```shell
 docker compose down
 ```
