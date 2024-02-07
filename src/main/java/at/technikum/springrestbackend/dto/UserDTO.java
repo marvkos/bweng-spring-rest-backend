@@ -6,19 +6,19 @@ import org.checkerframework.common.aliasing.qual.Unique;
 
 public class UserDTO {
     private String id;
-    //@NotBlank
+    @NotBlank
     private String username;
-    //@NotBlank
+    @NotBlank
     private String pw;
-    //@NotBlank
+    @NotBlank
     private String name;
     @Unique
     @NotBlank
     @Valid
     private String email;
-    //@NotBlank
+    @NotBlank
     private String country;
-    //@NotBlank
+    @NotBlank
     private String address;
 
     public UserDTO() {
