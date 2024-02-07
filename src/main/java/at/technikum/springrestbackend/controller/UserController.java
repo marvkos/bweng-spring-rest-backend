@@ -21,20 +21,24 @@ public class UserController {
     private final UserServices userServices;
     private final UserRepository userRepository;
     @Autowired
-    public UserController(UserMapper userMapper,
-                          UserServices userServices,
-                          UserRepository userRepository) {
+    public UserController(
+                        UserMapper userMapper,
+                        UserServices userServices,
+                        UserRepository userRepository) {
+
         this.userMapper = userMapper;
         this.userServices = userServices;
         this.userRepository = userRepository;
     }
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<UserDTO> readAll() {
         return userServices.findAll().stream()
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
     }
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.FOUND)
     public UserDTO read(@PathVariable String id) {
         UserModel user = userServices.find(id);
         return userMapper.toDTO(user);
@@ -49,25 +53,28 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public UserDTO update(@PathVariable String id, @RequestBody UserDTO updatedUserDTO){
 
+        //for update logic CTRL+LMB on 'update' - method call
         return userMapper.toDTO(userServices.update(id, updatedUserDTO));
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.FOUND)
     public UserDTO delete(@PathVariable String id){
         UserDTO deletedUserDTO =
                 new UserDTO(
-                        id, userServices.find(id).getUsername(),
+                        id,
+                        userServices.find(id).getUsername(),
                         userServices.find(id).getPw(),
                         userServices.find(id).getCountry(),
                         userServices.find(id).getAddress(),
-                        userServices.find(id).getFirstname(),
-                        userServices.find(id).getSurname(),
-                        userServices.find(id).getEmail(),
-                        userServices.find(id).getGender()
+                        userServices.find(id).getName(),
+                        userServices.find(id).getEmail()
                 );
 
+        userServices.find(id);
         userRepository.deleteById(id);
         return deletedUserDTO;
     }

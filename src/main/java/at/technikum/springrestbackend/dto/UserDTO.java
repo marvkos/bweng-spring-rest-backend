@@ -2,6 +2,7 @@ package at.technikum.springrestbackend.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 public class UserDTO {
     private String id;
@@ -9,11 +10,9 @@ public class UserDTO {
     private String username;
     @NotBlank
     private String pw;
-    private String gender;
     @NotBlank
-    private String firstname;
-    @NotBlank
-    private String surname;
+    private String name;
+    @Unique
     @NotBlank
     @Valid
     private String email;
@@ -22,33 +21,26 @@ public class UserDTO {
     @NotBlank
     private String address;
 
-
-
-
     public UserDTO() {
     }
 
-    public UserDTO(String id, String username, String pw, String country, String address, String firstname, String surname, String email, String gender) {
+    public UserDTO(String id, String username, String pw, String country, String address, String name, String email) {
         this.id = id;
         this.username = username;
         this.pw = pw;
         this.country = country;
         this.address = address;
-        this.firstname = firstname;
-        this.surname = surname;
+        this.name = name;
         this.email = email;
-        this.gender = gender;
     }
 
 
-    public void setAllDTO(String id, String username, String pw, String country, String address, String firstname, String surname, String email, String gender) {
+    public void setAllDTO(String id, String username, String pw, String country, String address, String name, String email) {
         setCountry(country);
         setUsername(username);
         setAddress(address);
         setEmail(email);
-        setFirstname(firstname);
-        setSurname(surname);
-        setGender(gender);
+        setName(name);
         setPw(pw);
         setId(id);
     }
@@ -93,20 +85,12 @@ public class UserDTO {
         this.address = address;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -115,13 +99,5 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 }

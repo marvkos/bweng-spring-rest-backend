@@ -1,5 +1,4 @@
 package at.technikum.springrestbackend.services;
-
 import at.technikum.springrestbackend.dto.UserDTO;
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
 import at.technikum.springrestbackend.model.UserModel;
@@ -23,7 +22,7 @@ public class UserServices {
     }
     public UserModel find(String id) {
         return userRepository.findById(id)
-                .orElseThrow(EntityExistsException::new);
+                .orElseThrow(() -> new EntityExistsException("User not found with id: " + id));
     }
 
     public List<UserModel> findAll (){
@@ -47,10 +46,8 @@ public class UserServices {
         existingUser.setAllEntity(
                 id, userDTOupdate.getUsername(),
                 userDTOupdate.getPw(), userDTOupdate.getCountry(),
-                userDTOupdate.getAddress(), userDTOupdate.getFirstname(),
-                userDTOupdate.getSurname(), userDTOupdate.getEmail(),
-                userDTOupdate.getGender()
-                );
+                userDTOupdate.getAddress(), userDTOupdate.getName(),
+                userDTOupdate.getEmail());
 
         return userRepository.save(existingUser);
     }
