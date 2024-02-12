@@ -44,9 +44,13 @@ public class UserServices {
         UserModel existingUser = userRepository.findById(id).orElseThrow();
 
         existingUser.setAllEntity(
-                id, userDTOupdate.getUsername(),
-                userDTOupdate.getPw(), userDTOupdate.getCountry(),
-                userDTOupdate.getAddress(), userDTOupdate.getName(),
+                id,
+                userDTOupdate.getUsername(),
+                userDTOupdate.getPassword(),
+                userDTOupdate.getCountry(),
+                userDTOupdate.getAddress(),
+                userDTOupdate.getFirstname(),
+                userDTOupdate.getSurname(),
                 userDTOupdate.getEmail());
 
         return userRepository.save(existingUser);

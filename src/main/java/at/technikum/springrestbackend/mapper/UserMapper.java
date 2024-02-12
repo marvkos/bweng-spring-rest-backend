@@ -14,8 +14,9 @@ public class UserMapper {
         UserDTO newUserDTO = new UserDTO();
         //assigning ID, PW and USERNAME to the DTO by using SETTER
         newUserDTO.setAllDTO(userModel.getId(), userModel.getUsername(),
-                             userModel.getPw(), userModel.getCountry(),
-                             userModel.getAddress(), userModel.getName(),
+                             userModel.getPassword(), userModel.getCountry(),
+                             userModel.getAddress(), userModel.getFirstname(),
+                             userModel.getSurname(),
                              userModel.getEmail());
         return newUserDTO;
     }
@@ -26,9 +27,10 @@ public class UserMapper {
         if (userDTO.getId() == null) {
             return new UserModel(
                         UUID.randomUUID().toString(),
-                        userDTO.getUsername(), userDTO.getPw(),
+                        userDTO.getUsername(), userDTO.getPassword(),
                         userDTO.getCountry(), userDTO.getAddress(),
-                        userDTO.getName(),
+                        userDTO.getFirstname(),
+                        userDTO.getSurname(),
                         userDTO.getEmail());
         }
 //      ALTERNATIVELY:
@@ -41,9 +43,10 @@ public class UserMapper {
 //        }
         return new UserModel(
                     userDTO.getId(),
-                    userDTO.getUsername(), userDTO.getPw(),
+                    userDTO.getUsername(), userDTO.getPassword(),
                     userDTO.getCountry(), userDTO.getAddress(),
-                    userDTO.getName(),
+                    userDTO.getFirstname(),
+                    userDTO.getSurname(),
                     userDTO.getEmail());
     }
 

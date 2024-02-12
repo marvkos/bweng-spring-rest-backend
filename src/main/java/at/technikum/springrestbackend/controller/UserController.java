@@ -67,10 +67,11 @@ public class UserController {
                 new UserDTO(
                         id,
                         userServices.find(id).getUsername(),
-                        userServices.find(id).getPw(),
+                        userServices.find(id).getPassword(),
                         userServices.find(id).getCountry(),
                         userServices.find(id).getAddress(),
-                        userServices.find(id).getName(),
+                        userServices.find(id).getFirstname(),
+                        userServices.find(id).getSurname(),
                         userServices.find(id).getEmail()
                 );
 
