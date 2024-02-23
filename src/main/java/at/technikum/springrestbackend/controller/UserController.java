@@ -37,6 +37,12 @@ public class UserController {
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+//    @GetMapping("/findallofevent")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<UserDTO> readAllOfEvent(@RequestBody Event event){
+//
+//    }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
     public UserDTO read(@PathVariable String id) {
