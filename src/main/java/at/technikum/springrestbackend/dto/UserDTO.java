@@ -36,13 +36,13 @@ public class UserDTO {
 
 
     public void setAllDTO(String id, String username, String pw, String country, String address, String name, String email) {
-        setCountry(country);
-        setUsername(username);
-        setAddress(address);
-        setEmail(email);
-        setName(name);
-        setPw(pw);
-        setId(id);
+        this.id = id;
+        this.username = username;
+        this.pw = pw;
+        this.country = country;
+        this.address = address;
+        this.name = name;
+        this.email = email;
     }
 
     public String getId() {

@@ -5,7 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class UserModel {
 
     @Id
@@ -31,13 +31,13 @@ public class UserModel {
     }
 
     public void setAllEntity(String id, String username, String pw, String country, String address, String name, String email) {
-        setCountry(country);
-        setUsername(username);
-        setAddress(address);
-        setEmail(email);
-        setName(name);
-        setPw(pw);
-        setId(id);
+        this.id = id;
+        this.username = username;
+        this.pw = pw;
+        this.country = country;
+        this.address = address;
+        this.name = name;
+        this.email = email;
     }
 
     public String getId() {
