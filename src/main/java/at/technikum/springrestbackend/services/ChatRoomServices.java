@@ -50,8 +50,8 @@ public class ChatRoomServices {
         //author, eventID and MAYBE media (?) are redundant
         existingChatRoom.setAllEntity(
                 id,
-                chatRoomDTOupdated.,
-                chatRoomDTOupdated.
+                chatRoomDTOupdated.getChatMessages(),
+                chatRoomDTOupdated.getUsers()
         );
 
 

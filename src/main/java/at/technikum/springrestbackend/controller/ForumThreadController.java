@@ -74,18 +74,10 @@ public class ForumThreadController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public ForumPostDTO delete(@PathVariable String id){
-        ForumPostDTO deletedForumPostDTO =
-                new ForumPostDTO(
-                        id,
-                        postServices.find(id).getTitle(),
-                        postServices.find(id).getAuthor(),
-                        postServices.find(id).getEventID(),
-                        postServices.find(id).getContent(),
-                        postServices.find(id).getMediaPlaceHolder()
-                );
-        postServices.find(id);
+    public void delete(@PathVariable String id){
+//        postServices.find(id);
         postRepository.deleteById(id);
-        return deletedForumPostDTO;
+        System.out.println("Forum Thread with id: " + id + " deleted successfully!");
+
     }
 }

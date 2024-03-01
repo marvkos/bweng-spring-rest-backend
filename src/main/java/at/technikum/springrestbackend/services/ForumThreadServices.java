@@ -52,7 +52,6 @@ public class ForumThreadServices {
                 id,
                 forumPostDTOupdated.getTitle(),
                 forumPostDTOupdated.getAuthor(),
-                forumPostDTOupdated.getEventID(),
                 forumPostDTOupdated.getContent(),
                 forumPostDTOupdated.getMediaPlaceHolder());
 

@@ -47,21 +47,9 @@ public class ForumPostServices {
                 id,
                 forumPostDTOupdated.getTitle(),
                 forumPostDTOupdated.getAuthor(),
-                forumPostDTOupdated.getEventID(),
                 forumPostDTOupdated.getContent(),
-                forumPostDTOupdated.getMediaPlaceHolder());
-
-
-//        alternative version:
-//        existingPost.setId(id);
-//        existingPost.setTitle(forumPostDTOupdated.getTitle());
-
-//        author update in case username changes UNSURE YET --> may be handled via usernameID
-//        --> MAY require DataBase connection via OneToMany, ManyToMany etc. to achieve this
-
-//        existingPost.setAuthor(forumPostDTOupdated.getAuthor());
-//        existingPost.setContent(forumPostDTOupdated.getContent());
-
+                forumPostDTOupdated.getMediaPlaceHolder()
+                );
 
         return postRepository.save(existingPost);
     }

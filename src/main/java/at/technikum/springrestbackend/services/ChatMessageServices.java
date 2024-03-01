@@ -4,6 +4,7 @@ package at.technikum.springrestbackend.services;
 import at.technikum.springrestbackend.dto.ChatMessageDTO;
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
 import at.technikum.springrestbackend.model.ChatMessageModel;
+import at.technikum.springrestbackend.model.ChatRoomModel;
 import at.technikum.springrestbackend.repository.ChatMessageRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;
@@ -44,13 +45,15 @@ public class ChatMessageServices {
         //get the existing Post from the DB and THEN set new values
         ChatMessageModel existingChatMessage = chatMessageRepository.findById(id).orElseThrow();
 
+        ChatRoomModel chatRoomModel = new ChatRoomModel();
         //author, eventID and MAYBE media (?) are redundant
         existingChatMessage.setAllEntity(
                 id,
                 chatMessageDTOupdated.getAuthorid(),
                 chatMessageDTOupdated.getContent(),
-                chatMessageDTOupdated.getChat,
-                chatMessageDTOupdated.getMediaPlaceHolder());
+                chatRoomModel,
+                chatMessageDTOupdated.getMediaPlaceHolder()
+                );
 
         return chatMessageRepository.save(existingChatMessage);
     }

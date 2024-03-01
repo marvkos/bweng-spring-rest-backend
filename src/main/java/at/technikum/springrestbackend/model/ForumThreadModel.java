@@ -19,7 +19,8 @@ public class ForumThreadModel {
     @NotBlank
     @ManyToOne
     @JoinColumn(name = "Event_id")
-    private Event event;
+    private EventModel event;
+    private String content;
     @OneToMany
     @JoinColumn(name = "ForumPosts_id")
     private List<ForumPostModel> forumPosts;
@@ -34,22 +35,24 @@ public class ForumThreadModel {
     public ForumThreadModel() {
     }
 
-    public ForumThreadModel(String id, String title, String author, Event event, List<ForumPostModel> forumPosts, List<String> mediaPlaceHolder) {
+    public ForumThreadModel(String id, String title, String author, EventModel event, List<ForumPostModel> forumPosts, List<String> mediaPlaceHolder, String content) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.event = event;
         this.forumPosts = forumPosts;
         this.mediaPlaceHolder = mediaPlaceHolder;
+        this.content = content;
     }
 
-    public void setAllEntity(String id, String title, String author, Event event, List<ForumPostModel> forumPosts, List<String> mediaPlaceHolder) {
+    public void setAllEntity(String id, String title, String author, EventModel event, List<ForumPostModel> forumPosts, List<String> mediaPlaceHolder, String content) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.event = event;
         this.forumPosts = forumPosts;
         this.mediaPlaceHolder = mediaPlaceHolder;
+        this.content = content;
     }
 
     public String getId() {
@@ -76,11 +79,11 @@ public class ForumThreadModel {
         this.author = author;
     }
 
-    public Event getEvent() {
+    public EventModel getEvent() {
         return event;
     }
 
-    public void setEvent(Event event) {
+    public void setEvent(EventModel event) {
         this.event = event;
     }
 
@@ -99,4 +102,13 @@ public class ForumThreadModel {
     public void setMediaPlaceHolder(List<String> mediaPlaceHolder) {
         this.mediaPlaceHolder = mediaPlaceHolder;
     }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
 }

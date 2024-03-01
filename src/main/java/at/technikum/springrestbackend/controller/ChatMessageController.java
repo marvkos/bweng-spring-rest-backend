@@ -61,18 +61,10 @@ public class ChatMessageController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public ChatMessageDTO delete(@PathVariable String id){
-        ChatMessageDTO deletedChatMessageDTO =
-                new ChatMessageDTO(
-                        id,
-                        chatServices.find(id).getAuthor(),
-                        chatServices.find(id).getRecipientid(),
-                        chatServices.find(id).getEventID(),
-                        chatServices.find(id).getContent(),
-                        chatServices.find(id).getMediaPlaceHolder()
-                );
-        chatServices.find(id);
+    public void delete(@PathVariable String id){
+//        chatServices.find(id);
         chatRepository.deleteById(id);
-        return deletedChatMessageDTO;
+        System.out.println("Chat Message with id: " + id + " deleted successfully!");
+
     }
 }

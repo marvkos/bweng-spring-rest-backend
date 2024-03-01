@@ -1,44 +1,51 @@
 package at.technikum.springrestbackend.mapper;
 
 import at.technikum.springrestbackend.dto.ForumPostDTO;
+import at.technikum.springrestbackend.dto.ForumThreadDTO;
 import at.technikum.springrestbackend.model.ForumPostModel;
+import at.technikum.springrestbackend.model.ForumThreadModel;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
 public class ForumThreadMapper {
-    public ForumPostDTO toDTO(ForumPostModel forumPostModel) {
-        ForumPostDTO newForumPostDTO = new ForumPostDTO();
-        newForumPostDTO.setAllDTO(
-                forumPostModel.getId(),
-                forumPostModel.getTitle(),
-                forumPostModel.getAuthor(),
-                forumPostModel.getEvent(),
-                forumPostModel.getContent(),
-                forumPostModel.getMediaPlaceHolder()
+    public ForumThreadDTO toDTO(ForumThreadModel forumThreadModel) {
+        ForumThreadDTO newForumThreadDTO = new ForumThreadDTO();
+        EventModel event = new EventModel();
+        newForumThreadDTO.setAllDTO(
+                forumThreadModel.getId(),
+                forumThreadModel.getTitle(),
+                forumThreadModel.getAuthor(),
+                forumThreadModel.getEvent(),
+                forumThreadModel.getContent(),
+                forumThreadModel.getMediaPlaceHolder(),
+                forumThreadModel.getForumPosts()
         );
-        return newForumPostDTO;
+        return newForumThreadDTO;
     }
 
-    public ForumPostModel toEntity(ForumPostDTO forumPostDTO) {
+    public ForumThreadModel toEntity(ForumThreadDTO forumThreadDTO) {
+        EventModel event = new EventModel();
 
-        if (forumPostDTO.getId() == null) {
-            return new ForumPostModel(
+        if (forumThreadDTO.getId() == null) {
+            return new ForumThreadModel(
                     UUID.randomUUID().toString(),
-                    forumPostDTO.getTitle(),
-                    forumPostDTO.getAuthor(),
-                    forumPostDTO.getEventID(),
-                    forumPostDTO.getContent(),
-                    forumPostDTO.getMediaPlaceHolder());
+                    forumThreadDTO.getTitle(),
+                    forumThreadDTO.getAuthor(),
+                    event,
+                    forumThreadDTO.getForumPosts(),
+                    forumThreadDTO.getMediaPlaceHolder(),
+                    forumThreadDTO.getContent());
         }
 
-        return new ForumPostModel(
-                forumPostDTO.getId(),
-                forumPostDTO.getTitle(),
-                forumPostDTO.getAuthor(),
-                forumPostDTO.getEventID(),
-                forumPostDTO.getContent(),
-                forumPostDTO.getMediaPlaceHolder());
+        return new ForumThreadModel(
+                forumThreadDTO.getId(),
+                forumThreadDTO.getTitle(),
+                forumThreadDTO.getAuthor(),
+                event,
+                forumThreadDTO.getForumPosts(),
+                forumThreadDTO.getMediaPlaceHolder(),
+                forumThreadDTO.getContent());
     }
 }

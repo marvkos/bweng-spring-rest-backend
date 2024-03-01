@@ -12,7 +12,6 @@ public class ChatMessageDTO {
     private String authorid;
     @NotBlank
     private String content;
-
     //media attachments as URL, BLOB or filepath?
     //List for multiple file upload
     private List<String> mediaPlaceHolder;

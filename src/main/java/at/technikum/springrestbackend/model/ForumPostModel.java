@@ -10,6 +10,7 @@ import java.util.List;
 public class ForumPostModel {
     @Id
     private String id;
+    private String title;
     @Valid
     @NotBlank
     private String author;
@@ -28,18 +29,21 @@ public class ForumPostModel {
 
     public ForumPostModel(
             String id,
+            String title,
             String author,
             String content,
             List<String> mediaPlaceHolder
     ) {
         this.id = id;
+        this.title = title;
         this.author = author;
         this.content = content;
         this.mediaPlaceHolder = mediaPlaceHolder;
     }
 
-    public void setAllEntity(String id, String author, String content, List<String> mediaPlaceHolder) {
+    public void setAllEntity(String id, String title, String author, String content, List<String> mediaPlaceHolder) {
         this.id = id;
+        this.title = title;
         this.author = author;
         this.content = content;
         this.mediaPlaceHolder = mediaPlaceHolder;
@@ -47,6 +51,10 @@ public class ForumPostModel {
 
     public String getId() {
         return id;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getAuthor() {
@@ -63,6 +71,10 @@ public class ForumPostModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setAuthor(String author) {

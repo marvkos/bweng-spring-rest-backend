@@ -2,6 +2,7 @@ package at.technikum.springrestbackend.mapper;
 
 import at.technikum.springrestbackend.dto.ChatMessageDTO;
 import at.technikum.springrestbackend.model.ChatMessageModel;
+import at.technikum.springrestbackend.model.ChatRoomModel;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -14,8 +15,6 @@ public class ChatMessageMapper {
         newchatMessageDTO.setAllDTO(
                 chatMessageModel.getId(),
                 chatMessageModel.getAuthor(),
-                chatMessageModel.getRecipientid(),
-                chatMessageModel.getEventID(),
                 chatMessageModel.getContent(),
                 chatMessageModel.getMediaPlaceHolder()
         );
@@ -24,22 +23,23 @@ public class ChatMessageMapper {
 
     public ChatMessageModel toEntity(ChatMessageDTO chatMessageDTO) {
 
+        ChatRoomModel chatRoomModel = new ChatRoomModel();
+
         if (chatMessageDTO.getId() == null) {
+
             return new ChatMessageModel(
                     UUID.randomUUID().toString(),
                     chatMessageDTO.getAuthorid(),
-                    chatMessageDTO.getRecipientid(),
-                    chatMessageDTO.getEventID(),
                     chatMessageDTO.getContent(),
+                    chatRoomModel,
                     chatMessageDTO.getMediaPlaceHolder());
         }
 
         return new ChatMessageModel(
                 chatMessageDTO.getId(),
                 chatMessageDTO.getAuthorid(),
-                chatMessageDTO.getRecipientid(),
-                chatMessageDTO.getEventID(),
                 chatMessageDTO.getContent(),
+                chatRoomModel,
                 chatMessageDTO.getMediaPlaceHolder());
     }
 }

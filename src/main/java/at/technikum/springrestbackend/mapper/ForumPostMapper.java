@@ -14,7 +14,6 @@ public class ForumPostMapper {
                 forumPostModel.getId(),
                 forumPostModel.getTitle(),
                 forumPostModel.getAuthor(),
-                forumPostModel.getEvent(),
                 forumPostModel.getContent(),
                 forumPostModel.getMediaPlaceHolder()
         );
@@ -28,7 +27,6 @@ public class ForumPostMapper {
                     UUID.randomUUID().toString(),
                     forumPostDTO.getTitle(),
                     forumPostDTO.getAuthor(),
-                    forumPostDTO.getEventID(),
                     forumPostDTO.getContent(),
                     forumPostDTO.getMediaPlaceHolder());
         }
@@ -37,7 +35,6 @@ public class ForumPostMapper {
                 forumPostDTO.getId(),
                 forumPostDTO.getTitle(),
                 forumPostDTO.getAuthor(),
-                forumPostDTO.getEventID(),
                 forumPostDTO.getContent(),
                 forumPostDTO.getMediaPlaceHolder());
     }

@@ -1,7 +1,9 @@
 package at.technikum.springrestbackend.mapper;
 
 import at.technikum.springrestbackend.dto.ChatMessageDTO;
+import at.technikum.springrestbackend.dto.ChatRoomDTO;
 import at.technikum.springrestbackend.model.ChatMessageModel;
+import at.technikum.springrestbackend.model.ChatRoomModel;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -9,37 +11,28 @@ import java.util.UUID;
 @Component
 public class ChatRoomMapper {
 
-    public ChatMessageDTO toDTO(ChatMessageModel chatMessageModel) {
-        ChatMessageDTO newchatMessageDTO = new ChatMessageDTO();
-        newchatMessageDTO.setAllDTO(
-                chatMessageModel.getId(),
-                chatMessageModel.getAuthor(),
-                chatMessageModel.getRecipientid(),
-                chatMessageModel.getEventID(),
-                chatMessageModel.getContent(),
-                chatMessageModel.getMediaPlaceHolder()
+    public ChatRoomDTO toDTO(ChatRoomModel chatRoomModel) {
+        ChatRoomDTO newchatRoomDTO = new ChatRoomDTO();
+        newchatRoomDTO.setAllDTO(
+                chatRoomModel.getId(),
+                chatRoomModel.getUsers(),
+                chatRoomModel.getChatMessages()
         );
-        return newchatMessageDTO;
+        return newchatRoomDTO;
     }
 
-    public ChatMessageModel toEntity(ChatMessageDTO chatMessageDTO) {
+    public ChatRoomModel toEntity(ChatRoomDTO chatRoomDTO) {
 
-        if (chatMessageDTO.getId() == null) {
-            return new ChatMessageModel(
+        if (chatRoomDTO.getId() == null) {
+            return new ChatRoomModel(
                     UUID.randomUUID().toString(),
-                    chatMessageDTO.getAuthorid(),
-                    chatMessageDTO.getRecipientid(),
-                    chatMessageDTO.getEventID(),
-                    chatMessageDTO.getContent(),
-                    chatMessageDTO.getMediaPlaceHolder());
+                    chatRoomDTO.getChatMessages(),
+                    chatRoomDTO.getUsers());
         }
 
-        return new ChatMessageModel(
-                chatMessageDTO.getId(),
-                chatMessageDTO.getAuthorid(),
-                chatMessageDTO.getRecipientid(),
-                chatMessageDTO.getEventID(),
-                chatMessageDTO.getContent(),
-                chatMessageDTO.getMediaPlaceHolder());
+        return new ChatRoomModel(
+                chatRoomDTO.getId(),
+                chatRoomDTO.getChatMessages(),
+                chatRoomDTO.getUsers());
     }
 }

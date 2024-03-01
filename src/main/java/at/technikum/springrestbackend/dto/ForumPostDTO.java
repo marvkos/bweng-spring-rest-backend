@@ -10,9 +10,6 @@ public class ForumPostDTO {
     @Valid
     @NotBlank
     private String author;
-    @Valid
-    @NotBlank
-    private String eventID;
     @NotBlank
     private String content;
 
@@ -30,23 +27,20 @@ public class ForumPostDTO {
             String id,
             String title,
             String author,
-            String eventID,
             String content,
             List<String> mediaPlaceHolder
     ) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.eventID = eventID;
         this.content = content;
         this.mediaPlaceHolder = mediaPlaceHolder;
     }
 
-    public void setAllDTO(String id, String title, String author, String eventID, String content, List<String> mediaPlaceHolder) {
+    public void setAllDTO(String id, String title, String author, String content, List<String> mediaPlaceHolder) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.eventID = eventID;
         this.content = content;
         this.mediaPlaceHolder = mediaPlaceHolder;
     }
@@ -63,15 +57,31 @@ public class ForumPostDTO {
         return author;
     }
 
-    public String getEventID() {
-        return eventID;
-    }
-
     public String getContent() {
         return content;
     }
 
     public List<String> getMediaPlaceHolder() {
         return mediaPlaceHolder;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setMediaPlaceHolder(List<String> mediaPlaceHolder) {
+        this.mediaPlaceHolder = mediaPlaceHolder;
     }
 }
