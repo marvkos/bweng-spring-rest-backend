@@ -29,6 +29,12 @@ public class UserServices {
         return userRepository.findAll();
     }
 
+//    public List<UserModel> findAllUserOfEvent (Event event) {
+//        //TODO: list of users of a certain event
+//
+//        return userRepository.findAllById(event.getID);
+//    }
+
     public UserModel save(UserModel userModel){
         return userRepository.save(userModel);
     }

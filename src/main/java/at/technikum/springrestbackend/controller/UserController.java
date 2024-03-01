@@ -37,7 +37,9 @@ public class UserController {
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
     }
+  
     @GetMapping("/{userId}")
+
     @ResponseStatus(HttpStatus.FOUND)
     public UserDTO read(@PathVariable String userId) {
         UserModel user = userServices.find(userId);
