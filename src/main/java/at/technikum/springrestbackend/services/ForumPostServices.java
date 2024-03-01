@@ -49,7 +49,7 @@ public class ForumPostServices {
                 forumPostDTOupdated.getAuthor(),
                 forumPostDTOupdated.getContent(),
                 forumPostDTOupdated.getMediaPlaceHolder()
-                );
+        );
 
         return postRepository.save(existingPost);
     }

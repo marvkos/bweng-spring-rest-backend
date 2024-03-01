@@ -53,7 +53,7 @@ public class ChatMessageServices {
                 chatMessageDTOupdated.getContent(),
                 chatRoomModel,
                 chatMessageDTOupdated.getMediaPlaceHolder()
-                );
+        );
 
         return chatMessageRepository.save(existingChatMessage);
     }

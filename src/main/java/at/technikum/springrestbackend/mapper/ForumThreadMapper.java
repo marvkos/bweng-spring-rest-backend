@@ -11,7 +11,6 @@ import java.util.UUID;
 public class ForumThreadMapper {
     public ForumThreadDTO toDTO(ForumThreadModel forumThreadModel) {
         ForumThreadDTO newForumThreadDTO = new ForumThreadDTO();
-        EventModel event = new EventModel();
         newForumThreadDTO.setAllDTO(
                 forumThreadModel.getId(),
                 forumThreadModel.getTitle(),

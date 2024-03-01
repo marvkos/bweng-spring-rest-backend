@@ -32,7 +32,7 @@ public class UserModel {
         this.email = email;
     }
 
-public void setAllEntity(String userId, String username, String password, String country, String address,String firstname, String surname, String email) {
+    public void setAllEntity(String userId, String username, String password, String country, String address,String firstname, String surname, String email) {
         setCountry(country);
         setUsername(username);
         setAddress(address);
