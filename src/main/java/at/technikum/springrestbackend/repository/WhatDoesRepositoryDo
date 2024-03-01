@@ -1,0 +1,22 @@
+Data Access: primary purpose is to provide methods for performing CRUD
+(Create, Read, Update, Delete) operations on the data stored in a database.
+It encapsulates the logic for interacting with the database, abstracting away
+the details of database access from the rest of the application.
+
+provide a layer of abstraction over the underlying data storage system. shield the rest of the application
+from the specific details of the database implementation, such as SQL queries, connection management,
+and transaction handling.
+
+Domain-specific Queries: define methods for executing domain-specific queries that retrieve data
+based on specific criteria. make easier to retrieve data without directly writing SQL queries.
+
+May handle transaction management, ensuring that database operations are performed atomically and consistently.
+They may manage transaction boundaries and coordinate multiple database operations within a single transaction.
+
+Map database records to domain objects (entities) and vice versa.
+They convert database rows into objects that can be manipulated and processed by the application's
+business logic, and they convert domain objects back into database records for storage.
+
+Caching and Optimization: may implement caching mechanisms to improve performance by
+caching frequently accessed data in memory. They may also optimize database queries and data access
+patterns to minimize database load and improve response times.

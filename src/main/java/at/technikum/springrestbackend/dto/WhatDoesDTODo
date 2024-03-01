@@ -1,0 +1,20 @@
+Data Transfer Object
+
+primary purpose: transfer of data between different components of the application.
+This includes between the client and the server over a network,
+between different layers of the application (e.g., controller, service, repository),
+or between different microservices in a distributed system.
+
+Encapsulation of Data by grouping related fields together into a single object.
+helps organize and structure the data being transferred, making it easier to work with and understand.
+This can help reduce the number of network calls by bundling multiple pieces of data into a single object.
+
+Versioning and Compatibility: DTOs can be versioned to handle changes in the data structure over time.
+This allows for backward and forward compatibility between different versions of the application
+or between different clients and servers.
+
+Security: DTOs can be used to control the data being transferred between the client and the server,
+helping to prevent unauthorized access to sensitive information.
+
+Data Transformation into different formats (e.g., JSON, XML) for communication between
+different systems or components.

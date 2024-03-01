@@ -1,0 +1,22 @@
+primary purpose is to implement the business logic of the application. This includes the rules,
+workflows, and operations that define how the application behaves and processes data.
+
+Abstraction Layer over the repository or data access layer. They encapsulate the details of data access
+and manipulation, allowing the rest of the application to interact with the business logic without needing
+to know about the underlying data storage implementation.
+
+Transaction Management: ensuring that multiple database operations are performed atomically and consistently.
+They may define transaction boundaries and coordinate the execution of multiple operations within a
+single transaction.
+
+Validate incoming data to ensure that it meets the requirements and constraints of the application.
+This includes validating user input, enforcing business rules, and performing data integrity checks.
+
+Error Handling: Services handle exceptions and errors that occur during the execution of business logic.
+They may catch and handle exceptions gracefully, returning meaningful error responses to the client.
+
+May orchestrate the execution of multiple operations or workflows to fulfill a specific request or use case.
+May coordinate the interaction between multiple components of application, such as other services or repositories.
+
+Implement Cross-cutting Concerns: such as logging, caching, security, and authentication. applied to
+all operations performed by the service and ensure consistency and reliability across the application.

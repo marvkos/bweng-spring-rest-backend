@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import org.checkerframework.common.aliasing.qual.Unique;
 
 public class UserDTO {
-    private String id;
+    private String userId;
     @NotBlank
     private String username;
     @NotBlank
@@ -18,6 +18,7 @@ public class UserDTO {
     @Valid
     private String email;
     @NotBlank
+    @Valid
     private String country;
     @NotBlank
     private String address;
@@ -25,8 +26,8 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String id, String username, String password, String country, String address, String firstname, String surname, String email) {
-        this.id = id;
+    public UserDTO(String userID, String username, String password, String country, String address, String firstname, String surname, String email) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
         this.country = country;
@@ -37,7 +38,7 @@ public class UserDTO {
     }
 
 
-    public void setAllDTO(String id, String username, String password, String country, String address, String firstname, String surname, String email) {
+    public void setAllDTO(String userId, String username, String password, String country, String address, String firstname, String surname, String email) {
         setCountry(country);
         setUsername(username);
         setAddress(address);
@@ -45,15 +46,15 @@ public class UserDTO {
         setFirstname(firstname);
         setSurname(surname);
         setPassword(password);
-        setId(id);
+        setUserId(userId);
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -64,7 +65,9 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -94,9 +97,13 @@ public class UserDTO {
         this.firstname = firstname;
     }
 
-    public String getSurname() { return surname; }
+    public String getSurname() {
+        return surname;
+    }
 
-    public void setSurname(String surname) { this.surname = surname; }
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
     public String getEmail() {
         return email;
