@@ -23,7 +23,7 @@ public class EventModel {
     private String eventLongDescription;
 
     //Constructor
-    protected EventModel(){}
+    public EventModel(){}
 
     public EventModel(String eventId, UserModel user, String eventName, String eventPicture, String eventAdress, ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
         this.eventId = eventId;

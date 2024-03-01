@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.dto;
 
+import at.technikum.springrestbackend.model.EventModel;
 import at.technikum.springrestbackend.model.ForumPostModel;
 import at.technikum.springrestbackend.model.ForumThreadModel;
 import jakarta.validation.Valid;

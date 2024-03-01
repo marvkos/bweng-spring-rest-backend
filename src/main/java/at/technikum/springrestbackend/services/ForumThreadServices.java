@@ -2,6 +2,7 @@ package at.technikum.springrestbackend.services;
 
 import at.technikum.springrestbackend.dto.ForumPostDTO;
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
+import at.technikum.springrestbackend.model.EventModel;
 import at.technikum.springrestbackend.model.ForumPostModel;
 import at.technikum.springrestbackend.repository.ForumPostRepository;
 import jakarta.persistence.EntityExistsException;
@@ -29,10 +30,10 @@ public class ForumThreadServices {
         return postRepository.findAll();
     }
 
-    public List<ForumPostModel> findAllByEvent (Event event) {
-        //TODO: list of posts of a certain event
-        return postRepository.findAllById(event.getID);
-    }
+//    public List<ForumPostModel> findAllByEvent (EventModel event) {
+//        //TODO: list of posts of a certain event
+//        return postRepository.findAllById(event.getEventId());
+//    }
 
     public ForumPostModel save(ForumPostModel forumPostModel){
         return postRepository.save(forumPostModel);
