@@ -1,0 +1,22 @@
+Commonly used to map data between DTOs and domain entities.
+
+DTOs are often used to transfer data between the client and the server,
+while domain entities/models represent the business objects within the application.
+Mappers handle the conversion between these two representations,
+ensuring that data is correctly transferred and validated.
+Transform data from one format to another. involves copying data from one object to another,
+possibly applying data manipulation or conversion logic in the process.
+
+also handle mapping data between domain entities and database entities (e.g., JPA entities).
+This involves converting data from the object-oriented representation used in the application
+to the relational database representation.
+
+Abstraction of Data Transformation Logic: encapsulate the logic for data transformation,
+abstracting it away from the rest of the application. This promotes code reuse, maintainability,
+and separation of concerns by keeping the transformation logic isolated in a dedicated component.
+
+can be versioned to handle changes in the data structure over time. allows backward and forward
+compatibility between different versions of the application or between different layers of the application.
+
+facilitate testing by providing a clear and consistent way to map data between different
+representations. makes it easier to write unit tests.

@@ -5,18 +5,20 @@ import jakarta.validation.constraints.NotBlank;
 import org.checkerframework.common.aliasing.qual.Unique;
 
 public class UserDTO {
-    private String id;
+    private String userId;
     @NotBlank
     private String username;
     @NotBlank
-    private String pw;
+    private String password;
     @NotBlank
-    private String name;
+    private String firstname;
+    private String surname;
     @Unique
     @NotBlank
     @Valid
     private String email;
     @NotBlank
+    @Valid
     private String country;
     @NotBlank
     private String address;
@@ -24,33 +26,35 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String id, String username, String pw, String country, String address, String name, String email) {
-        this.id = id;
+    public UserDTO(String userID, String username, String password, String country, String address, String firstname, String surname, String email) {
+        this.userId = userId;
         this.username = username;
-        this.pw = pw;
+        this.password = password;
         this.country = country;
         this.address = address;
-        this.name = name;
+        this.firstname = firstname;
+        this.surname = surname;
         this.email = email;
     }
 
 
-    public void setAllDTO(String id, String username, String pw, String country, String address, String name, String email) {
-        this.id = id;
-        this.username = username;
-        this.pw = pw;
-        this.country = country;
-        this.address = address;
-        this.name = name;
-        this.email = email;
+    public void setAllDTO(String userId, String username, String password, String country, String address, String firstname, String surname, String email) {
+        setCountry(country);
+        setUsername(username);
+        setAddress(address);
+        setEmail(email);
+        setFirstname(firstname);
+        setSurname(surname);
+        setPassword(password);
+        setUserId(userId);
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -61,12 +65,12 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getPw() {
-        return pw;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getCountry() {
@@ -85,12 +89,20 @@ public class UserDTO {
         this.address = address;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {

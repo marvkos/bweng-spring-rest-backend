@@ -1,51 +1,54 @@
 package at.technikum.springrestbackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Users")
 public class UserModel {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String userId;
     private String username;
-    private String pw;
-    private String name;
+    private String password;
+    private String firstname;
+    private String surname;
     private String email;
     private String country;
     private String address;
 
+    //TODO ProfilePicture and email
 
     protected UserModel() {}
 
-    public UserModel(String id, String username, String pw, String country, String address, String name, String email) {
-        this.id = id;
+    public UserModel(String userId, String username, String password, String country, String address, String firstname, String surname, String email) {
+        this.userId = userId;
         this.username = username;
-        this.pw = pw;
+        this.password = password;
         this.country = country;
         this.address = address;
-        this.name = name;
+        this.firstname = firstname;
+        this.surname = surname;
         this.email = email;
     }
 
-    public void setAllEntity(String id, String username, String pw, String country, String address, String name, String email) {
-        this.id = id;
-        this.username = username;
-        this.pw = pw;
-        this.country = country;
-        this.address = address;
-        this.name = name;
-        this.email = email;
+public void setAllEntity(String userId, String username, String password, String country, String address,String firstname, String surname, String email) {
+        setCountry(country);
+        setUsername(username);
+        setAddress(address);
+        setEmail(email);
+        setFirstname(firstname);
+        setSurname(surname);
+        setPassword(password);
+        setUserId(userId);
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -56,12 +59,12 @@ public class UserModel {
         this.username = username;
     }
 
-    public String getPw() {
-        return pw;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPw(String pw) {
-        this.pw = pw;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getCountry() {
@@ -80,12 +83,20 @@ public class UserModel {
         this.address = address;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {

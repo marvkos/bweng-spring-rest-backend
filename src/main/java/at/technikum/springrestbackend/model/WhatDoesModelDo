@@ -1,0 +1,18 @@
+Model or Entity represents the structure of the data in your application.
+It defines the attributes (fields) and behaviors (methods) of the objects that make up your domain.
+
+may contain business logic that governs how the data is manipulated and processed within your application.
+This can include validation rules, calculation logic, and other domain-specific operations.
+
+responsible for representing data in a form that can be persisted to a database or other storage mechanism.
+This typically involves mapping the attributes of the Model or Entity to columns in a database table.
+
+encapsulates the data and behavior associated with a particular entity in your application.
+This helps to enforce modularity, separation of concerns, and maintainability by grouping related
+functionality together.
+
+Data Integrity: may enforce constraints and business rules to ensure data integrity and consistency.
+such as uniqueness, referential integrity, and data validation rules.
+
+State Management: keeps track of the current values of its attributes and
+provides methods to modify and access this state.

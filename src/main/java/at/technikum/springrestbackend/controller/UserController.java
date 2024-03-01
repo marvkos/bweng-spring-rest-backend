@@ -37,16 +37,12 @@ public class UserController {
                 .map(userMapper::toDTO)
                 .collect(Collectors.toList());
     }
+  
+    @GetMapping("/{userId}")
 
-//    @GetMapping("/findallofevent")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<UserDTO> readAllOfEvent(@RequestBody Event event){
-//
-//    }
-    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public UserDTO read(@PathVariable String id) {
-        UserModel user = userServices.find(id);
+    public UserDTO read(@PathVariable String userId) {
+        UserModel user = userServices.find(userId);
         return userMapper.toDTO(user);
     }
 
@@ -58,30 +54,31 @@ public class UserController {
         return userMapper.toDTO(user);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO update(@PathVariable String id, @RequestBody UserDTO updatedUserDTO){
+    public UserDTO update(@PathVariable String userId, @RequestBody UserDTO updatedUserDTO){
 
         //for update logic CTRL+LMB on 'update' - method call
-        return userMapper.toDTO(userServices.update(id, updatedUserDTO));
+        return userMapper.toDTO(userServices.update(userId, updatedUserDTO));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.FOUND)
-    public UserDTO delete(@PathVariable String id){
+    public UserDTO delete(@PathVariable String userId){
         UserDTO deletedUserDTO =
                 new UserDTO(
-                        id,
-                        userServices.find(id).getUsername(),
-                        userServices.find(id).getPw(),
-                        userServices.find(id).getCountry(),
-                        userServices.find(id).getAddress(),
-                        userServices.find(id).getName(),
-                        userServices.find(id).getEmail()
+                        userId,
+                        userServices.find(userId).getUsername(),
+                        userServices.find(userId).getPassword(),
+                        userServices.find(userId).getCountry(),
+                        userServices.find(userId).getAddress(),
+                        userServices.find(userId).getFirstname(),
+                        userServices.find(userId).getSurname(),
+                        userServices.find(userId).getEmail()
                 );
 
-        userServices.find(id);
-        userRepository.deleteById(id);
+        userServices.find(userId);
+        userRepository.deleteById(userId);
         return deletedUserDTO;
     }
 
