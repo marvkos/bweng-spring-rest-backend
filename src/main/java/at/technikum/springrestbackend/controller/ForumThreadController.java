@@ -41,13 +41,13 @@ public class ForumThreadController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{eventid}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ForumPostDTO> readAllofEvent(@PathVariable String eventid){
-        return postServices.findAllByEvent(eventid).stream()
-                .map(postMapper::toDTO)
-                .collect(Collectors.toList());
-    }
+//    @GetMapping("/{eventid}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<ForumPostDTO> readAllofEvent(@PathVariable String eventid){
+//        return postServices.findAllByEvent(eventid).stream()
+//                .map(postMapper::toDTO)
+//                .collect(Collectors.toList());
+//    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)
