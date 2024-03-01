@@ -2,9 +2,11 @@ package at.technikum.springrestbackend.mapper;
 
 import at.technikum.springrestbackend.dto.EventDTO;
 import at.technikum.springrestbackend.model.EventModel;
+import org.springframework.stereotype.Component;
 
 
 import java.util.UUID;
+@Component
 public class EventMapper {
     public EventDTO toDTO(EventModel eventModel) {
     //creating a new DTO of Event to assign the values of the Entity to it

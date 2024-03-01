@@ -1,12 +1,9 @@
 package at.technikum.springrestbackend.services;
 
 
-import at.technikum.springrestbackend.dto.ChatMessageDTO;
 import at.technikum.springrestbackend.dto.ChatRoomDTO;
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
-import at.technikum.springrestbackend.model.ChatMessageModel;
 import at.technikum.springrestbackend.model.ChatRoomModel;
-import at.technikum.springrestbackend.repository.ChatMessageRepository;
 import at.technikum.springrestbackend.repository.ChatRoomRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,6 @@
 package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;

@@ -1,14 +1,8 @@
 package at.technikum.springrestbackend.controller;
-
-import at.technikum.springrestbackend.dto.ChatMessageDTO;
 import at.technikum.springrestbackend.dto.ChatRoomDTO;
-import at.technikum.springrestbackend.mapper.ChatMessageMapper;
 import at.technikum.springrestbackend.mapper.ChatRoomMapper;
-import at.technikum.springrestbackend.model.ChatMessageModel;
 import at.technikum.springrestbackend.model.ChatRoomModel;
-import at.technikum.springrestbackend.repository.ChatMessageRepository;
 import at.technikum.springrestbackend.repository.ChatRoomRepository;
-import at.technikum.springrestbackend.services.ChatMessageServices;
 import at.technikum.springrestbackend.services.ChatRoomServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/chatmessage")
+@RequestMapping("/chatmessages")
 @CrossOrigin
 public class ChatMessageController {
     private final ChatMessageMapper chatMapper;

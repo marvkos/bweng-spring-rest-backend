@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 //FORUM THREAD, NOT POST! NAMING IS BAD!
 @RestController
-@RequestMapping("/forumposts")
+@RequestMapping("/forumthreads")
 @CrossOrigin
 public class ForumThreadController {
 

@@ -2,8 +2,6 @@ package at.technikum.springrestbackend.dto;
 
 import at.technikum.springrestbackend.model.ChatMessageModel;
 import at.technikum.springrestbackend.model.UserModel;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
