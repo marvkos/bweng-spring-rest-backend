@@ -1,0 +1,21 @@
+*Acts as an intermediary between the client (e.g., web browser, mobile app) and the server-side logic.*
+
+Request Mapping: The controller maps incoming HTTP requests to specific handler
+methods based on the request URL and HTTP method (e.g., GET, POST, PUT, DELETE).
+This mapping is typically defined using annotations such as
+@GetMapping, @PostMapping, @PutMapping, @DeleteMapping, etc.
+
+Request Processing: The handler methods in the controller process the incoming requests.
+They may perform various tasks such as retrieving data from the database, invoking business
+logic methods from the service layer, performing data validation, and so on.
+
+Data Binding: The controller binds request data (e.g., request parameters, request body) to
+method parameters or objects. This allows the controller to access and process the data sent
+by the client in the request.
+
+Response Generation: The handler methods in the controller generate an appropriate HTTP response
+based on the outcome of request processing. This response may include data (e.g., JSON, XML) to be
+sent back to the client, along with an HTTP status code and any necessary headers.
+
+Exception Handling: The controller may handle exceptions that occur during request processing.
+It can catch and handle exceptions gracefully, returning meaningful error responses to the client.

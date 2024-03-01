@@ -13,7 +13,7 @@ public class UserMapper {
         //creating a new DTO of User to assign the values of the Entity to it
         UserDTO newUserDTO = new UserDTO();
         //assigning ID, PW and USERNAME to the DTO by using SETTER
-        newUserDTO.setAllDTO(userModel.getId(), userModel.getUsername(),
+        newUserDTO.setAllDTO(userModel.getUserId(), userModel.getUsername(),
                              userModel.getPassword(), userModel.getCountry(),
                              userModel.getAddress(), userModel.getFirstname(),
                              userModel.getSurname(),
@@ -24,7 +24,7 @@ public class UserMapper {
     public UserModel toEntity(UserDTO userDTO) {
         //TODO: security with PassWord needed (Hashing?)
         //DataBank entry requires the id as a primary key
-        if (userDTO.getId() == null) {
+        if (userDTO.getUserId() == null) {
             return new UserModel(
                         UUID.randomUUID().toString(),
                         userDTO.getUsername(), userDTO.getPassword(),
@@ -34,7 +34,7 @@ public class UserMapper {
                         userDTO.getEmail());
         }
 //      ALTERNATIVELY:
-//        if (userDTO.getId() == null) {
+//        if (userDTO.getUserId() == null) {
 //            UserModel newUserModel = new UserModel(
 //                          UUID.randomUUID().toString(),
 //                          ...
@@ -42,7 +42,7 @@ public class UserMapper {
 //            return newUserModel;
 //        }
         return new UserModel(
-                    userDTO.getId(),
+                    userDTO.getUserId(),
                     userDTO.getUsername(), userDTO.getPassword(),
                     userDTO.getCountry(), userDTO.getAddress(),
                     userDTO.getFirstname(),
