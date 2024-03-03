@@ -5,16 +5,18 @@ import at.technikum.springrestbackend.exception.EntityNotFoundException;
 import at.technikum.springrestbackend.model.EventModel;
 import at.technikum.springrestbackend.repository.EventRepository;
 import jakarta.persistence.EntityExistsException;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import org.springframework.stereotype.Service;
+//import org.springframework.util.StringUtils;
+//import org.springframework.web.multipart.MultipartFile;
+//
+//import java.io.IOException;
+//import java.nio.file.Files;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
+//import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+@Service
 public class EventServices {
     private final EventRepository eventRepository;
 
@@ -60,26 +62,26 @@ public class EventServices {
         return eventRepository.save(eventModel);
     }
     //EventProfilePicture upload logic with Exceptions
-    public void uploadEventProfilePicture(String eventId, MultipartFile file) throws IOException {
-        EventModel event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Event not found"));
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        String uploadDir = "/event-pictures/";
-        String filePath = uploadDir + eventId + "/" + fileName;
-
-        Path uploadPath = Paths.get(uploadDir + eventId);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-
-        // Copy the file to the target location
-        Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-
-        // Set the file path in the event model
-        event.setEventPicture(filePath);
-
-        // Save the updated event model
-        eventRepository.save(event);
-    }
+//    public void uploadEventProfilePicture(String eventId, MultipartFile file) throws IOException {
+//        EventModel event = eventRepository.findById(eventId).orElseThrow(() -> new IllegalArgumentException("Event not found"));
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//        String uploadDir = "/event-pictures/";
+//        String filePath = uploadDir + eventId + "/" + fileName;
+//
+//        Path uploadPath = Paths.get(uploadDir + eventId);
+//        if (!Files.exists(uploadPath)) {
+//            Files.createDirectories(uploadPath);
+//        }
+//
+//        // Copy the file to the target location
+//        Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+//
+//        // Set the file path in the event model
+//        event.setEventPicture(filePath);
+//
+//        // Save the updated event model
+//        eventRepository.save(event);
+//    }
 
 }
 

@@ -2,6 +2,8 @@ package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Users")
 public class UserModel {
@@ -16,6 +18,9 @@ public class UserModel {
     private String email;
     private String country;
     private String address;
+
+    @ManyToMany(mappedBy = "users")
+    private List<ChatRoomModel> chatRooms;
 
     //TODO ProfilePicture and email
 

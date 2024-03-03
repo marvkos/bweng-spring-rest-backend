@@ -12,11 +12,14 @@ public class ChatRoomModel {
     @Id
     private String id;
     @OneToMany
-    @JoinColumn(name = "ChatMessage_id")
     private List<ChatMessageModel> chatMessages;
     @NotBlank
     @ManyToMany
-    @JoinColumn(name = "Users_id")
+//    @JoinTable(
+//            name = "chat_room_users",
+//            joinColumns = @JoinColumn(name = "chat_room_id"),
+//            inverseJoinColumns = @JoinColumn(name = "Users_id")
+//    )
     private List<UserModel> users;
 
 

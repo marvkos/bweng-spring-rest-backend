@@ -7,7 +7,6 @@ import java.util.List;
 public class ForumPostDTO {
     private String id;
     private String title;
-    @Valid
     @NotBlank
     private String author;
     @NotBlank

@@ -13,12 +13,10 @@ public class UserDTO {
     @NotBlank
     private String firstname;
     private String surname;
-    @Unique
+
     @NotBlank
-    @Valid
     private String email;
     @NotBlank
-    @Valid
     private String country;
     @NotBlank
     private String address;
