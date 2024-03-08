@@ -18,7 +18,7 @@ public class ChatMessageModel {
     @Valid
     @NotBlank
     @ManyToOne
-    @JoinColumn(name = "ChatRoom_id")
+    //@JoinColumn(name = "chat_room_id")
     private ChatRoomModel chatRoomModel;
 
     //media attachments as URL, BLOB or filepath?

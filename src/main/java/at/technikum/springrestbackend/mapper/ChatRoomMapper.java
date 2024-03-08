@@ -1,8 +1,6 @@
 package at.technikum.springrestbackend.mapper;
 
-import at.technikum.springrestbackend.dto.ChatMessageDTO;
 import at.technikum.springrestbackend.dto.ChatRoomDTO;
-import at.technikum.springrestbackend.model.ChatMessageModel;
 import at.technikum.springrestbackend.model.ChatRoomModel;
 import org.springframework.stereotype.Component;
 

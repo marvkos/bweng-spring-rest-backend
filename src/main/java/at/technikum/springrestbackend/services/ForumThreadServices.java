@@ -2,7 +2,6 @@ package at.technikum.springrestbackend.services;
 
 import at.technikum.springrestbackend.dto.ForumPostDTO;
 import at.technikum.springrestbackend.exception.EntityNotFoundException;
-import at.technikum.springrestbackend.model.EventModel;
 import at.technikum.springrestbackend.model.ForumPostModel;
 import at.technikum.springrestbackend.repository.ForumPostRepository;
 import jakarta.persistence.EntityExistsException;

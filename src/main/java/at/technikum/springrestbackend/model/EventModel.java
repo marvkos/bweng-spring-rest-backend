@@ -13,7 +13,7 @@ public class EventModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String eventId;
     @ManyToOne
-    @JoinColumn(name = "userId")
+    //@JoinColumn(name = "Users_id")
     private UserModel user;
     private String eventName;
     private String eventPicture;

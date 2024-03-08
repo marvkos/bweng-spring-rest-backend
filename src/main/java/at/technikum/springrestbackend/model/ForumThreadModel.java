@@ -18,11 +18,10 @@ public class ForumThreadModel {
     @Valid
     @NotBlank
     @ManyToOne
-    @JoinColumn(name = "Event_id")
+    //@JoinColumn(name = "Event_eventid")
     private EventModel event;
     private String content;
     @OneToMany
-    @JoinColumn(name = "ForumPosts_id")
     private List<ForumPostModel> forumPosts;
 
     //media attachments as URL, BLOB or filepath?

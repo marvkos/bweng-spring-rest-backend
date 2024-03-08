@@ -1,9 +1,7 @@
 package at.technikum.springrestbackend.mapper;
 
-import at.technikum.springrestbackend.dto.ForumPostDTO;
 import at.technikum.springrestbackend.dto.ForumThreadDTO;
 import at.technikum.springrestbackend.model.EventModel;
-import at.technikum.springrestbackend.model.ForumPostModel;
 import at.technikum.springrestbackend.model.ForumThreadModel;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,6 @@ import java.util.UUID;
 public class ForumThreadMapper {
     public ForumThreadDTO toDTO(ForumThreadModel forumThreadModel) {
         ForumThreadDTO newForumThreadDTO = new ForumThreadDTO();
-        EventModel event = new EventModel();
         newForumThreadDTO.setAllDTO(
                 forumThreadModel.getId(),
                 forumThreadModel.getTitle(),
