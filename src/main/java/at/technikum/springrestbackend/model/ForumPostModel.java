@@ -18,7 +18,7 @@ public class ForumPostModel {
     private UserModel author;
     @NotBlank
     @ManyToOne
-    @JoinColumn(name = "fk_event")
+    @JoinColumn(name = "fk_event_post")
     private EventModel event;
     @NotBlank
     private String content;
@@ -27,8 +27,6 @@ public class ForumPostModel {
     //List for multiple file upload
     @ElementCollection
     private List<String> mediaPlaceHolder;
-
-    //TODO: possible timestamp field aka metadata
 
     public ForumPostModel() {
     }

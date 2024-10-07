@@ -18,9 +18,9 @@ public class EventModel {
     private UserModel creator;
     @ManyToMany
     @JoinTable(
-            name = "Users",
-            joinColumns = @JoinColumn(name = "fk_event"),
-            inverseJoinColumns = @JoinColumn(name = "fk_user")
+            name = "event_users",
+            joinColumns = @JoinColumn(name = "fk_event_user"),
+            inverseJoinColumns = @JoinColumn(name = "fk_user_event")
     )
     private List<UserModel> userIDs = new ArrayList<>();
 

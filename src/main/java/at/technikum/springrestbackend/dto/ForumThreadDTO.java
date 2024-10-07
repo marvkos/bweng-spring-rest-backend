@@ -35,34 +35,34 @@ public class ForumThreadDTO {
             String id,
             String title,
             String author,
-            EventModel event,
+            //EventModel event,
             String content,
-            List<String> mediaPlaceHolder,
-            List<ForumPostModel> threadModel) {
+            List<String> mediaPlaceHolder
+            /*List<ForumPostModel> threadModel*/) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.event = event;
+        //this.event = event;
         this.content = content;
         this.mediaPlaceHolder = mediaPlaceHolder;
-        this.forumPosts = threadModel;
+        //this.forumPosts = threadModel;
     }
 
     public void setAllDTO(
             String id,
             String title,
             String author,
-            EventModel event,
+            //EventModel event,
             String content,
-            List<String> mediaPlaceHolder,
-            List<ForumPostModel> threadModel) {
+            List<String> mediaPlaceHolder
+            /*List<ForumPostModel> threadModel*/) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.event = event;
+        //this.event = event;
         this.content = content;
         this.mediaPlaceHolder = mediaPlaceHolder;
-        this.forumPosts = threadModel;
+        //this.forumPosts = threadModel;
     }
 
     public String getId() {
@@ -89,13 +89,13 @@ public class ForumThreadDTO {
         this.author = author;
     }
 
-    public EventModel getEvent() {
-        return event;
-    }
-
-    public void setEvent(EventModel event) {
-        this.event = event;
-    }
+//    public EventModel getEvent() {
+//        return event;
+//    }
+//
+//    public void setEvent(EventModel event) {
+//        this.event = event;
+//    }
 
     public String getContent() {
         return content;
@@ -113,11 +113,11 @@ public class ForumThreadDTO {
         this.mediaPlaceHolder = mediaPlaceHolder;
     }
 
-    public List<ForumPostModel> getForumPosts() {
-        return forumPosts;
-    }
-
-    public void setForumPosts(List<ForumPostModel> forumPosts) {
-        this.forumPosts = forumPosts;
-    }
+//    public List<ForumPostModel> getForumPosts() {
+//        return forumPosts;
+//    }
+//
+//    public void setForumPosts(List<ForumPostModel> forumPosts) {
+//        this.forumPosts = forumPosts;
+//    }
 }

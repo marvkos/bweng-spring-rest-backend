@@ -10,7 +10,7 @@ public class MediaModel {
     private String mediaID;
     private String mediaURL;
     @ManyToOne
-    @JoinColumn(name = "fk_event") //foreign key
+    @JoinColumn(name = "fk_event_model") //foreign key
     private EventModel event;
     @OneToOne(mappedBy = "profilePicture")
     private UserModel user;

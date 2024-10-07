@@ -20,9 +20,6 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long jwtExpirationInMs;
 
-
-
-
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
