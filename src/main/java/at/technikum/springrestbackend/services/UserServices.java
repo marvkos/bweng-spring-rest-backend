@@ -26,6 +26,11 @@ public class UserServices {
                 .orElseThrow(() -> new EntityExistsException("User not found with id: " + id));
     }
 
+    public UserModel findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
+    }
+
     public List<UserModel> findAll (){
         return userRepository.findAll();
     }
