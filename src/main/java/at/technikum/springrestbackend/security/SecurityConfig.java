@@ -38,8 +38,7 @@ public class SecurityConfig {
 
         http
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http
                 .authorizeHttpRequests(registry -> registry
@@ -51,8 +50,7 @@ public class SecurityConfig {
 
                         // allow errors so that @ResponseStatus() will show and not 401
                         .requestMatchers("/error").permitAll()
-                        .anyRequest().authenticated()
-                );
+                        .anyRequest().authenticated());
 
         return http.build();
     }
