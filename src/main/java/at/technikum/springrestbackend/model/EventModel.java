@@ -3,18 +3,34 @@ package at.technikum.springrestbackend.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table (name="events")
+@Table (name="Events")
 public class EventModel {
 
     @Positive
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String eventId;
+    private String eventID;
     @ManyToOne
-    //@JoinColumn(name = "Users_id")
-    private UserModel user;
+    @JoinColumn(name = "fk_creator") //foreign key
+    private UserModel creator;
+    @ManyToMany
+    @JoinTable(
+            name = "Users",
+            joinColumns = @JoinColumn(name = "fk_event"),
+            inverseJoinColumns = @JoinColumn(name = "fk_user")
+    )
+    private List<UserModel> userIDs = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "event")
+    private List<MediaModel> galleryPictures = new ArrayList<>();
+
+    @OneToMany(mappedBy = "event")
+    private List<ForumPostModel> eventPosts = new ArrayList<>();
+
     private String eventName;
     private String eventPicture;
     private String eventAdress;
@@ -25,9 +41,9 @@ public class EventModel {
     //Constructor
     public EventModel(){}
 
-    public EventModel(String eventId, UserModel user, String eventName, String eventPicture, String eventAdress, ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
-        this.eventId = eventId;
-        this.user = user;
+    public EventModel(String eventId, UserModel creator, String eventName, String eventPicture, String eventAdress, ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
+        this.eventID = eventId;
+        this.creator = creator;
         this.eventName = eventName;
         this.eventPicture = eventPicture;
         this.eventAdress = eventAdress;
@@ -38,8 +54,8 @@ public class EventModel {
 
     public void setAllEventEntity(String eventId, UserModel user, String eventName, String eventPicture, String eventAdress,
                                   ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
-        setEventId(eventId);
-        setUser(user);
+        setEventID(eventId);
+        setCreator(user);
         setEventName(eventName);
         setEventPicture(eventPicture);
         setEventAdress(eventAdress);
@@ -50,20 +66,20 @@ public class EventModel {
 
 
     //Getter and Setter
-    public String getEventId() {
-        return eventId;
+    public String getEventID() {
+        return eventID;
     }
 
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
+    public void setEventID(String eventID) {
+        this.eventID = eventID;
     }
 
-    public UserModel getUser() {
-        return user;
+    public UserModel getCreator() {
+        return creator;
     }
 
-    public void setUser(UserModel user) {
-        this.user = user;
+    public void setCreator(UserModel creator) {
+        this.creator = creator;
     }
 
     public String getEventName() {
@@ -112,5 +128,29 @@ public class EventModel {
 
     public void setEventLongDescription(String eventLongDescription) {
         this.eventLongDescription = eventLongDescription;
+    }
+
+    public List<UserModel> getAttendingUserIDs() {
+        return userIDs;
+    }
+
+    public void setUserIDs(List<UserModel> userIDs) {
+        this.userIDs = userIDs;
+    }
+
+    public List<ForumPostModel> getEventPosts() {
+        return eventPosts;
+    }
+
+    public void setEventPosts(List<ForumPostModel> eventPosts) {
+        this.eventPosts = eventPosts;
+    }
+
+    public List<MediaModel> getGalleryPictures() {
+        return galleryPictures;
+    }
+
+    public void setGalleryPictures(List<MediaModel> galleryPictures) {
+        this.galleryPictures = galleryPictures;
     }
 }

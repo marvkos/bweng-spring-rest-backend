@@ -39,7 +39,6 @@ public class UserController {
     }
   
     @GetMapping("/{userId}")
-
     @ResponseStatus(HttpStatus.FOUND)
     public UserDTO read(@PathVariable String userId) {
         UserModel user = userServices.find(userId);
@@ -68,13 +67,12 @@ public class UserController {
         UserDTO deletedUserDTO =
                 new UserDTO(
                         userId,
+                        userServices.find(userId).getAttendingEvents(),
                         userServices.find(userId).getUsername(),
                         userServices.find(userId).getPassword(),
-                        userServices.find(userId).getCountry(),
-                        userServices.find(userId).getAddress(),
-                        userServices.find(userId).getFirstname(),
-                        userServices.find(userId).getSurname(),
-                        userServices.find(userId).getEmail()
+                        userServices.find(userId).getEmail(),
+                        userServices.find(userId).getProfilePicture(),
+                        userServices.find(userId).getProfileDescription()
                 );
 
         userServices.find(userId);

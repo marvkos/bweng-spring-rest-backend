@@ -1,22 +1,29 @@
 package at.technikum.springrestbackend.dto;
 
+import at.technikum.springrestbackend.model.ForumPostModel;
+import at.technikum.springrestbackend.model.MediaModel;
 import at.technikum.springrestbackend.model.UserModel;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 
 public class EventDTO {
 
-    private String eventId;
-    private UserModel user;
+    private String eventID;
+    @NotBlank
+    private UserModel creator;
+    private List<UserModel> attendingUsers;
+    private List<MediaModel> galleryPictures;
+    private List<ForumPostModel> eventPosts;
     @NotBlank
     private String eventName;
     @NotBlank
     private String eventPicture;
     @NotBlank
     @Valid
-    private String eventAdress;
+    private String eventLocation;
     @NotBlank
     private ZonedDateTime eventDate; // or LocalDateTime without TimeZone
     @NotBlank
@@ -25,47 +32,54 @@ public class EventDTO {
     private String eventLongDescription;
 
     //Constructor
-    public EventDTO(){}
+    public EventDTO(){
+    }
 
-    public EventDTO(String eventId, UserModel user, String eventName, String eventPicture, String eventAdress, ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
-        this.eventId = eventId;
-        this.user = user;
+    public EventDTO(String eventId, List<UserModel> userIDs, List<MediaModel> pictures, List<ForumPostModel> eventPosts, UserModel creator, String eventName, String eventPicture, String eventAdress, ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
+        this.eventID = eventId;
+        this.creator = creator;
         this.eventName = eventName;
         this.eventPicture = eventPicture;
-        this.eventAdress = eventAdress;
+        this.eventLocation = eventAdress;
         this.eventDate = eventDate;
         this.eventShortDescription = eventShortDescription;
         this.eventLongDescription = eventLongDescription;
+        this.attendingUsers = userIDs;
+        this.galleryPictures = pictures;
+        this.eventPosts = eventPosts;
     }
 
-    public void setAllEventDTO(String eventId, UserModel user, String eventName, String eventPicture, String eventAdress,
-                                  ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
-        setEventId(eventId);
-        setUser(user);
+    public void setAllEventDTO(String eventId, UserModel creator, String eventName, String eventPicture, String eventAdress,
+                                  ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription,
+                                  List<UserModel> userIDs, List<MediaModel> pictures, List<ForumPostModel> eventPosts) {
+        setEventID(eventId);
+        setCreator(creator);
         setEventName(eventName);
         setEventPicture(eventPicture);
-        setEventAdress(eventAdress);
+        setEventLocation(eventAdress);
         setEventDate(eventDate);
         setEventShortDescription(eventShortDescription);
         setEventLongDescription(eventLongDescription);
+        setEventPosts(eventPosts);
+        setGalleryPictures(pictures);
+        setAttendingUsers(userIDs);
     }
-
 
     //Getter and Setter
-    public String getEventId() {
-        return eventId;
+    public String getEventID() {
+        return eventID;
     }
 
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
+    public void setEventID(String eventID) {
+        this.eventID = eventID;
     }
 
-    public UserModel getUser() {
-        return user;
+    public UserModel getCreator() {
+        return creator;
     }
 
-    public void setUser(UserModel user) {
-        this.user = user;
+    public void setCreator(UserModel user) {
+        this.creator = user;
     }
 
     public String getEventName() {
@@ -84,12 +98,12 @@ public class EventDTO {
         this.eventPicture = eventPicture;
     }
 
-    public String getEventAdress() {
-        return eventAdress;
+    public String getEventLocation() {
+        return eventLocation;
     }
 
-    public void setEventAdress(String eventAdress) {
-        this.eventAdress = eventAdress;
+    public void setEventLocation(String eventLocation) {
+        this.eventLocation = eventLocation;
     }
 
     public ZonedDateTime getEventDate() {
@@ -114,5 +128,29 @@ public class EventDTO {
 
     public void setEventLongDescription(String eventLongDescription) {
         this.eventLongDescription = eventLongDescription;
+    }
+
+    public List<UserModel> getAttendingUsers() {
+        return attendingUsers;
+    }
+
+    public void setAttendingUsers(List<UserModel> attendingUsers) {
+        this.attendingUsers = attendingUsers;
+    }
+
+    public List<MediaModel> getGalleryPictures() {
+        return galleryPictures;
+    }
+
+    public void setGalleryPictures(List<MediaModel> galleryPictures) {
+        this.galleryPictures = galleryPictures;
+    }
+
+    public List<ForumPostModel> getEventPosts() {
+        return eventPosts;
+    }
+
+    public void setEventPosts(List<ForumPostModel> eventPosts) {
+        this.eventPosts = eventPosts;
     }
 }

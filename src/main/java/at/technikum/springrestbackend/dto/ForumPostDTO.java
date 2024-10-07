@@ -1,5 +1,6 @@
 package at.technikum.springrestbackend.dto;
 
+import at.technikum.springrestbackend.model.UserModel;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
@@ -8,7 +9,7 @@ public class ForumPostDTO {
     private String id;
     private String title;
     @NotBlank
-    private String author;
+    private UserModel author;
     @NotBlank
     private String content;
 
@@ -25,7 +26,7 @@ public class ForumPostDTO {
     public ForumPostDTO(
             String id,
             String title,
-            String author,
+            UserModel author,
             String content,
             List<String> mediaPlaceHolder
     ) {
@@ -36,7 +37,7 @@ public class ForumPostDTO {
         this.mediaPlaceHolder = mediaPlaceHolder;
     }
 
-    public void setAllDTO(String id, String title, String author, String content, List<String> mediaPlaceHolder) {
+    public void setAllDTO(String id, String title, UserModel author, String content, List<String> mediaPlaceHolder) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -52,7 +53,7 @@ public class ForumPostDTO {
         return title;
     }
 
-    public String getAuthor() {
+    public UserModel getAuthor() {
         return author;
     }
 
@@ -72,7 +73,7 @@ public class ForumPostDTO {
         this.title = title;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(UserModel author) {
         this.author = author;
     }
 

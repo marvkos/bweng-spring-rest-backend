@@ -16,3 +16,38 @@ such as uniqueness, referential integrity, and data validation rules.
 
 State Management: keeps track of the current values of its attributes and
 provides methods to modify and access this state.
+
+
+
+Information to Cardinal Relationships in Spring:
+
+When using any cardinal relationship annotation - be sure to understand the relationship the entities (tables) have with each other.
+How to know which tag to use and how to use it:
+    example: you are building the EventModel entity and you realized you need to assign Pictures to it.
+    First you will introduce a new attribute for example a list of pictures to the EventModel like so:
+    private List<Picture> pictures. Now this attribute will be red underlined because the relationship is not set yet.
+    To set the correct annotation you have to know the relationship (1:1, 1:n, n:m)
+    In this example we assume pictures can only belong to 1 event - so the relationship is 1:n or n:1
+    depending on the perspective.
+    To know which one to put in which entity:
+      - Look at the entity you are currently in and realize: for example 1 event can have many pictures
+        and can many events share 1 and the same picture? in our case no. can many events have many pictures? yes, but
+        this does not help our logic nor is it logical to begin with. it is a pointless argument.
+        Therefore in the Event entity we put @OneToMany.
+
+      - Same game with when you are in the Picture entity: 1 picture can belong to only 1 event, 1 picture cannot belong to
+        several events and several pictures can belong to 1 event.
+        Therefore in the Picture entity we put @ManyToOne.
+
+When using ManyToMany (n:m) or OneToOne (1:1) only one Entity (Model) will be given the "ownership".
+Ownership basically means that the Entity will be responsible for data integrity.
+Usually, the Entity that is being accessed more frequently will be assigned the ownership.
+Ownership can be recognized by the annotation @JoinedColumn.
+On the flip side - the other Entity which it has the relationship can be recognized by the "mappedBy" command.
+When using mappedBy be sure to put the exact name of the attribute that it is pointing to (see code).
+
+When facing ManyToOne (n:1) or OneToMany(1:n) the rule is to assign the ownership (aka where to place @JoinedColumn)
+to the Entity that has the "Many-Tag".
+For example: an event can have MANY pictures, but a picture can only belong to 1 event
+--> then @JoinedColumn should be assigned to the Picture entity.
+Logically the OneToMany counterpart will have the mappedBy tag instead.
