@@ -35,7 +35,9 @@ public class EventDTO {
     public EventDTO(){
     }
 
-    public EventDTO(String eventId, List<UserModel> userIDs, List<MediaModel> pictures, List<ForumPostModel> eventPosts, UserModel creator, String eventName, String eventPicture, String eventAdress, ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
+    public EventDTO(String eventId, List<UserModel> userIDs, List<MediaModel> pictures, List<ForumPostModel> eventPosts,
+                    UserModel creator, String eventName, String eventPicture, String eventAdress, ZonedDateTime eventDate,
+                    String eventShortDescription, String eventLongDescription) {
         this.eventID = eventId;
         this.creator = creator;
         this.eventName = eventName;

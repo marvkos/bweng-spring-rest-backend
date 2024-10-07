@@ -4,7 +4,6 @@ import at.technikum.springrestbackend.exception.EntityNotFoundException;
 import at.technikum.springrestbackend.model.UserModel;
 import at.technikum.springrestbackend.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

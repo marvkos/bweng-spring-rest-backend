@@ -41,7 +41,8 @@ public class EventModel {
     //Constructor
     public EventModel(){}
 
-    public EventModel(String eventId, UserModel creator, String eventName, String eventPicture, String eventAdress, ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
+    public EventModel(String eventId, UserModel creator, String eventName, String eventPicture, String eventAdress,
+                      ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
         this.eventID = eventId;
         this.creator = creator;
         this.eventName = eventName;
