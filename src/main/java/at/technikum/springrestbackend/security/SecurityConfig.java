@@ -3,6 +3,7 @@ package at.technikum.springrestbackend.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,8 +46,11 @@ public class SecurityConfig {
                         // Swagger UI access
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/events/**").permitAll()
-                        .requestMatchers("/users/**").permitAll()
+
+                        // limiting access without authentication to register, login and view event page
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/events/{eventId}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
 
                         // allow errors so that @ResponseStatus() will show and not 401
                         .requestMatchers("/error").permitAll()
