@@ -1,0 +1,85 @@
+Swagger webpage:
+http://localhost:8080/swagger-ui/index.html
+
+--------------------------------------------------------------------
+creating the tables
+--------------------------------------------------------------------
+USE spring;
+
+
+CREATE TABLE Users (
+    userID VARCHAR(36) NOT NULL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    profileDescription TEXT,
+    isAdmin BOOLEAN DEFAULT FALSE,
+    fk_profilePicture VARCHAR(36)
+);
+
+CREATE TABLE Media (
+    mediaID VARCHAR(36) NOT NULL PRIMARY KEY,
+    mediaURL VARCHAR(255) NOT NULL,
+    fk_event_model VARCHAR(36)
+);
+
+CREATE TABLE Events (
+    eventID VARCHAR(36) NOT NULL PRIMARY KEY,
+    fk_creator VARCHAR(36),
+    eventName VARCHAR(255) NOT NULL,
+    eventPicture VARCHAR(255),
+    eventAdress VARCHAR(255),
+    eventDate DATETIME NOT NULL,
+    eventShortDescription TEXT,
+    eventLongDescription TEXT
+);
+
+CREATE TABLE ForumPosts (
+    id VARCHAR(36) NOT NULL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    fk_author VARCHAR(36),
+    fk_event_post VARCHAR(36),
+    content TEXT NOT NULL
+);
+
+CREATE TABLE ForumThreads (
+    id VARCHAR(36) NOT NULL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL
+);
+
+CREATE TABLE event_users (
+    fk_event_user VARCHAR(36),
+    fk_user_event VARCHAR(36),
+    PRIMARY KEY (fk_event_user, fk_user_event)
+);
+
+
+------------------------------------------------------------------------------------------
+
+and THEN we add the constraints - otherwise you will run into errors because of unknown reference.
+
+------------------------------------------------------------------------------------------
+
+ALTER TABLE Users
+ADD FOREIGN KEY (fk_profilePicture) REFERENCES Media(mediaID);
+
+ALTER TABLE Media
+ADD FOREIGN KEY (fk_event_model) REFERENCES Events(eventID);
+
+ALTER TABLE Events
+ADD FOREIGN KEY (fk_creator) REFERENCES Users(userID);
+
+ALTER TABLE ForumPosts
+ADD FOREIGN KEY (fk_author) REFERENCES Users(userID),
+ADD FOREIGN KEY (fk_event_post) REFERENCES Events(eventID);
+
+ALTER TABLE event_users
+ADD FOREIGN KEY (fk_event_user) REFERENCES Events(eventID),
+ADD FOREIGN KEY (fk_user_event) REFERENCES Users(userID);
+
+
+
+
+
