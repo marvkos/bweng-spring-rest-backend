@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//FORUM THREAD, NOT POST! NAMING IS BAD!
 @RestController
 @RequestMapping("/forumposts")
 @CrossOrigin
@@ -42,13 +41,6 @@ public class ForumPostController {
                 .collect(Collectors.toList());
     }
 
-//    @GetMapping("/{eventid}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<ForumPostDTO> readAllofEvent(@PathVariable String eventid){
-//        return postServices.findAllByEvent(eventid).stream()
-//                .map(postMapper::toDTO)
-//                .collect(Collectors.toList());
-//    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.FOUND)

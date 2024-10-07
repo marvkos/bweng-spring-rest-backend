@@ -44,10 +44,10 @@ public class EventServices {
 
         existingEvent.setAllEventEntity(
                 id,
-                eventDTOupdate.getUser(),
+                eventDTOupdate.getCreator(),
                 eventDTOupdate.getEventName(),
                 eventDTOupdate.getEventPicture(),
-                eventDTOupdate.getEventAdress(),
+                eventDTOupdate.getEventLocation(),
                 eventDTOupdate.getEventDate(),
                 eventDTOupdate.getEventShortDescription(),
                 eventDTOupdate.getEventLongDescription());

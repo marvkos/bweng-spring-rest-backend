@@ -13,7 +13,13 @@ public class ForumPostModel {
     private String title;
     @Valid
     @NotBlank
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "fk_author") //foreign key
+    private UserModel author;
+    @NotBlank
+    @ManyToOne
+    @JoinColumn(name = "fk_event")
+    private EventModel event;
     @NotBlank
     private String content;
 
@@ -30,7 +36,7 @@ public class ForumPostModel {
     public ForumPostModel(
             String id,
             String title,
-            String author,
+            UserModel author,
             String content,
             List<String> mediaPlaceHolder
     ) {
@@ -41,7 +47,7 @@ public class ForumPostModel {
         this.mediaPlaceHolder = mediaPlaceHolder;
     }
 
-    public void setAllEntity(String id, String title, String author, String content, List<String> mediaPlaceHolder) {
+    public void setAllEntity(String id, String title, UserModel author, String content, List<String> mediaPlaceHolder) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -57,7 +63,7 @@ public class ForumPostModel {
         return title;
     }
 
-    public String getAuthor() {
+    public UserModel getAuthor() {
         return author;
     }
 
@@ -77,7 +83,7 @@ public class ForumPostModel {
         this.title = title;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(UserModel author) {
         this.author = author;
     }
 

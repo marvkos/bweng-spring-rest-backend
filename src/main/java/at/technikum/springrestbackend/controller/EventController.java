@@ -33,6 +33,8 @@ public class EventController {
         this.eventRepository = eventRepository;
     }
 
+    //Event Routing Controllers
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EventDTO> readAll() {
@@ -54,7 +56,6 @@ public class EventController {
         eventServices.save(event);
         return eventMapper.toDTO(event);
     }
-
     @PutMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventDTO update(@PathVariable String eventId, @RequestBody EventDTO updatedEventDTO){
@@ -69,19 +70,28 @@ public class EventController {
         EventDTO deletedEventDTO =
                 new EventDTO(
                         eventId,
-                        eventServices.find(eventId).getUser(),
+                        eventServices.find(eventId).getAttendingUserIDs(),
+                        eventServices.find(eventId).getGalleryPictures(),
+                        eventServices.find(eventId).getEventPosts(),
+                        eventServices.find(eventId).getCreator(),
                         eventServices.find(eventId).getEventName(),
                         eventServices.find(eventId).getEventPicture(),
                         eventServices.find(eventId).getEventAdress(),
                         eventServices.find(eventId).getEventDate(),
                         eventServices.find(eventId).getEventShortDescription(),
                         eventServices.find(eventId).getEventLongDescription()
+
                 );
 
         eventServices.find(eventId);
         eventRepository.deleteById(eventId);
         return deletedEventDTO;
     }
+
+    //TODO: Event Users Routing Controllers
+
+
+    //TODO: Event Media Routing Controllers
 
 
 }

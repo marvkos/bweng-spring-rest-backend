@@ -13,20 +13,22 @@ public class EventMapper {
         EventDTO newEventDTO = new EventDTO();
         //assigning all Information
         newEventDTO.setAllEventDTO(
-                eventModel.getEventId(), eventModel.getUser(),
+                eventModel.getEventID(), eventModel.getCreator(),
                 eventModel.getEventName(), eventModel.getEventPicture(),
                 eventModel.getEventAdress(), eventModel.getEventDate(),
-                eventModel.getEventShortDescription(), eventModel.getEventLongDescription());
+                eventModel.getEventShortDescription(), eventModel.getEventLongDescription(),
+                eventModel.getAttendingUserIDs(), eventModel.getGalleryPictures(),
+                eventModel.getEventPosts());
         return newEventDTO;
     }
 
     public EventModel toEntity(EventDTO eventDTO) {
         //DataBank entry requires the id as a primary key
-        if (eventDTO.getEventId() == null) {
+        if (eventDTO.getEventID() == null) {
             return new EventModel(
                     UUID.randomUUID().toString(),
-                    eventDTO.getUser(), eventDTO.getEventName(),
-                    eventDTO.getEventPicture(), eventDTO.getEventAdress(),
+                    eventDTO.getCreator(), eventDTO.getEventName(),
+                    eventDTO.getEventPicture(), eventDTO.getEventLocation(),
                     eventDTO.getEventDate(),
                     eventDTO.getEventShortDescription(),
                     eventDTO.getEventLongDescription());
@@ -40,9 +42,9 @@ public class EventMapper {
 //            return newEventModel;
 //        }
         return new EventModel(
-                eventDTO.getEventId(),
-                eventDTO.getUser(), eventDTO.getEventName(),
-                eventDTO.getEventPicture(), eventDTO.getEventAdress(),
+                eventDTO.getEventID(),
+                eventDTO.getCreator(), eventDTO.getEventName(),
+                eventDTO.getEventPicture(), eventDTO.getEventLocation(),
                 eventDTO.getEventDate(),
                 eventDTO.getEventShortDescription(),
                 eventDTO.getEventLongDescription());
