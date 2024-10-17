@@ -1,11 +1,10 @@
 package at.technikum.springrestbackend.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class UserModel {
 
     @Id
@@ -25,7 +24,8 @@ public class UserModel {
     private boolean isAdmin;
 
 
-    protected UserModel() {}
+    protected UserModel() {
+    }
 
     public UserModel(String userId, String username, String password, String email) {
         this.userID = userId;
@@ -43,7 +43,6 @@ public class UserModel {
         this.profilePicture = profilePicture;
         this.profileDescription = profileDescription;
     }
-
 
 
     public String getUserID() {

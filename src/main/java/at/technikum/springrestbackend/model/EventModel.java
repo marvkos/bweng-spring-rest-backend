@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name="Events")
+@Table (name="events")
 public class EventModel {
 
     @Positive
