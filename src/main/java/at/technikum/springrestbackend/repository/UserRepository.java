@@ -8,5 +8,19 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends ListCrudRepository<UserModel, String> {
+
+    // Methode zum Finden eines Benutzers anhand des Benutzernamens
     Optional<UserModel> findByUsername(String username);
+
+    // Methode zum Deaktivieren (löschen) eines Benutzers (setzt isDeleted auf true)
+    default void softDeleteUser(UserModel user) {
+        user.setDeleted(true);
+        save(user);
+    }
+
+    // Methode zum Wiederherstellen eines Benutzers (setzt isDeleted auf false)
+    default void restoreUser(UserModel user) {
+        user.setDeleted(false);
+        save(user);
+    }
 }

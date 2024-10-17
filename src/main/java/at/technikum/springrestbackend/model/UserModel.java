@@ -10,20 +10,23 @@ public class UserModel {
 
     @Id
     private String userID;
+
     @ManyToMany(mappedBy = "userIDs")
     private List<EventModel> attendingEvents;
+
     private String username;
     private String password;
     private String email;
+
     @OneToOne
     @JoinColumn(name = "fk_profilePicture", unique = true) //foreign key
     private MediaModel profilePicture;
 
-    //TODO ForumPost Relatonship missing
-
-    private String profileDescription;
+    // Zusätzliche Attribute für Soft-Delete und Admin
+    private boolean isDeleted;  // Hinzugefügt: Kennzeichnet, ob der Benutzer gelöscht ist
     private boolean isAdmin;
 
+    private String profileDescription;
 
     protected UserModel() {}
 
@@ -44,7 +47,7 @@ public class UserModel {
         this.profileDescription = profileDescription;
     }
 
-
+    // Getter und Setter
 
     public String getUserID() {
         return userID;
@@ -100,5 +103,21 @@ public class UserModel {
 
     public void setProfileDescription(String profileDescription) {
         this.profileDescription = profileDescription;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

@@ -7,15 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name="Events")
+@Table(name = "Events")
 public class EventModel {
 
     @Positive
     @Id
     private String eventID;
+
     @ManyToOne
     @JoinColumn(name = "fk_creator") //foreign key
     private UserModel creator;
+
     @ManyToMany
     @JoinTable(
             name = "event_users",
@@ -23,7 +25,6 @@ public class EventModel {
             inverseJoinColumns = @JoinColumn(name = "fk_user_event")
     )
     private List<UserModel> userIDs = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "event")
     private List<MediaModel> galleryPictures = new ArrayList<>();
@@ -38,8 +39,11 @@ public class EventModel {
     private String eventShortDescription;
     private String eventLongDescription;
 
-    //Constructor
-    public EventModel(){}
+    // Soft-Delete-Attribut hinzufügen
+    private boolean isDeleted;
+
+    // Constructor
+    public EventModel() {}
 
     public EventModel(String eventId, UserModel creator, String eventName, String eventPicture, String eventAdress,
                       ZonedDateTime eventDate, String eventShortDescription, String eventLongDescription) {
@@ -51,6 +55,7 @@ public class EventModel {
         this.eventDate = eventDate;
         this.eventShortDescription = eventShortDescription;
         this.eventLongDescription = eventLongDescription;
+        this.isDeleted = false; // Standardwert ist false
     }
 
     public void setAllEventEntity(String eventId, UserModel user, String eventName, String eventPicture, String eventAdress,
@@ -65,8 +70,8 @@ public class EventModel {
         setEventLongDescription(eventLongDescription);
     }
 
+    // Getter und Setter
 
-    //Getter and Setter
     public String getEventID() {
         return eventID;
     }
@@ -153,5 +158,13 @@ public class EventModel {
 
     public void setGalleryPictures(List<MediaModel> galleryPictures) {
         this.galleryPictures = galleryPictures;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
