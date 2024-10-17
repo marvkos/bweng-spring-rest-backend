@@ -5,7 +5,6 @@ import at.technikum.springrestbackend.mapper.UserMapper;
 import at.technikum.springrestbackend.model.UserModel;
 import at.technikum.springrestbackend.repository.UserRepository;
 import at.technikum.springrestbackend.services.UserServices;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -44,14 +43,14 @@ public class UserController {
         UserModel user = userServices.find(userId);
         return userMapper.toDTO(user);
     }
-
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO create(@RequestBody @Valid UserDTO userDTO){
-        UserModel user = userMapper.toEntity(userDTO);
-        userServices.save(user);
-        return userMapper.toDTO(user);
-    }
+//
+//    @PostMapping()
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public UserDTO create(@RequestBody @Valid UserDTO userDTO){
+//        UserModel user = userMapper.toEntity(userDTO);
+//        userServices.save(user);
+//        return userMapper.toDTO(user);
+//    }
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)

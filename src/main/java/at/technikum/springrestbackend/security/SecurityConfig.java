@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -50,11 +51,15 @@ public class SecurityConfig {
                         // limiting access without authentication to register, login and view event page
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/events/{eventId}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
 
                         // allow errors so that @ResponseStatus() will show and not 401
                         .requestMatchers("/error").permitAll()
+
                         .anyRequest().authenticated());
+
+        // Add JwtRequestFilter before UsernamePasswordAuthenticationFilter for username password checking
+        http.
+                addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
