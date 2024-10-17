@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-@Table(name = "forum_posts")
+@Table(name = "forumPosts")
 public class ForumPostModel {
     @Id
     private String id;

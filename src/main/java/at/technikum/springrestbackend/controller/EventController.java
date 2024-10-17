@@ -82,7 +82,7 @@ public class EventController {
                         eventServices.find(eventId).getEventLongDescription()
 
                 );
-
+        //Todo: event delete in service, controller to repository nix gut, delete with right userID
         eventServices.find(eventId);
         eventRepository.deleteById(eventId);
         return deletedEventDTO;

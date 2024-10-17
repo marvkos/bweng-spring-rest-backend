@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @Entity
-@Table(name = "forum_threads")
+@Table(name = "forumThreads")
 public class ForumThreadModel {
     @Id
     private String id;
