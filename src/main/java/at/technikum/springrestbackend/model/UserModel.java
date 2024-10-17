@@ -5,19 +5,16 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class UserModel {
 
     @Id
     private String userID;
-
     @ManyToMany(mappedBy = "userIDs")
     private List<EventModel> attendingEvents;
-
     private String username;
     private String password;
     private String email;
-
     @OneToOne
     @JoinColumn(name = "fk_profilePicture", unique = true) //foreign key
     private MediaModel profilePicture;
@@ -47,7 +44,7 @@ public class UserModel {
         this.profileDescription = profileDescription;
     }
 
-    // Getter und Setter
+
 
     public String getUserID() {
         return userID;

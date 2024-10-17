@@ -3,7 +3,7 @@ package at.technikum.springrestbackend.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Media")
+@Table(name = "media")
 public class MediaModel {
 
     @Id

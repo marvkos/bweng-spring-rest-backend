@@ -7,17 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Events")
+@Table (name="events")
 public class EventModel {
 
     @Positive
     @Id
     private String eventID;
-
     @ManyToOne
     @JoinColumn(name = "fk_creator") //foreign key
     private UserModel creator;
-
     @ManyToMany
     @JoinTable(
             name = "event_users",
@@ -25,6 +23,7 @@ public class EventModel {
             inverseJoinColumns = @JoinColumn(name = "fk_user_event")
     )
     private List<UserModel> userIDs = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "event")
     private List<MediaModel> galleryPictures = new ArrayList<>();
@@ -70,8 +69,8 @@ public class EventModel {
         setEventLongDescription(eventLongDescription);
     }
 
-    // Getter und Setter
 
+    //Getter and Setter
     public String getEventID() {
         return eventID;
     }
