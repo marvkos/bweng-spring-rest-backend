@@ -38,11 +38,9 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable);
-
         http
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
         http
                 .authorizeHttpRequests(registry -> registry
                         // Swagger UI access
@@ -51,10 +49,11 @@ public class SecurityConfig {
                         // limiting access without authentication to register, login and view event page
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/events/{eventId}").permitAll()
+                        //border patrol for admin only pages
+                        .requestMatchers("/admin/**").hasAuthority("isAdmin")
                         // allow errors so that @ResponseStatus() will show and not 401
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated());
-
         // Add JwtRequestFilter before UsernamePasswordAuthenticationFilter for username password checking
         http.
                 addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
