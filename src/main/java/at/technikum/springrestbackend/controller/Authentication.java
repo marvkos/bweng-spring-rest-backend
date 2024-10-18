@@ -9,14 +9,13 @@ import at.technikum.springrestbackend.services.UserServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityExistsException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 @Tag(name = "Authentication", description = "API für Authentifizierung und Registrierung von Benutzern")
 @RestController
@@ -42,7 +41,7 @@ public class Authentication {
             LoginResponseDTO responseDTO = authenticationService.login(loginRequestDTO);
 
             // JWT-Token in einem HTTP-Only Cookie speichern
-            Cookie cookie = new Cookie("jwt", responseDTO.getToken());
+            Cookie cookie = new Cookie("jwt", responseDTO.getJwt());
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             cookie.setMaxAge(24 * 60 * 60); // Token für 1 Tag gültig
