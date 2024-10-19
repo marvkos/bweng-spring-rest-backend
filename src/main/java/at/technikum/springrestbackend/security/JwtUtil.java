@@ -6,7 +6,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +35,11 @@ public class JwtUtil {
                 .getBody();
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, boolean isAdmin) {
+
         Map<String, Object> claims = new HashMap<>();
+        claims.put("isAdmin", isAdmin); // Add isAdmin flag to the claims
+
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -62,5 +64,10 @@ public class JwtUtil {
 
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
+    }
+
+    public Boolean extractIsAdmin(String token) {
+        Claims claims = extractAllClaims(token);
+        return (Boolean) claims.get("isAdmin");
     }
 }

@@ -1,4 +1,4 @@
-package at.technikum.springrestbackend.service;
+package at.technikum.springrestbackend.services;
 
 import org.springframework.stereotype.Service;
 
