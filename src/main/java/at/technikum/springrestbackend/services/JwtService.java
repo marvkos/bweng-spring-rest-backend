@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -15,10 +14,6 @@ public class JwtService {
 
     private String SECRET_KEY = "deinGeheimesSchluessel"; // Setze hier deinen geheimen Schlüssel
 
-    public String generateToken(String username) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
-    }
 
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
@@ -46,4 +41,11 @@ public class JwtService {
     private boolean isTokenExpired(String token) {
         return extractClaims(token).getExpiration().before(new Date());
     }
+
+    public boolean extractIsAdmin(String token) {
+        Claims claims = extractClaims(token);
+        // Annahme: Das JWT enthält ein Claim namens "isAdmin", das einen Boolean-Wert speichert
+        return claims.get("isAdmin", Boolean.class);
+    }
+
 }
